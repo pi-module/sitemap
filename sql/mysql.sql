@@ -30,3 +30,14 @@ CREATE TABLE `{url_top}` (
   KEY `create_id` (`id`, `create`),
   KEY `order_id` (`id`, `order`)
 );
+
+CREATE TABLE `{item}` ( 
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `module` varchar(64) NOT NULL,
+  `table` varchar(64) NOT NULL,
+  `count` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `module` (`module`),
+  KEY `table` (`table`),
+  KEY `module_table` (`module`, `table`)
+);

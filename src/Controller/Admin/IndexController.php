@@ -146,23 +146,58 @@ class IndexController extends ActionController
         	$this->jump(array('action' => 'top'), __('Please select link'));	
         }
     }
+
+    /**
+     * List update action
+     */
+    public function topaddAction()
+    {
+        // Set view
+        $this->view()->setTemplate(false);
+        $id = $this->params('id');
+        $row_list = $this->getModel('url_list')->find($id);
+        if ($row_list) {
+            $values['loc'] = $row_list->loc;
+            $values['lastmod'] = $row_list->lastmod;
+            $values['changefreq'] = $row_list->changefreq;
+            $values['priority'] = $row_list->priority;
+            $values['create'] = time();
+            // Save
+            $row_top = $this->getModel('url_top')->createRow();
+            $row_top->assign($values);
+            $row_top->save();
+            // Delete
+            Pi::api('sitemap', 'sitemap')->item($row_list->module, $row_list->table, false);
+            $row_list->delete();
+            // jump
+            $this->jump(array('action' => 'list'), __('This link add as top link'));
+        } else {
+            $this->jump(array('action' => 'list'), __('Please select link'));   
+        }
+    }
     	
     /**
      * List action
      */
     public function listAction()
     {
+        // Get info
+        $module = $this->params('module');
+        // Get info
+        $select = $this->getModel('url_list')->select()->order(array('id DESC', 'create DESC'));
+        $rowset = $this->getModel('url_list')->selectWith($select);
+        // Make list
+        foreach ($rowset as $row) {
+            $link[$row->id] = $row->toArray();
+            $link[$row->id]['create'] = _date($link[$row->id]['create']);
+        }
+        // Go to update page if empty
+        if (empty($link)) {
+            return $this->redirect()->toRoute('', array('action' => 'index'));
+        }
         // Set view
         $this->view()->setTemplate('index_list');
-    }
-
-    /**
-     * List update action
-     */
-    public function listupdateAction()
-    {
-        // Set view
-        $this->view()->setTemplate('index_listadd');
+        $this->view()->assign('links', $link);
     }
 
     /**
@@ -174,6 +209,7 @@ class IndexController extends ActionController
         $id = $this->params('id');
         $row = $this->getModel('url_list')->find($id);
         if ($row) {
+            Pi::api('sitemap', 'sitemap')->item($row->module, $row->table, false);
         	$row->delete();
             $this->jump(array('action' => 'list'), __('This link deleted'));
         } else {
