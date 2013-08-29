@@ -1,1 +1,21 @@
- 
+ <?php $this->css($this->assetModule('css/admin.css')); ?>
+<div class="sitemap">
+	<?php if(isset($url)) { ?>
+	<div class="alert">
+		<h3><?php _e('Warning!'); ?></h3>
+        <p><?php _e('Your website have <strong>SiteMap.xml</strong>, But you should update your sitemap every day. Please use <strong>Generat</strong> button for update it'); ?></p>
+	</div>
+	<div class="btn-group">
+		<a class="btn btn-success" title="<?php _e('Generat'); ?>" href="<?php echo $this->url('', array('action' => 'generat')); ?>"><i class="icon-edit"></i> <?php _e('Generat'); ?></a>
+		<a class="btn" title="<?php _e('View'); ?>" rel="external" href="<?php echo $url; ?>"><i class="icon-eye-open"></i> <?php _e('View'); ?></a>
+	</div>
+	<?php } else { ?>
+	<div class="alert alert-error">
+		<h3><?php _e('Error!'); ?></h3>
+        <p><?php _e('Your website does not have an XML sitemap - this can be problematic. A sitemap lists URLs that are available for crawling and can include additional information like your sites latest updates, frequency of changes and importance of the URLs. This allows search engines to crawl the site more intelligently. Please use <strong>Generat</strong> button for update it'); ?></p>
+	</div>
+	<div class="btn-group">
+		<a class="btn btn-success" title="<?php _e('Generat'); ?>" href="<?php echo $this->url('', array('action' => 'generat')); ?>"><i class="icon-edit"></i> <?php _e('Generat'); ?></a>
+	</div>
+	<?php } ?>
+</div>	

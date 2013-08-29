@@ -7,11 +7,13 @@ CREATE TABLE `{url_list}` (
   `create` int(10) unsigned NOT NULL,
   `module` varchar(64) NOT NULL,
   `table` varchar(64) NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY (`id`),
+  KEY `status` (`status`),
   KEY `create` (`create`),
   KEY `module` (`module`),
   KEY `table` (`table`),
-  KEY `create_id` (`id`, `create`),
+  KEY `create_id` (`id`, `create`, `status`),
   KEY `module_table` (`module`, `table`)
 ); 
 
