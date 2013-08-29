@@ -22,6 +22,16 @@ use Pi\Application\AbstractApi;
 *
 * Pi::api('sitemap', 'sitemap')->add($module, $table, $link, $plus);
 * Pi::api('sitemap', 'sitemap')->item($module, $table, $plus);
+* 
+* if (Pi::service('module')->isActive('sitemap')) {
+* 	$link = array();
+* 	$link['loc'] = Pi:url('YOUR ROTE URL');
+* 	$link['lastmod'] = date("Y-m-d H:i:s"); // Or set empty
+* 	$link['changefreq'] = 'daily'; // Or set empty
+* 	$link['priority'] = 1; // Or set empty
+* 	Pi::api('sitemap', 'sitemap')->add($module, $table, $link);
+* }	
+* 
 */
 class Sitemap extends AbstractApi
 { 
@@ -30,9 +40,9 @@ class Sitemap extends AbstractApi
     	// Set
     	$values = array();
     	$values['loc'] = $link['loc'];
-    	$values['lastmod'] = $link['lastmod'];
-    	$values['changefreq'] = $link['changefreq'];
-    	$values['priority'] = $link['priority'];
+    	$values['lastmod'] = (!empty($link['lastmod'])) ? $link['lastmod'] : date("Y-m-d H:i:s");
+    	$values['changefreq'] = (!empty($link['changefreq'])) ? $link['changefreq'] : 'daily';
+    	$values['priority'] = (!empty($link['priority'])) ? $link['priority'] : '';
     	$values['create'] = time();
     	$values['module'] = $module;
     	$values['table'] = $table;
