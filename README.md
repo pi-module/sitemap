@@ -12,3 +12,4 @@ ToDo
 * Generat siteman.xml file by cronjob
 * Generat module-sitemap.xml and module-table-sitemap.xml 
 * Add needed setting options
+* Add zip and html sitemap
