@@ -25,7 +25,7 @@ use Pi\Application\AbstractApi;
 * 
 * if (Pi::service('module')->isActive('sitemap')) {
 * 	$link = array();
-* 	$link['loc'] = Pi:url('YOUR ROTE URL');
+* 	$link['loc'] = Pi::url('YOUR ROTE URL');
 * 	$link['lastmod'] = date("Y-m-d H:i:s"); // Or set empty
 * 	$link['changefreq'] = 'daily'; // Or set empty
 * 	$link['priority'] = 1; // Or set empty
