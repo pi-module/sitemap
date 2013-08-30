@@ -49,6 +49,6 @@ CREATE TABLE `{history}` (
   `table` varchar(64) NOT NULL,
   `create` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `file` (`file`),
+  UNIQUE KEY `file` (`file`),
   KEY `create` (`create`)
 );
