@@ -13,34 +13,87 @@ use Pi;
 use Pi\Mvc\Controller\ActionController;
 use Module\Sitemap\Form\TopForm;
 use Module\Sitemap\Form\TopFilter;
-
+use Module\Sitemap\Lib\Generat;
 
 /**
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
 class IndexController extends ActionController
 {
-    
     protected $listColumns = array( 'id', 'loc', 'lastmod', 'changefreq', 'priority', 'create', 'module', 'table', 'status');
-
     protected $topColumns = array('id', 'loc', 'lastmod', 'changefreq', 'priority', 'create', 'order');
-
 
     /**
      * Default action
      */
     public function indexAction()
     {
-        // Set sitemap.xml path
-        $sitemap = Pi::path('sitemap.xml');
-        // Set url
-        if (file_exists($sitemap)) {
-        	$url = Pi::url('sitemap.xml');
-        	$this->view()->assign('url', $url);
+        // Get info
+        $select = $this->getModel('history')->select()->order(array('id DESC', 'create DESC'));
+        $rowset = $this->getModel('history')->selectWith($select);
+        // Make list
+        foreach ($rowset as $row) {
+            $history[$row->id] = $row->toArray();
+            $history[$row->id]['file_create'] = _date($history[$row->id]['create']);
+            $history[$row->id]['url'] = Pi::url($history[$row->id]['file']);
+            $history[$row->id]['path'] = Pi::path($history[$row->id]['file']);
+            $history[$row->id]['exists'] = (file_exists($history[$row->id]['path'])) ? 1 : 0;
+            $history[$row->id]['update'] = ($history[$row->id]['create'] > (intval(time() - 86400))) ? 1 : 0;
+            
+            $generat = array();
+            $generat['action'] = 'generat';
+            $generat['select-file'] = $history[$row->id]['file'];
+            if (!empty($history[$row->id]['module']) && !empty($history[$row->id]['table'])) {
+                $generat['select-module'] = $history[$row->id]['module'];
+                $generat['select-table'] = $history[$row->id]['table'];
+            }
+
+            $history[$row->id]['generat'] = $this->url('', $generat);
         }
+
+        // Get info
+        $select = $this->getModel('item')->select()->order(array('id DESC', 'count DESC'));
+        $rowset = $this->getModel('item')->selectWith($select);
+        // Make list
+        foreach ($rowset as $row) {
+            $item[$row->id] = $row->toArray();
+            $item[$row->id]['file'] = sprintf('%s-%s-sitemap.xml', $item[$row->id]['module'], $item[$row->id]['table']);
+            $item[$row->id]['generat'] = $this->url('', array(
+                'action' => 'generat', 
+                'select-file' => $item[$row->id]['file'], 
+                'select-module' => $item[$row->id]['module'], 
+                'select-table' => $item[$row->id]['table'])
+            );
+            $exists = (file_exists(Pi::path($item[$row->id]['file']))) ? 1 : 0;
+            // unset exists files
+            if ($exists) {
+                unset($item[$row->id]);
+            }
+        }
+
         // Set view
         $this->view()->setTemplate('index_index');
+        $this->view()->assign('historys', $history);
+        $this->view()->assign('items', $item);
     }
+
+    public function GeneratAction()
+    {
+        $file = $this->params('select-file', 'sitemap.xml');
+        $module = $this->params('select-module', '');
+        $table = $this->params('select-table', '');
+        // Set table where
+        if (!empty($module) && !empty($table)) {
+            $setindex = false;
+            $settop = false;
+        }
+
+        $sitemap = new Generat($file, $module, $table, $setindex, $settop);
+        $sitemap->file();
+
+        $this->view()->setTemplate(false);
+        $this->jump(array('action' => 'index'), __('working ... '));
+    }    
 
     /**
      * Tools action
@@ -215,108 +268,5 @@ class IndexController extends ActionController
         } else {
         	$this->jump(array('action' => 'list'), __('Please select link'));	
         }
-    }
-
-    /**
-     * Generat sitemap action
-     */
-    public function GeneratAction()
-    {
-        
-        // Set view
-        $this->view()->setTemplate(false);
-        // Set sitemap.xml path
-        $sitemap = Pi::path('sitemap.xml');
-        // Remove old file
-        if (file_exists($sitemap)) {
-        	if (!@unlink($sitemap)) {
-        		$message = sprintf(__('Unable to remove %s , please remove file manual and generat again'), $sitemap);
-        		$this->jump(array('action' => 'index'), $message);
-        	}
-        }
-        // Get content
-        $content = $this->Content();
-        // Write information on sitemap.xml
-        $sm = fopen($sitemap, "x+");
-        fwrite($sm, '<?xml version="1.0" encoding="UTF-8"?>');
-        fwrite($sm, PHP_EOL . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
-        // Write links
-        foreach ($content as $link) {
-        	fwrite($sm, PHP_EOL . '	<url>');
-        	if (!empty($link['loc'])) {
-        		fwrite($sm, PHP_EOL . '		<loc>' . $this->escapingUrl($link['loc']) . '</loc>');
-        	}
-        	if (!empty($link['lastmod'])) {
-        		fwrite($sm, PHP_EOL . '		<lastmod>' . $link['lastmod'] . '</lastmod>');
-        	}
-        	if (!empty($link['changefreq'])) {
-        		fwrite($sm, PHP_EOL . '		<changefreq>' . $link['changefreq'] . '</changefreq>');
-        	}
-        	if (!empty($link['priority'])) {
-        		fwrite($sm, PHP_EOL . '		<priority>' . $link['priority'] . '</priority>');
-        	}
-        	fwrite($sm, PHP_EOL . '	</url>');
-        }	
-        // Close file
-        fwrite($sm, PHP_EOL . '</urlset>');
-        fclose($sm);
-        // jump
-        $this->jump(array('action' => 'index'), __('Finish'));
-    }
-
-    public function Content()
-    {
-    	$content = array();
-
-    	// Add website index url
-    	$content[] = array(
-    		'loc' => Pi::url('www'),
-    		'lastmod' => date("Y-m-d H:i:s"),
-    		'changefreq' => 'daily',
-    		'priority' => '',
-    	);
-
-    	// Make info from url_top table
-    	$order = array('id DESC', 'create DESC');
-        $select = $this->getModel('url_top')->select()->order($order);
-        $rowset = $this->getModel('url_top')->selectWith($select);
-        foreach ($rowset as $row) {
-            $url_top[$row->id] = $row->toArray();
-            $link['loc'] = $url_top[$row->id]['loc'];
-            $link['lastmod'] = $url_top[$row->id]['lastmod'];
-            $link['changefreq'] = $url_top[$row->id]['changefreq'];
-            $link['priority'] = $url_top[$row->id]['priority'];
-            $content[] = $link;
-        }
-        $columns = array('count' => new \Zend\Db\Sql\Expression('count(*)'));
-        $select = $this->getModel('url_top')->select()->columns($columns);
-        $count = $this->getModel('url_top')->selectWith($select)->current()->count;
-
-        // Make info from url_list table
-        $limit = intval(500 - intval($count));
-        $where = array('status' => 1);
-        $select = $this->getModel('url_list')->select()->where($where)->order($order)->limit($limit);
-        $rowset = $this->getModel('url_list')->selectWith($select);
-        foreach ($rowset as $row) {
-            $url_top[$row->id] = $row->toArray();
-            $link['loc'] = $url_top[$row->id]['loc'];
-            $link['lastmod'] = $url_top[$row->id]['lastmod'];
-            $link['changefreq'] = $url_top[$row->id]['changefreq'];
-            $link['priority'] = $url_top[$row->id]['priority'];
-            $content[] = $link;
-        }
-
-        // Set just 500 urls for sitemap.xml
-        $content = array_slice($content, 0, 499);
-    	return $content;
-    }
-
-    public function escapingUrl($url)
-    {
-    	$url = htmlspecialchars($url, ENT_QUOTES);
-    	//$url = rawurlencode($url);
-    	$url = urldecode($url);
-    	$url = str_replace(' ', '%20', $url);
-    	return $url;
     }
 }

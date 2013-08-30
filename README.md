@@ -6,11 +6,11 @@ Features
 * Generat sitemap.xml file manaul 
 * Generat sitemap.xml from added links ( add manual link )
 * Generat sitemap.xml after add items on each module by API
+* Generat module-table-sitemap.xml 
 
 ToDo
 ----------------------
 * Generat siteman.xml file by cronjob
-* Generat module-sitemap.xml and module-table-sitemap.xml 
 * Add needed setting options
 * Add zip and html sitemap
 

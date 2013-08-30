@@ -41,3 +41,14 @@ CREATE TABLE `{item}` (
   KEY `table` (`table`),
   KEY `module_table` (`module`, `table`)
 );
+
+CREATE TABLE `{history}` ( 
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `file` varchar(64) NOT NULL,
+  `module` varchar(64) NOT NULL,
+  `table` varchar(64) NOT NULL,
+  `create` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `file` (`file`),
+  KEY `create` (`create`)
+);

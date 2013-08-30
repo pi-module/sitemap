@@ -11,17 +11,20 @@ namespace Module\Sitemap\Api;
 
 use Pi;
 use Pi\Application\AbstractApi;
+use Module\Sitemap\Lib\Generat;
 
 /**
 * Sitemap APIs
 *
 * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
 *
-* Pi::service('api')->sitemap(array('Sitemap', 'add'), $module, $table, $link, $plus);
+* Pi::service('api')->sitemap(array('Sitemap', 'add'), $module, $table, $link);
 * Pi::service('api')->sitemap(array('Sitemap', 'item'), $module, $table, $plus);
+* Pi::service('api')->sitemap(array('Sitemap', 'generat'), $name, $module, $table, $setindex, $settop, $setlist);
 *
-* Pi::api('sitemap', 'sitemap')->add($module, $table, $link, $plus);
+* Pi::api('sitemap', 'sitemap')->add($module, $table, $link);
 * Pi::api('sitemap', 'sitemap')->item($module, $table, $plus);
+* Pi::api('sitemap', 'sitemap')->generat($name, $module, $table, $setindex, $settop, $setlist);
 * 
 * if (Pi::service('module')->isActive('sitemap')) {
 * 	$link = array();
@@ -35,7 +38,7 @@ use Pi\Application\AbstractApi;
 */
 class Sitemap extends AbstractApi
 { 
-	public function add($module, $table, $link, $plus = true)
+	public function add($module, $table, $link)
     {
     	// Set
     	$values = array();
@@ -52,7 +55,7 @@ class Sitemap extends AbstractApi
         $row->assign($values);
         $row->save();
         // Update item table
-        $this->item($module, $table, $plus);
+        $this->item($module, $table);
     }	
 
     public function item($module, $table, $plus = true)
@@ -74,5 +77,11 @@ class Sitemap extends AbstractApi
             $row->assign($values);
             $row->save();
         }
+    }
+
+    public function generat($name = 'sitemap.xml', $module = '', $table = '', $setindex = true, $settop = true, $setlist = true)
+    {
+        $sitemap = new Generat($name, $module, $table, $setindex, $settop, $setlist);
+        $sitemap->file();
     }
 }

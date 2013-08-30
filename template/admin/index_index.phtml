@@ -1,21 +1,61 @@
  <?php $this->css($this->assetModule('css/admin.css')); ?>
 <div class="sitemap">
-	<?php if(isset($url)) { ?>
-	<div class="alert">
-		<h3><?php _e('Warning!'); ?></h3>
-        <p><?php _e('Your website have <strong>SiteMap.xml</strong>, But you should update your sitemap every day. Please use <strong>Generat</strong> button for update it'); ?></p>
-	</div>
-	<div class="btn-group">
-		<a class="btn btn-success" title="<?php _e('Generat'); ?>" href="<?php echo $this->url('', array('action' => 'generat')); ?>"><i class="icon-edit"></i> <?php _e('Generat'); ?></a>
-		<a class="btn" title="<?php _e('View'); ?>" rel="external" href="<?php echo $url; ?>"><i class="icon-eye-open"></i> <?php _e('View'); ?></a>
-	</div>
-	<?php } else { ?>
-	<div class="alert alert-error">
-		<h3><?php _e('Error!'); ?></h3>
-        <p><?php _e('Your website does not have an XML sitemap - this can be problematic. A sitemap lists URLs that are available for crawling and can include additional information like your sites latest updates, frequency of changes and importance of the URLs. This allows search engines to crawl the site more intelligently. Please use <strong>Generat</strong> button for update it'); ?></p>
-	</div>
-	<div class="btn-group">
-		<a class="btn btn-success" title="<?php _e('Generat'); ?>" href="<?php echo $this->url('', array('action' => 'generat')); ?>"><i class="icon-edit"></i> <?php _e('Generat'); ?></a>
-	</div>
+	<h3><?php _e('List of sitemaps'); ?></h3>
+	<?php foreach($historys as $history) { ?>
+        <?php if ($history['exists']) { ?>
+            <?php if ($history['update']) { ?>
+            <div class="alert alert-success">
+            	<h5><?php _e('Congratulations !'); ?></h5>
+            	<p><?php echo sprintf('Your website <strong>%s</strong> is uptodated on %s. But you can use <strong>ReUpdate</strong> button for update it again', $history['file'], $history['file_create']); ?></p>
+                <div class="btn-group">
+            		<a class="btn btn-success" title="<?php _e('ReUpdate'); ?>" href="<?php echo $this->escape($history['generat']); ?>"><i class="icon-edit"></i> <?php _e('ReUpdate'); ?></a>
+            		<a class="btn" title="<?php echo $this->escape($history['file']); ?>" href="<?php echo $this->escape($history['url']); ?>"><i class="icon-eye-open"></i> <?php echo $this->escape($history['file']); ?></a>
+            	</div>
+            </div>
+            <?php } else { ?>
+            <div class="alert">
+            	<h5><?php _e('Warning !'); ?></h5>
+            	<p><?php echo sprintf('Your website have <strong>%s</strong> and it uptodated on %s, But you should update your sitemap every day. Please use <strong>Update</strong> button for update it', $history['file'], $history['file_create']); ?></p>
+            	<div class="btn-group">
+            		<a class="btn btn-warning" title="<?php _e('Update'); ?>" href="<?php echo $this->escape($history['generat']); ?>"><i class="icon-edit"></i> <?php _e('Update'); ?></a>
+            		<a class="btn" title="<?php echo $this->escape($history['file']); ?>" href="<?php echo $this->escape($history['url']); ?>"><i class="icon-eye-open"></i> <?php echo $this->escape($history['file']); ?></a>
+            	</div>
+            </div>			
+            <?php } ?>
+        <?php } else { ?>
+            <div class="alert alert-error">
+            	<h5><?php _e('Error !'); ?></h5>
+            	<p><?php echo sprintf('Your website does not have an <strong> %s </strong> - this can be problematic. A sitemap lists URLs that are available for crawling and can include additional information like your sites latest updates, frequency of changes and importance of the URLs. This allows search engines to crawl the site more intelligently. Please use <strong>Generat</strong> button for update it', $this->escape($history['file'])); ?></p>
+            	<div class="btn-group">
+            		<a class="btn btn-danger" title="<?php _e('Generat'); ?>" href="<?php echo $this->escape($history['generat']); ?>"><i class="icon-edit"></i> <?php _e('Generat'); ?></a>
+            	</div>
+            </div>	
+        <?php } ?>
 	<?php } ?>
+
+
+	<h3><?php _e('List of Possible sitemaps'); ?></h3>
+	<table class="table table-striped table-bordered table-condensed">
+		<tr>
+			<th><?php _e('File'); ?></th>
+			<th><?php _e('Module'); ?></th>
+			<th><?php _e('Table'); ?></th>
+			<th><?php _e('Count'); ?></th>
+			<th><?php _e('Action'); ?></th>
+		</tr>
+		<?php foreach($items as $item) { ?>
+        <tr>
+            <td><?php echo $this->escape($item['file']); ?></td>
+            <td><?php echo $this->escape($item['module']); ?></td>
+            <td><?php echo $this->escape($item['table']); ?></td>
+            <td><?php echo $this->escape($item['count']); ?></td>
+            <td>
+				<div class="btn-group">
+					<a class="btn btn-danger" title="<?php _e('Generat'); ?>" href="<?php echo $this->escape($item['generat']); ?>"><i class="icon-edit"></i> <?php _e('Generat'); ?></a>
+				</div>
+            </td>
+		</tr>	
+		<?php } ?>
+	</table>
+
 </div>	

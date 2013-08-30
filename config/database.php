@@ -20,5 +20,6 @@ return array(
         'url_list' => 'table',
         'url_top' => 'table',
         'item' => 'table',
+        'history' => 'table',
     )
 );
