@@ -39,7 +39,6 @@ class IndexController extends ActionController
             $history[$row->id]['path'] = Pi::path($history[$row->id]['file']);
             $history[$row->id]['exists'] = (file_exists($history[$row->id]['path'])) ? 1 : 0;
             $history[$row->id]['update'] = ($history[$row->id]['create'] > (intval(time() - 86400))) ? 1 : 0;
-            
             $generat = array();
             $generat['action'] = 'generat';
             $generat['select-file'] = $history[$row->id]['file'];
@@ -47,8 +46,17 @@ class IndexController extends ActionController
                 $generat['select-module'] = $history[$row->id]['module'];
                 $generat['select-table'] = $history[$row->id]['table'];
             }
-
             $history[$row->id]['generat'] = $this->url('', $generat);
+        }
+
+        if (empty($history)) {
+            $history[0]['file'] = 'sitemap.xml';
+            $history[0]['file_create'] = _date(time());
+            $history[0]['url'] = Pi::url('sitemap.xml');
+            $history[0]['path'] = Pi::path('sitemap.xml');
+            $history[0]['exists'] = 0;
+            $history[0]['update'] = 0;
+            $history[0]['generat'] = $this->url('', array('action' => 'generat', 'select-file' => 'sitemap.xml'));
         }
 
         // Get info
@@ -77,7 +85,7 @@ class IndexController extends ActionController
         $this->view()->assign('items', $item);
     }
 
-    public function GeneratAction()
+    public function generatAction()
     {
         $file = $this->params('select-file', 'sitemap.xml');
         $module = $this->params('select-module', '');
@@ -86,6 +94,9 @@ class IndexController extends ActionController
         if (!empty($module) && !empty($table)) {
             $setindex = false;
             $settop = false;
+        } else {
+            $setindex = true;
+            $settop = true;
         }
 
         $sitemap = new Generat($file, $module, $table, $setindex, $settop);
@@ -93,7 +104,25 @@ class IndexController extends ActionController
 
         $this->view()->setTemplate(false);
         $this->jump(array('action' => 'index'), __('working ... '));
-    }    
+    }  
+
+    public function deletefileAction()
+    {
+        $this->view()->setTemplate(false);
+        $file = $this->params('file');
+        if ($file) {
+            $file = Pi::path($file);
+            if (file_exists($file)) {
+                if (!@unlink($file)) {
+                    $message = sprintf(__('Unable to remove %s , please remove file manual and generat again'), $file);
+                    throw new \Exception($message);
+               } 
+            }
+            $this->jump(array('action' => 'index'), __('Selected file delete')); 
+        } else {
+            $this->jump(array('action' => 'index'), __('Please selete file')); 
+        }
+    }  
 
     /**
      * Tools action
