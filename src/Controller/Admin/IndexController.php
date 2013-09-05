@@ -98,10 +98,12 @@ class IndexController extends ActionController
             $setindex = true;
             $settop = true;
         }
-
-        $sitemap = new Generat($file, $module, $table, $setindex, $settop);
-        $sitemap->file();
-
+        // Generat sitemap
+        $generat = new Generat($file, $module, $table, $setindex, $settop);
+        $sitemap = $this->view()->navigation($generat->content())->sitemap();
+        $sitemap = $sitemap->setFormatOutput(true)->render();
+        $generat->write($sitemap);
+        // Set view
         $this->view()->setTemplate(false);
         $this->jump(array('action' => 'index'), __('working ... '));
     }  
