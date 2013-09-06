@@ -48,7 +48,7 @@ return array(
             'description' => _t('Set empty for add sitemaps on website root, or add pach like : upload/sitemap'),
             'edit' => 'text',
             'filter' => 'string',
-            'value' => ''
+            'value' => 'upload/sitemap'
         ),
     ),
 );

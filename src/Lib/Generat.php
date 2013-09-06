@@ -66,13 +66,14 @@ class Generat
     {
         // Set path
         if (empty($this->path)) {
-            $sitemap = Pi::path($this->name);
+            $sitemap = $sitemaps = Pi::path($this->name);
         } else {
-            $sitemap = Pi::path(sprintf('%s/%s', $this->path, $this->name));
+            $sitemap = $sitemaps[] = Pi::path(sprintf('%s/%s', $this->path, $this->name));
+            $sitemaps[] = Pi::path($this->name);
         }
         // Remove old file
-        if (Pi::service('file')->exists($sitemap)) {
-            Pi::service('file')->remove($sitemap);
+        if (Pi::service('file')->exists($sitemaps)) {
+            Pi::service('file')->remove($sitemaps);
         }
         // write to file
         $file = fopen($sitemap, "x+");

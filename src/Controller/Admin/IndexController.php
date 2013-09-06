@@ -39,12 +39,15 @@ class IndexController extends ActionController
                 $file = $history[$row->id]['file'];
             } else {
                 $file = sprintf('%s/%s', $history[$row->id]['path'], $history[$row->id]['file']);
+                $fileRoot = $history[$row->id]['file'];
             }
             // Set array
             $history[$row->id]['file_create'] = _date($history[$row->id]['create']);
-            $history[$row->id]['url'] = Pi::url($file);
-            $history[$row->id]['path'] = Pi::path($file);
-            $history[$row->id]['exists'] = (Pi::service('file')->exists($history[$row->id]['path'])) ? 1 : 0;
+            $history[$row->id]['file_url'] = Pi::url($file);
+            $history[$row->id]['file_path'] = Pi::path($file);
+            $history[$row->id]['file_root_url'] = (isset($fileRoot)) ?  Pi::url($fileRoot) : '';
+            $history[$row->id]['exists'] = (Pi::service('file')->exists($file)) ? 1 : 0;
+            $history[$row->id]['exists_root'] = (Pi::service('file')->exists($fileRoot)) ? 1 : 0;
             $history[$row->id]['update'] = ($history[$row->id]['create'] > (intval(time() - 86400))) ? 1 : 0;
             // Set generat link
             $generat = array();
@@ -60,8 +63,8 @@ class IndexController extends ActionController
         if (empty($history)) {
             $history[0]['file'] = 'sitemap.xml';
             $history[0]['file_create'] = _date(time());
-            $history[0]['url'] = Pi::url('sitemap.xml');
-            $history[0]['path'] = Pi::path('sitemap.xml');
+            $history[0]['file_url'] = Pi::url('sitemap.xml');
+            $history[0]['file_path'] = Pi::path('sitemap.xml');
             $history[0]['exists'] = 0;
             $history[0]['update'] = 0;
             $history[0]['generat'] = $this->url('', array('action' => 'generat', 'select-file' => 'sitemap.xml'));
@@ -124,19 +127,40 @@ class IndexController extends ActionController
             // Set file path
             $path = trim($this->config('sitemap_location'), '/');
             if (empty($path)) {
-                $file = Pi::path($file);
+                $files = Pi::path($file);
             } else {
-                $file = Pi::path(sprintf('%s/%s', $path, $file));
+                $files[] = Pi::path(sprintf('%s/%s', $path, $file));
+                $files[] = Pi::path($file);
             }    
             // remove file
-            if (Pi::service('file')->exists($file)) {
-                Pi::service('file')->remove($file);
+            if (Pi::service('file')->exists($files)) {
+                Pi::service('file')->remove($files);
             }
             $this->jump(array('action' => 'index'), __('Selected file delete')); 
         } else {
             $this->jump(array('action' => 'index'), __('Please selete file')); 
         }
-    }  
+    } 
+
+    public function copyfileAction()
+    {
+        $this->view()->setTemplate(false);
+        $file = $this->params('file');
+        if ($file) {
+            // Set file path
+            $path = trim($this->config('sitemap_location'), '/');
+            if (!empty($path)) {
+                $originFile = Pi::path(sprintf('%s/%s', $path, $file));
+                $targetFile = Pi::path($file);
+                Pi::service('file')->copy($originFile, $targetFile, true);
+                $this->jump(array('action' => 'index'), __('Selected file copy to root'));
+            } else {
+                $this->jump(array('action' => 'index'), __('Your origin file path is website root')); 
+            }
+        } else {
+            $this->jump(array('action' => 'index'), __('Please selete file')); 
+        }
+    } 
 
     /**
      * Tools action
