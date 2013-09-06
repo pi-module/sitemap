@@ -19,26 +19,42 @@ use Module\Sitemap\Lib\Generat;
 * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
 *
 * Pi::service('api')->sitemap(array('Sitemap', 'add'), $module, $table, $link);
+* Pi::service('api')->sitemap(array('Sitemap', 'remove'), $link);
 * Pi::service('api')->sitemap(array('Sitemap', 'item'), $module, $table, $plus);
-* Pi::service('api')->sitemap(array('Sitemap', 'generat'), $name, $module, $table, $setindex, $settop, $setlist);
 *
 * Pi::api('sitemap', 'sitemap')->add($module, $table, $link);
+* Pi::api('sitemap', 'sitemap')->remove($link);
 * Pi::api('sitemap', 'sitemap')->item($module, $table, $plus);
-* Pi::api('sitemap', 'sitemap')->generat($name, $module, $table, $setindex, $settop, $setlist);
 * 
+* // Use it for add new link on sitemap module when you submit new item / category / topic ...
 * if (Pi::service('module')->isActive('sitemap')) {
-* 	$link = array();
-* 	$link['loc'] = Pi::url('YOUR ROTE URL');
-* 	$link['lastmod'] = date("Y-m-d H:i:s"); // Or set empty
-* 	$link['changefreq'] = 'daily'; // Or set empty
-* 	$link['priority'] = 1; // Or set empty
-* 	Pi::api('sitemap', 'sitemap')->add($module, $table, $link);
-* }	
+*   $link = array();
+*   $link['loc'] = Pi::url('YOUR ROTE URL');
+*   $link['lastmod'] = date("Y-m-d H:i:s"); // Or set empty
+*   $link['changefreq'] = 'daily'; // Or set empty
+*   $link['priority'] = 1; // Or set empty
+*   Pi::api('sitemap', 'sitemap')->add($module, $table, $link);
+* } 
+*
+* // Use it for remove items
+* if (Pi::service('module')->isActive('sitemap')) {
+*   $link = array();
+*   $link = Pi::url('YOUR ROTE URL');
+*   Pi::api('sitemap', 'sitemap')->remove($link);
+* } 
 * 
 */
 class Sitemap extends AbstractApi
 { 
-	public function add($module, $table, $link)
+	/**
+    * Add new link to url_list table
+    * 
+    * @param  string $module
+    * @param  string $table
+    * @param  array  $link
+    * @return true / false
+    */
+    public function add($module, $table, $link)
     {
     	// Set
     	$values = array();
@@ -53,11 +69,40 @@ class Sitemap extends AbstractApi
     	// Save
     	$row = Pi::model('url_list', $this->getModule())->createRow();
         $row->assign($values);
-        $row->save();
-        // Update item table
-        $this->item($module, $table);
+        if ($row->save()) {
+            // Update item table
+            $this->item($module, $table);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+    * Remove link from url_list table
+    * 
+    * @param  string $module
+    * @param  string $table
+    * @param  string $loc
+    * @return true / false
+    */
+    public function remove($module, $table, $loc)
+    {
+        $row = Pi::model('url_list', $this->getModule())->find($loc, 'loc');
+        if ($row->delete()) {
+            // Update item table
+            $this->item($module, $table, false);
+            return true;
+        }  
+        return false;  
     }	
 
+    /**
+    * Update count of links of each module on item table
+    *
+    * @param  string $module
+    * @param  string $table
+    * @param  true / false
+    */
     public function item($module, $table, $plus = true)
     {
         // Select row
@@ -77,11 +122,5 @@ class Sitemap extends AbstractApi
             $row->assign($values);
             $row->save();
         }
-    }
-
-    public function generat($name = 'sitemap.xml', $module = '', $table = '', $setindex = true, $settop = true, $setlist = true)
-    {
-        $sitemap = new Generat($name, $module, $table, $setindex, $settop, $setlist);
-        $sitemap->file();
     }
 }

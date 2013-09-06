@@ -17,13 +17,9 @@ use Module\Sitemap\Lib\Generat;
  */
 class Content extends Generat
 {
-    protected $content = array();
-
-    public function __construct($content = '')
+    public function __construct()
     {
-        if (!empty($content) && is_array($content)) {
-            $this->content = $content;
-        } 
+        $this->config();
     }
 
     public function make()
@@ -40,6 +36,10 @@ class Content extends Generat
         if ($this->setlist) {
             $this->content = $this->listurl($this->content);
         }
+        // Set limit
+        if ($this->limit) {
+            $this->content = array_slice($this->content, 0, intval($this->limit - 1)); 
+        }    
         // Return content array
         return $this->content;
     }
@@ -81,8 +81,13 @@ class Content extends Generat
             $where['module'] = $this->module;
             $where['table'] = $this->table;
         }
-        // Make list
-        $select = Pi::model('url_list', 'sitemap')->select()->where($where)->order($order);
+        // Make list by check limit
+        if ($this->limit) {
+            $limit = intval($this->limit - count($content)); 
+            $select = Pi::model('url_list', 'sitemap')->select()->where($where)->order($order)->limit($limit);
+        } else {
+            $select = Pi::model('url_list', 'sitemap')->select()->where($where)->order($order);
+        }
         $rowset = Pi::model('url_list', 'sitemap')->selectWith($select);
         foreach ($rowset as $row) {
             $url_top[$row->id] = $row->toArray();

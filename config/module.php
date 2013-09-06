@@ -55,6 +55,8 @@ return array(
         'resource' => array(
             // Database meta
             'database' => 'database.php',
+            // Module configs
+            'config' => 'config.php',
             // Navigation definition
             'navigation'    => 'navigation.php'
         )

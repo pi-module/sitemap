@@ -9,6 +9,7 @@ CREATE TABLE `{url_list}` (
   `table` varchar(64) NOT NULL,
   `status` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `loc` (`loc`),
   KEY `status` (`status`),
   KEY `create` (`create`),
   KEY `module` (`module`),
@@ -26,6 +27,7 @@ CREATE TABLE `{url_top}` (
   `create` int(10) unsigned NOT NULL,
   `order` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `loc` (`loc`),
   KEY `create` (`create`),
   KEY `create_id` (`id`, `create`),
   KEY `order_id` (`id`, `order`)
@@ -45,6 +47,7 @@ CREATE TABLE `{item}` (
 CREATE TABLE `{history}` ( 
   `id` int(10) unsigned NOT NULL auto_increment,
   `file` varchar(64) NOT NULL,
+  `path` varchar(64) NOT NULL,
   `module` varchar(64) NOT NULL,
   `table` varchar(64) NOT NULL,
   `create` int(10) unsigned NOT NULL,

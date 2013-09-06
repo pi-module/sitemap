@@ -12,7 +12,6 @@ namespace Module\Sitemap\Lib;
 use Pi;
 use Module\Sitemap\Lib\Content;
 
-
 /**
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
@@ -24,6 +23,8 @@ class Generat
     protected $setlist = true;
     protected $module = '';
     protected $table = '';
+    protected $path = '';
+    protected $limit = '';
 
     public function __construct($name = 'sitemap.xml', $module = '', $table = '', $setindex = true, $settop = true, $setlist = true)
     {
@@ -33,8 +34,21 @@ class Generat
         $this->setlist = $setlist;
         $this->module = $module;
         $this->table = $table;
+
+        $this->config();
     }
     
+    public function config()
+    {
+        $config = Pi::service('registry')->config->read('sitemap', 'sitemap');
+        // Set path
+        $this->path = trim($config['sitemap_location'], '/');
+        if (!empty($this->path)) {
+            Pi::service('file')->mkdir($this->path);
+        }
+        // Set limit
+        $this->limit = intval($config['sitemap_limit']);
+    }
 
     public function content()
     {
@@ -48,19 +62,21 @@ class Generat
         return $content;
     }	
 
-    public function write($content)
+    public function write($xml)
     {
-        $sitemap = Pi::path($this->name);
+        // Set path
+        if (empty($this->path)) {
+            $sitemap = Pi::path($this->name);
+        } else {
+            $sitemap = Pi::path(sprintf('%s/%s', $this->path, $this->name));
+        }
         // Remove old file
-        if (file_exists($sitemap)) {
-            if (!@unlink($sitemap)) {
-                $message = sprintf(__('Unable to remove %s , please remove file manual and generat again'), $sitemap);
-                throw new \Exception($message);
-            }
+        if (Pi::service('file')->exists($sitemap)) {
+            Pi::service('file')->remove($sitemap);
         }
         // write to file
         $file = fopen($sitemap, "x+");
-        fwrite($file, $content);
+        fwrite($file, $xml);
         fclose($file);
         // Save history
         $this->history();
@@ -72,11 +88,13 @@ class Generat
         if ($row) {
             $row->module = $this->module;
             $row->table = $this->table;
+            $row->path = $this->path;
             $row->create = time();
             $row->save();
         } else {
             $values = array();
             $values['file'] = $this->name;
+            $values['path'] = $this->path;
             $values['module'] = $this->module;
             $values['table'] = $this->table;
             $values['create'] = time();

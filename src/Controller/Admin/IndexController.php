@@ -34,11 +34,19 @@ class IndexController extends ActionController
         // Make list
         foreach ($rowset as $row) {
             $history[$row->id] = $row->toArray();
+            // Check last sitemap file path
+            if (empty($history[$row->id]['path'])) {
+                $file = $history[$row->id]['file'];
+            } else {
+                $file = sprintf('%s/%s', $history[$row->id]['path'], $history[$row->id]['file']);
+            }
+            // Set array
             $history[$row->id]['file_create'] = _date($history[$row->id]['create']);
-            $history[$row->id]['url'] = Pi::url($history[$row->id]['file']);
-            $history[$row->id]['path'] = Pi::path($history[$row->id]['file']);
-            $history[$row->id]['exists'] = (file_exists($history[$row->id]['path'])) ? 1 : 0;
+            $history[$row->id]['url'] = Pi::url($file);
+            $history[$row->id]['path'] = Pi::path($file);
+            $history[$row->id]['exists'] = (Pi::service('file')->exists($history[$row->id]['path'])) ? 1 : 0;
             $history[$row->id]['update'] = ($history[$row->id]['create'] > (intval(time() - 86400))) ? 1 : 0;
+            // Set generat link
             $generat = array();
             $generat['action'] = 'generat';
             $generat['select-file'] = $history[$row->id]['file'];
@@ -72,7 +80,7 @@ class IndexController extends ActionController
                 'select-module' => $item[$row->id]['module'], 
                 'select-table' => $item[$row->id]['table'])
             );
-            $exists = (file_exists(Pi::path($item[$row->id]['file']))) ? 1 : 0;
+            $exists = (Pi::service('file')->exists(Pi::path($item[$row->id]['file']))) ? 1 : 0;
             // unset exists files
             if ($exists) {
                 unset($item[$row->id]);
@@ -113,12 +121,16 @@ class IndexController extends ActionController
         $this->view()->setTemplate(false);
         $file = $this->params('file');
         if ($file) {
-            $file = Pi::path($file);
-            if (file_exists($file)) {
-                if (!@unlink($file)) {
-                    $message = sprintf(__('Unable to remove %s , please remove file manual and generat again'), $file);
-                    throw new \Exception($message);
-               } 
+            // Set file path
+            $path = trim($this->config('sitemap_location'), '/');
+            if (empty($path)) {
+                $file = Pi::path($file);
+            } else {
+                $file = Pi::path(sprintf('%s/%s', $path, $file));
+            }    
+            // remove file
+            if (Pi::service('file')->exists($file)) {
+                Pi::service('file')->remove($file);
             }
             $this->jump(array('action' => 'index'), __('Selected file delete')); 
         } else {
@@ -142,6 +154,7 @@ class IndexController extends ActionController
     {
         // Get info
         $module = $this->params('module');
+        $page = $this->params('p', 1);
         // Get info
         $select = $this->getModel('url_top')->select()->order(array('id DESC', 'create DESC'));
         $rowset = $this->getModel('url_top')->selectWith($select);
@@ -154,9 +167,25 @@ class IndexController extends ActionController
         if (empty($link)) {
             return $this->redirect()->toRoute('', array('action' => 'topupdate'));
         }
+        // Set paginator
+        $paginator = \Pi\Paginator\Paginator::factory($link);
+        $paginator->setItemCountPerPage($this->config('admin_perpage'));
+        $paginator->setCurrentPageNumber($page);
+        $paginator->setUrlOptions(array(
+            // Use router to build URL for each page
+            'pageParam' => 'p',
+            'totalParam' => 't',
+            'router' => $this->getEvent()->getRouter(),
+            'route' => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
+            'params' => array(
+                'module' => $this->getModule(),
+                'controller' => 'index',
+                'action' => 'top',
+            ),
+        ));
         // Set view
         $this->view()->setTemplate('index_top');
-        $this->view()->assign('links', $link);
+        $this->view()->assign('links', $paginator);
     }
 
     /**
@@ -267,6 +296,7 @@ class IndexController extends ActionController
     {
         // Get info
         $module = $this->params('module');
+        $page = $this->params('p', 1);
         // Get info
         $select = $this->getModel('url_list')->select()->order(array('id DESC', 'create DESC'));
         $rowset = $this->getModel('url_list')->selectWith($select);
@@ -279,9 +309,25 @@ class IndexController extends ActionController
         if (empty($link)) {
             return $this->redirect()->toRoute('', array('action' => 'index'));
         }
+        // Set paginator
+        $paginator = \Pi\Paginator\Paginator::factory($link);
+        $paginator->setItemCountPerPage($this->config('admin_perpage'));
+        $paginator->setCurrentPageNumber($page);
+        $paginator->setUrlOptions(array(
+            // Use router to build URL for each page
+            'pageParam' => 'p',
+            'totalParam' => 't',
+            'router' => $this->getEvent()->getRouter(),
+            'route' => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
+            'params' => array(
+                'module' => $this->getModule(),
+                'controller' => 'index',
+                'action' => 'list',
+            ),
+        ));
         // Set view
         $this->view()->setTemplate('index_list');
-        $this->view()->assign('links', $link);
+        $this->view()->assign('links', $paginator);
     }
 
     /**
