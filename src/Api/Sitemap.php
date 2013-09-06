@@ -38,9 +38,8 @@ use Module\Sitemap\Lib\Generat;
 *
 * // Use it for remove items
 * if (Pi::service('module')->isActive('sitemap')) {
-*   $link = array();
-*   $link = Pi::url('YOUR ROTE URL');
-*   Pi::api('sitemap', 'sitemap')->remove($link);
+*   $loc = Pi::url('YOUR ROTE URL');
+*   Pi::api('sitemap', 'sitemap')->remove($module, $table, $loc);
 * } 
 * 
 */
