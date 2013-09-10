@@ -1,61 +1,74 @@
- <?php $this->css($this->assetModule('css/admin.css')); ?>
+<?php $this->css($this->assetModule('css/admin.css')); ?>
 <div class="sitemap">
 	<h3><?php _e('List of sitemaps'); ?></h3>
-	<?php foreach($historys as $history) { ?>
-        <?php if ($history['exists']) { ?>
-            <?php if ($history['update']) { ?>
-            <div class="alert alert-success">
-            	<h5><?php _e('Congratulations !'); ?></h5>
-            	<p><?php echo sprintf('Your website <strong>%s</strong> is uptodated on %s. But you can use <strong>ReUpdate</strong> button for update it again', $history['file'], $history['file_create']); ?></p>
-                <p><?php echo sprintf('Your XML sitemap location is <strong>%s</strong>', $history['file_path']); ?></p>
-                <p><?php echo sprintf('Your XML sitemap URL is <strong>%s</strong>', $history['file_url']); ?></p>
-                <div class="clearfix">
-                    <div class="pull-left">
-                        <a class="btn btn-success" title="<?php _e('ReUpdate'); ?>" href="<?php echo $this->escape($history['generat']); ?>"><i class="icon-refresh"></i> <?php _e('ReUpdate'); ?></a>
-                        <?php if (!$history['exists_root']) { ?>
-                        <a class="btn btn-primary" title="<?php _e('Copy to root'); ?>" href="<?php echo $this->url('', array('action' => 'copyfile', 'file' => $this->escape($history['file']))); ?>"><i class="icon-copy"></i> <?php _e('Copy to root'); ?></a>
-                        <?php } elseif ($history['file_root_url']) { ?>
-                        <a class="btn" title="<?php echo $this->escape($history['file']); ?>" href="<?php echo $this->escape($history['file_root_url']); ?>"><i class="icon-eye-open"></i> <?php _e('Copy XML file'); ?></a>
-                        <?php } ?>
-                        <a class="btn" title="<?php echo $this->escape($history['file']); ?>" href="<?php echo $this->escape($history['file_url']); ?>"><i class="icon-eye-open"></i> <?php echo $this->escape($history['file']); ?></a>
-                    </div>
-                    <div class="pull-right">
-                        <a class="btn btn-danger" title="<?php _e('Delete file'); ?>" href="<?php echo $this->url('', array('action' => 'deletefile', 'file' => $this->escape($history['file']))); ?>"><i class="icon-trash"></i> <?php _e('Delete file'); ?></a>
-                    </div> 
-                </div>   
+    <?php foreach($historys as $history) { ?>
+        <?php 
+        // Setting
+        if ($history['exists']) {
+            if ($history['update']) {
+                if ($history['exists_root']) {
+                    $class = 'alert-success';
+                    $title = __('Congratulations !');
+                    $description = sprintf('Your website <strong>%s</strong> is uptodated on %s. And you can use <strong>Update</strong> button for update it again', $history['file'], $history['file_create']);
+                    $viewUrl = $this->escape($history['file_root_url']);
+                    $xmlRootLocation = sprintf('Your root copy XML sitemap location is <strong>%s</strong>', $history['file_root_path']);
+                    $xmlRootUrl = sprintf('Your root copy XML sitemap URL is <strong>%s</strong>', $history['file_root_url']);
+                } else {
+                    $class = '';
+                    $title = __('Warning !');
+                    $description = sprintf('Your website <strong>%s</strong> is uptodated on %s. But you dont move your XML file to website root. Please use <strong>Copy to root</strong> button or copy it manuale. And you can use <strong>Update</strong> button for update it again', $history['file'], $history['file_create']);
+                    $copyUrl = $this->url('', array('action' => 'copyfile', 'file' => $this->escape($history['file'])));
+                }
+            } else {
+                $class = '';
+                $title = __('Warning !');
+                $description = sprintf('Your website have <strong>%s</strong> and it uptodated on %s, But you should update your sitemap every day. Please use <strong>Update</strong> button for update it', $history['file'], $history['file_create']);
+            }
+            $xmlLocation = sprintf('Your main XML sitemap location is <strong>%s</strong>', $history['file_path']);
+            $xmlUrl = sprintf('Your main XML sitemap URL is <strong>%s</strong>', $history['file_url']);
+            $deleteUrl = $this->url('', array('action' => 'deletefile', 'file' => $this->escape($history['file'])));
+            $updateUrl = $this->escape($history['generat']);
+            $fileUrl = $this->escape($history['file_url']);
+        } else {
+            $class = 'alert-error';
+            $title = __('Error !');
+            $description = sprintf('Your website does not have a <strong> %s </strong> - this can be problematic. A sitemap lists URLs that are available for crawling and can include additional information like your sites latest updates, frequency of changes and importance of the URLs. This allows search engines to crawl the site more intelligently. Please use <strong>Generat</strong> button for update it', $this->escape($history['file']));
+            $generatUrl = $this->escape($history['generat']);
+        }  
+        ?>
+        <div class="alert <?php echo $class; ?>">
+            <h5><?php echo $title; ?></h5>
+            <p><?php echo $description; ?></p>
+            <?php if (isset($xmlLocation)) { ?><p><?php echo $xmlLocation; ?></p><?php } ?>
+            <?php if (isset($xmlUrl)) { ?><p><?php echo $xmlUrl; ?></p><?php } ?>
+            <?php if (isset($xmlRootLocation)) { ?><p><?php echo $xmlRootLocation; ?></p><?php } ?>
+            <?php if (isset($xmlRootUrl)) { ?><p><?php echo $xmlRootUrl; ?></p><?php } ?>
+            <div class="clearfix">
+                <div class="pull-left">
+                    <?php if (isset($updateUrl)) { ?>
+                    <a class="btn btn-success" title="<?php _e('Update'); ?>" href="<?php echo $updateUrl; ?>"><i class="icon-refresh"></i> <?php _e('Update'); ?></a>
+                    <?php } ?>
+                    <?php if (isset($fileUrl)) { ?>
+                    <a class="btn" title="<?php echo $this->escape($history['file']); ?>" href="<?php echo $fileUrl; ?>"><i class="icon-eye-open"></i> <?php _e('View main XML file'); ?></a>
+                    <?php } ?>
+                    <?php if (isset($viewUrl)) { ?>
+                    <a class="btn" title="<?php echo $this->escape($history['file']); ?>" href="<?php echo $viewUrl ?>"><i class="icon-eye-open"></i> <?php _e('View root copy XML file'); ?></a>
+                    <?php } ?>
+                    <?php if (isset($copyUrl)) { ?>
+                    <a class="btn btn-primary" title="<?php _e('Copy to root'); ?>" href="<?php echo $copyUrl; ?>"><i class="icon-copy"></i> <?php _e('Copy to root'); ?></a>
+                    <?php } ?>
+                </div>
+                <div class="pull-right">
+                    <?php if (isset($deleteUrl)) { ?>
+                    <a class="btn btn-danger" title="<?php _e('Delete file'); ?>" href="<?php echo $deleteUrl; ?>"><i class="icon-trash"></i> <?php _e('Delete file'); ?></a>
+                    <?php } ?>
+                    <?php if (isset($generatUrl)) { ?>
+                    <a class="btn btn-danger" title="<?php _e('Generat'); ?>" href="<?php echo $generatUrl; ?>"><i class="icon-edit"></i> <?php _e('Generat'); ?></a>
+                    <?php } ?>
+                </div>
             </div>
-            <?php } else { ?>
-            <div class="alert">
-            	<h5><?php _e('Warning !'); ?></h5>
-            	<p><?php echo sprintf('Your website have <strong>%s</strong> and it uptodated on %s, But you should update your sitemap every day. Please use <strong>Update</strong> button for update it', $history['file'], $history['file_create']); ?></p>
-                <p><?php echo sprintf('Your XML sitemap location is <strong>%s</strong>', $history['file_path']); ?></p>
-                <p><?php echo sprintf('Your XML sitemap URL is <strong>%s</strong>', $history['file_url']); ?></p>
-                <div class="clearfix">
-                    <div class="pull-left">
-            		    <a class="btn btn-warning" title="<?php _e('Update'); ?>" href="<?php echo $this->escape($history['generat']); ?>"><i class="icon-refresh"></i> <?php _e('Update'); ?></a>
-                        <?php if (!$history['exists_root']) { ?>
-                        <a class="btn btn-primary" title="<?php _e('Copy to root'); ?>" href="<?php echo $this->url('', array('action' => 'copyfile', 'file' => $this->escape($history['file']))); ?>"><i class="icon-copy"></i> <?php _e('Copy to root'); ?></a>
-                        <?php } elseif ($history['file_root_url']) { ?>
-                        <a class="btn" title="<?php echo $this->escape($history['file']); ?>" href="<?php echo $this->escape($history['file_root_url']); ?>"><i class="icon-eye-open"></i> <?php _e('Copy XML file'); ?></a> 
-                        <?php } ?>
-            		    <a class="btn" title="<?php echo $this->escape($history['file']); ?>" href="<?php echo $this->escape($history['file_url']); ?>"><i class="icon-eye-open"></i> <?php echo $this->escape($history['file']); ?></a>
-            	    </div>
-                    <div class="btn-group pull-right">
-                        <a class="btn btn-danger" title="<?php _e('Delete file'); ?>" href="<?php echo $this->url('', array('action' => 'deletefile', 'file' => $this->escape($history['file']))); ?>"><i class="icon-trash"></i> <?php _e('Delete file'); ?></a>
-                    </div>    
-                </div> 
-            </div>			
-            <?php } ?>
-        <?php } else { ?>
-            <div class="alert alert-error">
-            	<h5><?php _e('Error !'); ?></h5>
-            	<p><?php echo sprintf('Your website does not have a <strong> %s </strong> - this can be problematic. A sitemap lists URLs that are available for crawling and can include additional information like your sites latest updates, frequency of changes and importance of the URLs. This allows search engines to crawl the site more intelligently. Please use <strong>Generat</strong> button for update it', $this->escape($history['file'])); ?></p>
-            	<div class="btn-group">
-            		<a class="btn btn-danger" title="<?php _e('Generat'); ?>" href="<?php echo $this->escape($history['generat']); ?>"><i class="icon-edit"></i> <?php _e('Generat'); ?></a>
-            	</div>
-            </div>	
-        <?php } ?>
-	<?php } ?>
+        </div>
+    <?php } ?>
 
     <?php if (!empty($items)) { ?>
 	<h3><?php _e('List of Possible sitemaps'); ?></h3>

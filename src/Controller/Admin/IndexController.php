@@ -46,6 +46,7 @@ class IndexController extends ActionController
             $history[$row->id]['file_url'] = Pi::url($file);
             $history[$row->id]['file_path'] = Pi::path($file);
             $history[$row->id]['file_root_url'] = (isset($fileRoot)) ?  Pi::url($fileRoot) : '';
+            $history[$row->id]['file_root_path'] = (isset($fileRoot)) ?  Pi::path($fileRoot) : '';
             $history[$row->id]['exists'] = (Pi::service('file')->exists($file)) ? 1 : 0;
             $history[$row->id]['exists_root'] = (Pi::service('file')->exists($fileRoot)) ? 1 : 0;
             $history[$row->id]['update'] = ($history[$row->id]['create'] > (intval(time() - 86400))) ? 1 : 0;
@@ -127,15 +128,23 @@ class IndexController extends ActionController
             // Set file path
             $path = trim($this->config('sitemap_location'), '/');
             if (empty($path)) {
-                $files = Pi::path($file);
+                $file = Pi::path($file);
+                // remove file
+                if (Pi::service('file')->exists($file)) {
+                    Pi::service('file')->remove($file);
+                }
             } else {
-                $files[] = Pi::path(sprintf('%s/%s', $path, $file));
-                $files[] = Pi::path($file);
+                $file = Pi::path(sprintf('%s/%s', $path, $file));
+                // remove file
+                if (Pi::service('file')->exists($file)) {
+                    Pi::service('file')->remove($file);
+                }
+                // remove file
+                $file = Pi::path($file);
+                if (Pi::service('file')->exists($file)) {
+                    Pi::service('file')->remove($file);
+                }
             }    
-            // remove file
-            if (Pi::service('file')->exists($files)) {
-                Pi::service('file')->remove($files);
-            }
             $this->jump(array('action' => 'index'), __('Selected file delete')); 
         } else {
             $this->jump(array('action' => 'index'), __('Please selete file')); 
