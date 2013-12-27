@@ -3,8 +3,8 @@ sitemap
 
 Features
 ----------------------
-Sitemap module is tools than help you to build customize sitemap.xml from your website, you can add manual links and supported modules add automatically new links. You can manage your links and build new sitemap after submit new item on your website.
-default pact for xml files is `upload/sitemap/sitemap.xml` And you should copy your new sitemap to website root.
+Sitemap module is tools than help you to build customize sitemap.xml from your website, you can add manual links Or supported modules to add automatically new links. You can manage your links and build new sitemap after submit new item on your website.
+default path for xml files is `upload/sitemap/sitemap.xml` And you should copy your new sitemap to website root.
 
 * Generat sitemap.xml file manaul 
 * Generat sitemap.xml from added links ( add manual link )
