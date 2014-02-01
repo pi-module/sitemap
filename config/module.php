@@ -8,57 +8,30 @@
  */
 
 /**
- * Module meta
- *
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
 return array(
-    // Module meta
     'meta'  => array(
-        // Module title, required
         'title'         => __('Sitemap'),
-        // Description, for admin, optional
-        'description'   =>
-            __('For generate sitemap.xml.'),
-        // Version number, required
-        'version'       => '1',
-        // Distribution license, required
+        'description'   => __('For generate sitemap.xml.'),
+        'version'       => '1.0.1',
         'license'       => 'New BSD',
-        // Logo image, for admin, optional
         'logo'          => 'image/logo.png',
-        // Readme file, for admin, optional
         'readme'        => 'docs/readme.txt',
-        // Direct download link, available for wget, optional
-        //'download'      => 'http://dl.xoopsengine.org/core',
-        // Demo site link, optional
         'demo'          => 'http://pialog',
-
-        // Module is ready for clone? Default as false
-        'clonable'      => false,
+        'icon'          => 'fa fa-sitemap',
     ),
     // Author information
     'author'    => array(
-        // Author full name, required
-        'Dev'      => 'Hossein Azizabadi',
-        // Email address, optional
-        'Email'     => 'azizabadi@faragostaresh.com',
-        // Website link, optional
-        'Website'   => 'http://pialog.org',
-        'Architect' => '@voltan',
-        'Design'    => '@voltan',
-        // Credits and aknowledgement, optional
-        'Credits'   => 'Pi Engine Team; Zend Framework Team; FaraGostaresh Team.'
+        'dev'       => 'Hossein Azizabadi',
+        'email'     => 'azizabadi@faragostaresh.com',
+        'architect' => '@voltan',
+        'design'    => '@voltan'
     ),
-    // Maintenance actions
-    'maintenance'   => array(
-        // resource
-        'resource' => array(
-            // Database meta
-            'database' => 'database.php',
-            // Module configs
-            'config' => 'config.php',
-            // Navigation definition
-            'navigation'    => 'navigation.php'
-        )
-    )
+    // Resource
+    'resource' => array(
+        'database'      => 'database.php',
+        'config'        => 'config.php',
+        'navigation'    => 'navigation.php',
+    ),
 );

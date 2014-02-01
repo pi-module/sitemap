@@ -38,6 +38,8 @@ CREATE TABLE `{item}` (
   `module` varchar(64) NOT NULL,
   `table` varchar(64) NOT NULL,
   `count` int(10) unsigned NOT NULL,
+  `start` int(10) unsigned NOT NULL,
+  `end` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `module` (`module`),
   KEY `table` (`table`),
@@ -51,6 +53,8 @@ CREATE TABLE `{history}` (
   `module` varchar(64) NOT NULL,
   `table` varchar(64) NOT NULL,
   `create` int(10) unsigned NOT NULL,
+  `start` int(10) unsigned NOT NULL,
+  `end` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `file` (`file`),
   KEY `create` (`create`)

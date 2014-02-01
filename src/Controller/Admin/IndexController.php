@@ -11,6 +11,7 @@ namespace Module\Sitemap\Controller\Admin;
 
 use Pi;
 use Pi\Mvc\Controller\ActionController;
+use Pi\Paginator\Paginator;
 use Module\Sitemap\Form\TopForm;
 use Module\Sitemap\Form\TopFilter;
 use Module\Sitemap\Lib\Generat;
@@ -187,7 +188,7 @@ class IndexController extends ActionController
     {
         // Get info
         $module = $this->params('module');
-        $page = $this->params('p', 1);
+        $page = $this->params('page', 1);
         // Get info
         $select = $this->getModel('url_top')->select()->order(array('id DESC', 'create DESC'));
         $rowset = $this->getModel('url_top')->selectWith($select);
@@ -201,24 +202,25 @@ class IndexController extends ActionController
             return $this->redirect()->toRoute('', array('action' => 'topupdate'));
         }
         // Set paginator
-        $paginator = \Pi\Paginator\Paginator::factory($link);
+        $count = array('count' => new \Zend\Db\Sql\Predicate\Expression('count(*)'));
+        $select = $this->getModel('url_top')->select()->columns($count);
+        $count = $this->getModel('url_top')->selectWith($select)->current()->count;
+        $paginator = Paginator::factory(intval($count));
         $paginator->setItemCountPerPage($this->config('admin_perpage'));
         $paginator->setCurrentPageNumber($page);
         $paginator->setUrlOptions(array(
-            // Use router to build URL for each page
-            'pageParam' => 'p',
-            'totalParam' => 't',
-            'router' => $this->getEvent()->getRouter(),
-            'route' => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
-            'params' => array(
-                'module' => $this->getModule(),
-                'controller' => 'index',
-                'action' => 'top',
-            ),
+            'router'    => $this->getEvent()->getRouter(),
+            'route'     => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
+            'params'    => array_filter(array(
+                'module'        => $this->getModule(),
+                'controller'    => 'index',
+                'action'        => 'top',
+            )),
         ));
         // Set view
         $this->view()->setTemplate('index_top');
-        $this->view()->assign('links', $paginator);
+        $this->view()->assign('links', $link);
+        $this->view()->assign('paginator', $paginator);
     }
 
     /**
@@ -329,7 +331,7 @@ class IndexController extends ActionController
     {
         // Get info
         $module = $this->params('module');
-        $page = $this->params('p', 1);
+        $page = $this->params('page', 1);
         // Get info
         $select = $this->getModel('url_list')->select()->order(array('id DESC', 'create DESC'));
         $rowset = $this->getModel('url_list')->selectWith($select);
@@ -343,24 +345,25 @@ class IndexController extends ActionController
             return $this->redirect()->toRoute('', array('action' => 'index'));
         }
         // Set paginator
-        $paginator = \Pi\Paginator\Paginator::factory($link);
+        $count = array('count' => new \Zend\Db\Sql\Predicate\Expression('count(*)'));
+        $select = $this->getModel('url_top')->select()->columns($count);
+        $count = $this->getModel('url_top')->selectWith($select)->current()->count;
+        $paginator = Paginator::factory(intval($count));
         $paginator->setItemCountPerPage($this->config('admin_perpage'));
         $paginator->setCurrentPageNumber($page);
         $paginator->setUrlOptions(array(
-            // Use router to build URL for each page
-            'pageParam' => 'p',
-            'totalParam' => 't',
-            'router' => $this->getEvent()->getRouter(),
-            'route' => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
-            'params' => array(
-                'module' => $this->getModule(),
-                'controller' => 'index',
-                'action' => 'list',
-            ),
+            'router'    => $this->getEvent()->getRouter(),
+            'route'     => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
+            'params'    => array_filter(array(
+                'module'        => $this->getModule(),
+                'controller'    => 'index',
+                'action'        => 'list',
+            )),
         ));
         // Set view
         $this->view()->setTemplate('index_list');
-        $this->view()->assign('links', $paginator);
+        $this->view()->assign('links', $link);
+        $this->view()->assign('paginator', $paginator);
     }
 
     /**

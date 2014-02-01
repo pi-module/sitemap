@@ -14,13 +14,13 @@
                     $xmlRootLocation = sprintf(__('Your root copy XML sitemap location is <strong>%s</strong>'), $history['file_root_path']);
                     $xmlRootUrl = sprintf(__('Your root copy XML sitemap URL is <strong>%s</strong>'), $history['file_root_url']);
                 } else {
-                    $class = '';
+                    $class = 'alert alert-warning';
                     $title = __('Warning !');
                     $description = sprintf(__('Your website <strong>%s</strong> was updated on %s. But you dont move your XML file to website root. Please use <strong>Copy to root</strong> button or copy it manuale. And you can use <strong>Update</strong> button for update it again'), $history['file'], $history['file_create']);
                     $copyUrl = $this->url('', array('action' => 'copyfile', 'file' => $this->escape($history['file'])));
                 }
             } else {
-                $class = '';
+                $class = 'alert alert-warning';
                 $title = __('Warning !');
                 $description = sprintf(__('Your website have <strong>%s</strong> and it was updated on %s, But you should update your sitemap every day. Please use <strong>Update</strong> button for update it'), $history['file'], $history['file_create']);
             }
@@ -30,14 +30,14 @@
             $updateUrl = $this->escape($history['generat']);
             $fileUrl = $this->escape($history['file_url']);
         } else {
-            $class = 'alert-error';
+            $class = 'alert-danger';
             $title = __('Error !');
             $description = sprintf(__('Your website does not have a <strong> %s </strong> - this can be problematic. A sitemap lists URLs that are available for crawling and can include additional information like your sites latest updates, frequency of changes and importance of the URLs. This allows search engines to crawl the site more intelligently. Please use <strong>Generate</strong> button for update it'), $this->escape($history['file']));
-            $generatUrl = $this->escape($history['generat']);
+            $generatUrl = $history['generat'] ? $this->escape($history['generat']) : '';
         }  
         ?>
         <div class="alert <?php echo $class; ?>">
-            <h5><?php echo $title; ?></h5>
+            <h4><?php echo $title; ?></h4>
             <p><?php echo $description; ?></p>
             <?php if (isset($xmlLocation)) { ?><p><?php echo $xmlLocation; ?></p><?php } ?>
             <?php if (isset($xmlUrl)) { ?><p><?php echo $xmlUrl; ?></p><?php } ?>
@@ -49,10 +49,10 @@
                     <a class="btn btn-success" title="<?php _e('Update'); ?>" href="<?php echo $updateUrl; ?>"><i class="icon-refresh"></i> <?php _e('Update'); ?></a>
                     <?php } ?>
                     <?php if (isset($fileUrl)) { ?>
-                    <a class="btn" title="<?php echo $this->escape($history['file']); ?>" href="<?php echo $fileUrl; ?>"><i class="icon-eye-open"></i> <?php _e('View main XML file'); ?></a>
+                    <a class="btn btn-primary" title="<?php echo $this->escape($history['file']); ?>" href="<?php echo $fileUrl; ?>"><i class="icon-eye-open"></i> <?php _e('View main XML file'); ?></a>
                     <?php } ?>
                     <?php if (isset($viewUrl)) { ?>
-                    <a class="btn" title="<?php echo $this->escape($history['file']); ?>" href="<?php echo $viewUrl ?>"><i class="icon-eye-open"></i> <?php _e('View root copy XML file'); ?></a>
+                    <a class="btn btn-primary" title="<?php echo $this->escape($history['file']); ?>" href="<?php echo $viewUrl ?>"><i class="icon-eye-open"></i> <?php _e('View root copy XML file'); ?></a>
                     <?php } ?>
                     <?php if (isset($copyUrl)) { ?>
                     <a class="btn btn-primary" title="<?php _e('Copy to root'); ?>" href="<?php echo $copyUrl; ?>"><i class="icon-copy"></i> <?php _e('Copy to root'); ?></a>
@@ -62,7 +62,7 @@
                     <?php if (isset($deleteUrl)) { ?>
                     <a class="btn btn-danger" title="<?php _e('Delete file'); ?>" href="<?php echo $deleteUrl; ?>"><i class="icon-trash"></i> <?php _e('Delete file'); ?></a>
                     <?php } ?>
-                    <?php if (isset($generatUrl)) { ?>
+                    <?php if (isset($generatUrl) && !$deleteUrl) { ?>
                     <a class="btn btn-danger" title="<?php _e('Generat'); ?>" href="<?php echo $generatUrl; ?>"><i class="icon-edit"></i> <?php _e('Generat'); ?></a>
                     <?php } ?>
                 </div>
@@ -87,9 +87,7 @@
             <td><?php echo $this->escape($item['table']); ?></td>
             <td><?php echo $this->escape($item['count']); ?></td>
             <td>
-				<div class="btn-group">
-					<a class="btn btn-danger" title="<?php _e('Generate'); ?>" href="<?php echo $this->escape($item['generat']); ?>"><i class="icon-edit"></i> <?php _e('Generate'); ?></a>
-				</div>
+				<a class="btn btn-primary" title="<?php _e('Generate'); ?>" href="<?php echo $this->escape($item['generat']); ?>"><i class="fa fa-edit""></i> <?php _e('Generate'); ?></a>
             </td>
 		</tr>	
 		<?php } ?>

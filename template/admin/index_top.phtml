@@ -1,8 +1,8 @@
 <?php $this->css($this->assetModule('css/admin.css')); ?>
 <div class="sitemap"> 
-	<div class="btn-group">
-	   <a class="btn" title="<?php _e('Add Link'); ?>" href="<?php echo $this->url('', array('action' => 'topupdate')); ?>"><i class="icon-file"></i> <?php _e('Add Link'); ?></a>
-	</div>
+	<p>
+	   <a class="btn btn-primary" title="<?php _e('Add Link'); ?>" href="<?php echo $this->url('', array('action' => 'topupdate')); ?>"><i class="icon-file"></i> <?php _e('Add Link'); ?></a>
+	</p>
 	<h3><?php _e('List of top links'); ?></h3>
 	<table class="table table-striped table-bordered table-condensed">
 		<tr>
@@ -19,13 +19,11 @@
             <td><?php echo $this->escape($link['changefreq']); ?></td>
             <td><?php echo $this->escape($link['create']); ?></td>
             <td>
-				<div class="btn-group">
-					<a class="btn" title="<?php _e('Edit'); ?>" href="<?php echo $this->url('', array('action' => 'topupdate', 'id' => $link['id'])); ?>"><i class="icon-edit"></i> <?php _e('Edit'); ?></a>
-					<a class="btn" title="<?php _e('Delete'); ?>" href="<?php echo $this->url('', array('action' => 'topdelete', 'id' => $link['id'])); ?>"><i class="icon-trash"></i> <?php _e('Delete'); ?></a>
-				</div>
+				<a class="btn btn-primary" title="<?php _e('Edit'); ?>" href="<?php echo $this->url('', array('action' => 'topupdate', 'id' => $link['id'])); ?>"><i class="fa fa-edit"></i> <?php _e('Edit'); ?></a>
+				<a class="btn btn-danger" title="<?php _e('Delete'); ?>" href="<?php echo $this->url('', array('action' => 'topdelete', 'id' => $link['id'])); ?>"><i class="fa fa-trash-o"></i> <?php _e('Delete'); ?></a>
             </td>
 		</tr>	
 		<?php } ?>
 	</table>
-	<div class="paginator"><?php echo $this->paginationControl($links, 'Sliding', 'paginator'); ?></div>
+	<div class="paginator"><?php echo $this->paginationControl($paginator, 'Sliding', 'paginator.phtml'); ?></div>
 </div>

@@ -18,13 +18,11 @@
             <td><?php echo $this->escape($link['table']); ?></td>
             <td><?php echo $this->escape($link['create']); ?></td>
             <td>
-				<div class="btn-group">
-					<a class="btn" title="<?php _e('Add as top'); ?>" href="<?php echo $this->url('', array('action' => 'topadd', 'id' => $link['id'])); ?>"><i class="icon-edit"></i> <?php _e('Add as top'); ?></a>
-					<a class="btn" title="<?php _e('Delete'); ?>" href="<?php echo $this->url('', array('action' => 'listdelete', 'id' => $link['id'])); ?>"><i class="icon-trash"></i> <?php _e('Delete'); ?></a>
-				</div>
+				<a class="btn btn-primary" title="<?php _e('Add as top'); ?>" href="<?php echo $this->url('', array('action' => 'topadd', 'id' => $link['id'])); ?>"><i class="fa fa-edit"></i> <?php _e('Add as top'); ?></a>
+				<a class="btn btn-danger" title="<?php _e('Delete'); ?>" href="<?php echo $this->url('', array('action' => 'listdelete', 'id' => $link['id'])); ?>"><i class="fa fa-trash-o"></i> <?php _e('Delete'); ?></a>
             </td>
 		</tr>	
 		<?php } ?>
 	</table>
-	<div class="paginator"><?php echo $this->paginationControl($links, 'Sliding', 'paginator'); ?></div>
+	<div class="paginator"><?php echo $this->paginationControl($paginator, 'Sliding', 'paginator.phtml'); ?></div>
 </div>
