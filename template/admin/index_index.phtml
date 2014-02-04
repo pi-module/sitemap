@@ -1,96 +1,41 @@
 <?php $this->css($this->assetModule('css/admin.css')); ?>
 <div class="sitemap">
-	<h3><?php _e('List of sitemaps'); ?></h3>
-    <?php foreach($historys as $history) { ?>
-        <?php 
-        // Setting
-        if ($history['exists']) {
-            if ($history['update']) {
-                if ($history['exists_root']) {
-                    $class = 'alert-success';
-                    $title = __('Congratulations !');
-                    $description = sprintf(__('Your website <strong>%s</strong> was updated on %s. And you can use <strong>Update</strong> button for update it again'), $history['file'], $history['file_create']);
-                    $viewUrl = $this->escape($history['file_root_url']);
-                    $xmlRootLocation = sprintf(__('Your root copy XML sitemap location is <strong>%s</strong>'), $history['file_root_path']);
-                    $xmlRootUrl = sprintf(__('Your root copy XML sitemap URL is <strong>%s</strong>'), $history['file_root_url']);
-                } else {
-                    $class = 'alert alert-warning';
-                    $title = __('Warning !');
-                    $description = sprintf(__('Your website <strong>%s</strong> was updated on %s. But you dont move your XML file to website root. Please use <strong>Copy to root</strong> button or copy it manuale. And you can use <strong>Update</strong> button for update it again'), $history['file'], $history['file_create']);
-                    $copyUrl = $this->url('', array('action' => 'copyfile', 'file' => $this->escape($history['file'])));
-                }
-            } else {
-                $class = 'alert alert-warning';
-                $title = __('Warning !');
-                $description = sprintf(__('Your website have <strong>%s</strong> and it was updated on %s, But you should update your sitemap every day. Please use <strong>Update</strong> button for update it'), $history['file'], $history['file_create']);
-            }
-            $xmlLocation = sprintf(__('Your main XML sitemap location is <strong>%s</strong>'), $history['file_path']);
-            $xmlUrl = sprintf(__('Your main XML sitemap URL is <strong>%s</strong>'), $history['file_url']);
-            $deleteUrl = $this->url('', array('action' => 'deletefile', 'file' => $this->escape($history['file'])));
-            $updateUrl = $this->escape($history['generat']);
-            $fileUrl = $this->escape($history['file_url']);
-        } else {
-            $class = 'alert-danger';
-            $title = __('Error !');
-            $description = sprintf(__('Your website does not have a <strong> %s </strong> - this can be problematic. A sitemap lists URLs that are available for crawling and can include additional information like your sites latest updates, frequency of changes and importance of the URLs. This allows search engines to crawl the site more intelligently. Please use <strong>Generate</strong> button for update it'), $this->escape($history['file']));
-            $generatUrl = $history['generat'] ? $this->escape($history['generat']) : '';
-        }  
-        ?>
-        <div class="alert <?php echo $class; ?>">
-            <h4><?php echo $title; ?></h4>
-            <p><?php echo $description; ?></p>
-            <?php if (isset($xmlLocation)) { ?><p><?php echo $xmlLocation; ?></p><?php } ?>
-            <?php if (isset($xmlUrl)) { ?><p><?php echo $xmlUrl; ?></p><?php } ?>
-            <?php if (isset($xmlRootLocation)) { ?><p><?php echo $xmlRootLocation; ?></p><?php } ?>
-            <?php if (isset($xmlRootUrl)) { ?><p><?php echo $xmlRootUrl; ?></p><?php } ?>
-            <div class="clearfix">
-                <div class="pull-left">
-                    <?php if (isset($updateUrl)) { ?>
-                    <a class="btn btn-success" title="<?php _e('Update'); ?>" href="<?php echo $updateUrl; ?>"><i class="icon-refresh"></i> <?php _e('Update'); ?></a>
-                    <?php } ?>
-                    <?php if (isset($fileUrl)) { ?>
-                    <a class="btn btn-primary" title="<?php echo $this->escape($history['file']); ?>" href="<?php echo $fileUrl; ?>"><i class="icon-eye-open"></i> <?php _e('View main XML file'); ?></a>
-                    <?php } ?>
-                    <?php if (isset($viewUrl)) { ?>
-                    <a class="btn btn-primary" title="<?php echo $this->escape($history['file']); ?>" href="<?php echo $viewUrl ?>"><i class="icon-eye-open"></i> <?php _e('View root copy XML file'); ?></a>
-                    <?php } ?>
-                    <?php if (isset($copyUrl)) { ?>
-                    <a class="btn btn-primary" title="<?php _e('Copy to root'); ?>" href="<?php echo $copyUrl; ?>"><i class="icon-copy"></i> <?php _e('Copy to root'); ?></a>
-                    <?php } ?>
-                </div>
-                <div class="pull-right">
-                    <?php if (isset($deleteUrl)) { ?>
-                    <a class="btn btn-danger" title="<?php _e('Delete file'); ?>" href="<?php echo $deleteUrl; ?>"><i class="icon-trash"></i> <?php _e('Delete file'); ?></a>
-                    <?php } ?>
-                    <?php if (isset($generatUrl) && !$deleteUrl) { ?>
-                    <a class="btn btn-danger" title="<?php _e('Generat'); ?>" href="<?php echo $generatUrl; ?>"><i class="icon-edit"></i> <?php _e('Generat'); ?></a>
-                    <?php } ?>
-                </div>
-            </div>
-        </div>
-    <?php } ?>
-
-    <?php if (!empty($items)) { ?>
-	<h3><?php _e('List of Possible sitemaps'); ?></h3>
-	<table class="table table-striped table-bordered table-condensed">
-		<tr>
-			<th><?php _e('File'); ?></th>
-			<th><?php _e('Module'); ?></th>
-			<th><?php _e('Table'); ?></th>
-			<th><?php _e('Count'); ?></th>
-			<th><?php _e('Action'); ?></th>
-		</tr>
-		<?php foreach($items as $item) { ?>
+	<h3><?php _e('List of files'); ?></h3>
+    <table class="table table-striped table-bordered table-condensed">
         <tr>
-            <td><?php echo $this->escape($item['file']); ?></td>
-            <td><?php echo $this->escape($item['module']); ?></td>
-            <td><?php echo $this->escape($item['table']); ?></td>
-            <td><?php echo $this->escape($item['count']); ?></td>
+            <th><?php _e('ID'); ?></th>
+            <th><?php _e('File'); ?></th>
+            <th><?php _e('Create'); ?></th>
+            <th><?php _e('Update'); ?></th>
+            <th><?php _e('Start'); ?></th>
+            <th><?php _e('End'); ?></th>
+            <th><?php _e('Action'); ?></th>
+        </tr>
+        <?php foreach($generate as $file) { ?>
+        <tr>
+            <td><?php echo $this->escape($file['id']); ?></td>
+            <td><?php echo $this->escape($file['file']); ?></td>
+            <td><?php echo $this->escape($file['time_create']); ?></td>
+            <td><?php echo $this->escape($file['time_update']); ?></td>
+            <td><?php echo $this->escape($file['start']); ?></td>
+            <td><?php echo $this->escape($file['end']); ?></td>
             <td>
-				<a class="btn btn-primary" title="<?php _e('Generate'); ?>" href="<?php echo $this->escape($item['generat']); ?>"><i class="fa fa-edit""></i> <?php _e('Generate'); ?></a>
+                <?php if ($file['file_main_exists']) { ?>
+                <?php if (!$file['file_exists']) { ?>
+                <a class="btn btn-primary" title="<?php _e('Copy to root'); ?>" href="<?php echo $this->url('', array('action' => 'copyfile', 'file' => $this->escape($file['file']))); ?>"><i class="fa fa-copy"></i> <?php _e('Copy to root'); ?></a>
+                <?php } ?>
+                <a class="btn btn-success" title="<?php _e('Update'); ?>" href="<?php echo $this->escape($file['generate_link']); ?>"><i class="fa fa-refresh"></i> <?php _e('Update'); ?></a>
+                <a class="btn btn-warning" title="<?php _e('Delete file'); ?>" href="<?php echo $this->url('', array('action' => 'deletefile', 'file' => $this->escape($file['file']))); ?>"><i class="fa fa-file"></i> <?php _e('Delete file'); ?></a>
+                <?php } else { ?>
+                <a class="btn btn-success" title="<?php _e('Generate'); ?>" href="<?php echo $this->escape($file['generate_link']); ?>"><i class="fa fa-plus"></i> <?php _e('Generate'); ?></a>
+                <?php } ?>
+                <a class="btn btn-danger" title="<?php _e('Delete method'); ?>" href="<?php echo $this->url('', array('action' => 'delete', 'file' => $this->escape($file['file']))); ?>"><i class="fa fa-trash-o"></i> <?php _e('Delete method'); ?></a>
             </td>
-		</tr>	
-		<?php } ?>
-	</table>
-    <?php } ?>
-</div>	
+        </tr>   
+        <?php } ?>
+    </table>
+    <div class="well">
+        <h3><?php _e('Generate new sitemap method'); ?></h3>
+        <?php include $this->templateComponent('forms'); ?>
+    </div>
+</div>

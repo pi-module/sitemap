@@ -8,18 +8,8 @@
  */
 
 /**
- * Module meta
- *
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
 return array(
-    // SQL schema/data file
     'sqlfile' => 'sql/mysql.sql',
-    // Tables to be removed during uninstall, optional - the table list will be generated automatically upon installation
-    'schema' => array(
-        'url_list' => 'table',
-        'url_top' => 'table',
-        'item' => 'table',
-        'history' => 'table',
-    )
 );

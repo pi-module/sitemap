@@ -8,14 +8,12 @@
  */
 
 /**
- * Module meta
- *
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
 return array(
     'admin' => array(
         'generat' => array(
-            'label'         => _t('Generat'),
+            'label'         => _t('Generate'),
             'route'         => 'admin',
             'module'        => 'sitemap',
             'controller'    => 'index',
@@ -34,13 +32,6 @@ return array(
             'module'        => 'sitemap',
             'controller'    => 'index',
             'action'        => 'list',
-        ),
-        'tools' => array(
-            'label'         => _t('Tools'),
-            'route'         => 'admin',
-            'module'        => 'sitemap',
-            'controller'    => 'index',
-            'action'        => 'tools',
         ),
     ),
 );

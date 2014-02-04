@@ -7,6 +7,10 @@
  * @license         http://pialog.org/license.txt New BSD License
  */
 
+/**
+ * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
+ */
+
 namespace Module\Sitemap\Controller\Admin;
 
 use Pi;
@@ -14,15 +18,23 @@ use Pi\Mvc\Controller\ActionController;
 use Pi\Paginator\Paginator;
 use Module\Sitemap\Form\TopForm;
 use Module\Sitemap\Form\TopFilter;
-use Module\Sitemap\Lib\Generat;
+use Module\Sitemap\Form\GenerateForm;
+use Module\Sitemap\Form\GenerateFilter;
+use Module\Sitemap\Lib\Generate;
 
-/**
- * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
- */
 class IndexController extends ActionController
 {
-    protected $listColumns = array( 'id', 'loc', 'lastmod', 'changefreq', 'priority', 'create', 'module', 'table', 'status');
-    protected $topColumns = array('id', 'loc', 'lastmod', 'changefreq', 'priority', 'create', 'order');
+    protected $listColumns = array(
+        'id', 'loc', 'lastmod', 'changefreq', 'priority', 'time_create', 'module', 'table', 'item', 'status'
+    );
+
+    protected $topColumns = array(
+        'id', 'loc', 'lastmod', 'changefreq', 'priority', 'time_create', 'order'
+    );
+
+    protected $generateColumns = array(
+        'id', 'file', 'time_create', 'time_update', 'start', 'end'
+    );
 
     /**
      * Default action
@@ -30,122 +42,124 @@ class IndexController extends ActionController
     public function indexAction()
     {
         // Get info
-        $select = $this->getModel('history')->select()->order(array('id DESC', 'create DESC'));
-        $rowset = $this->getModel('history')->selectWith($select);
+        $select = $this->getModel('generate')->select()->order(array('time_update DESC'));
+        $rowset = $this->getModel('generate')->selectWith($select);
         // Make list
         foreach ($rowset as $row) {
-            $history[$row->id] = $row->toArray();
-            // Check last sitemap file path
-            if (empty($history[$row->id]['path'])) {
-                $file = $history[$row->id]['file'];
-            } else {
-                $file = sprintf('%s/%s', $history[$row->id]['path'], $history[$row->id]['file']);
-                $fileRoot = $history[$row->id]['file'];
-            }
-            // Set array
-            $history[$row->id]['file_create'] = _date($history[$row->id]['create']);
-            $history[$row->id]['file_url'] = Pi::url($file);
-            $history[$row->id]['file_path'] = Pi::path($file);
-            $history[$row->id]['file_root_url'] = (isset($fileRoot)) ?  Pi::url($fileRoot) : '';
-            $history[$row->id]['file_root_path'] = (isset($fileRoot)) ?  Pi::path($fileRoot) : '';
-            $history[$row->id]['exists'] = (Pi::service('file')->exists($file)) ? 1 : 0;
-            $history[$row->id]['exists_root'] = (Pi::service('file')->exists($fileRoot)) ? 1 : 0;
-            $history[$row->id]['update'] = ($history[$row->id]['create'] > (intval(time() - 86400))) ? 1 : 0;
-            // Set generat link
-            $generat = array();
-            $generat['action'] = 'generat';
-            $generat['select-file'] = $history[$row->id]['file'];
-            if (!empty($history[$row->id]['module']) && !empty($history[$row->id]['table'])) {
-                $generat['select-module'] = $history[$row->id]['module'];
-                $generat['select-table'] = $history[$row->id]['table'];
-            }
-            $history[$row->id]['generat'] = $this->url('', $generat);
+            $generate[$row->id] = $row->toArray();
+            $generate[$row->id]['time_create'] = _date($generate[$row->id]['time_create']);
+            $generate[$row->id]['time_update'] = ($generate[$row->id]['time_update']) ? _date($generate[$row->id]['time_update']) : __('Never');
+            $generate[$row->id]['file_url'] = Pi::url($generate[$row->id]['file']);
+            $generate[$row->id]['file_path'] = Pi::path($generate[$row->id]['file']);
+            $generate[$row->id]['file_exists'] = (Pi::service('file')->exists($generate[$row->id]['file'])) ? 1 : 0;
+            $generate[$row->id]['file_main_url'] = Pi::url(sprintf('upload/sitemap/%s', $generate[$row->id]['file']));
+            $generate[$row->id]['file_main_path'] = Pi::path(sprintf('upload/sitemap/%s', $generate[$row->id]['file']));
+            $generate[$row->id]['file_main_exists'] = (Pi::service('file')->exists(sprintf('upload/sitemap/%s', $generate[$row->id]['file']))) ? 1 : 0;
+            $generate[$row->id]['generate_link'] = $this->url('', array(
+                'module' =>  'sitemap',
+                'action' =>  'generate',
+                'file'   =>  $generate[$row->id]['file'],
+                'start'  =>  ($generate[$row->id]['start']) ? $generate[$row->id]['start'] : '',
+                'end'    =>  ($generate[$row->id]['end']) ? $generate[$row->id]['end'] : '',
+            ));
         }
-
-        if (empty($history)) {
-            $history[0]['file'] = 'sitemap.xml';
-            $history[0]['file_create'] = _date(time());
-            $history[0]['file_url'] = Pi::url('sitemap.xml');
-            $history[0]['file_path'] = Pi::path('sitemap.xml');
-            $history[0]['exists'] = 0;
-            $history[0]['update'] = 0;
-            $history[0]['generat'] = $this->url('', array('action' => 'generat', 'select-file' => 'sitemap.xml'));
+        // Set sitemap.xml if not exist
+        if (empty($generate)) {
+            $generate[0]['file'] = 'sitemap.xml';
+            $generate[0]['time_create'] = _date(time());
+            $generate[0]['file_url'] = Pi::url('sitemap.xml');
+            $generate[0]['file_path'] = Pi::path('sitemap.xml');
+            $generate[0]['file_exists'] = (Pi::service('file')->exists('sitemap.xml')) ? 1 : 0;
+            $generate[0]['file_main_url'] = Pi::url('upload/sitemap/sitemap.xml');
+            $generate[0]['file_main_path'] = Pi::path('upload/sitemap/sitemap.xml');
+            $generate[0]['file_main_exists'] = (Pi::service('file')->exists('upload/sitemap/sitemap.xml')) ? 1 : 0;
+            $generate[0]['generate_link'] = $this->url('', array(
+                'module' =>  'sitemap',
+                'action' =>  'generate',
+                'file'   =>  'sitemap.xml'
+            ));
         }
-
-        // Get info
-        $select = $this->getModel('item')->select()->order(array('id DESC', 'count DESC'));
-        $rowset = $this->getModel('item')->selectWith($select);
-        // Make list
-        foreach ($rowset as $row) {
-            $item[$row->id] = $row->toArray();
-            $item[$row->id]['file'] = sprintf('%s-%s-sitemap.xml', $item[$row->id]['module'], $item[$row->id]['table']);
-            $item[$row->id]['generat'] = $this->url('', array(
-                'action' => 'generat', 
-                'select-file' => $item[$row->id]['file'], 
-                'select-module' => $item[$row->id]['module'], 
-                'select-table' => $item[$row->id]['table'])
-            );
-            $exists = (Pi::service('file')->exists(Pi::path($item[$row->id]['file']))) ? 1 : 0;
-            // unset exists files
-            if ($exists) {
-                unset($item[$row->id]);
+        // Set Generate Form
+        $form = new GenerateForm('generate');
+        if ($this->request->isPost()) {
+            $data = $this->request->getPost();
+            $form->setInputFilter(new GenerateFilter);
+            $form->setData($data);
+            if ($form->isValid()) {
+                $values = $form->getData();
+                $url = array(
+                    'action' => 'generate',
+                    'file'   => $values['file'],
+                    'start'  => $values['start'],
+                    'end'    => $values['end'],
+                );
+                $this->jump($url, '');
             }
         }
-
         // Set view
         $this->view()->setTemplate('index_index');
-        $this->view()->assign('historys', $history);
-        $this->view()->assign('items', $item);
+        $this->view()->assign('generate', $generate);
+        $this->view()->assign('form', $form);
     }
 
-    public function generatAction()
+    public function generateAction()
     {
-        $file = $this->params('select-file', 'sitemap.xml');
-        $module = $this->params('select-module', '');
-        $table = $this->params('select-table', '');
-        // Set table where
-        if (!empty($module) && !empty($table)) {
-            $setindex = false;
-            $settop = false;
-        } else {
-            $setindex = true;
-            $settop = true;
+        $file = $this->params('file', 'sitemap.xml');
+        $start = $this->params('start');
+        $end = $this->params('end');
+        // Remove old files if exists
+        $fileRoot = Pi::path($file);
+        $fileMain = Pi::path(sprintf('upload/sitemap/%s', $file));
+        // remove fileRoot
+        if (Pi::service('file')->exists($fileRoot)) {
+            Pi::service('file')->remove($fileRoot);
+        }
+        // remove fileMain
+        if (Pi::service('file')->exists($fileMain)) {
+            Pi::service('file')->remove($fileMain);
         }
         // Generat sitemap
-        $generat = new Generat($file, $module, $table, $setindex, $settop);
-        $sitemap = $this->view()->navigation($generat->content())->sitemap();
+        $generate = new Generate($file, $start, $end);
+        $sitemap = $this->view()->navigation($generate->content())->sitemap();
         $sitemap = $sitemap->setFormatOutput(true)->render();
-        $generat->write($sitemap);
+        $generate->write($sitemap);
         // Set view
         $this->view()->setTemplate(false);
-        $this->jump(array('action' => 'index'), __('working ... '));
+        $this->jump(array('action' => 'index'), __('New XML file generated'));
     }  
+
+    public function deleteAction()
+    {
+        $this->view()->setTemplate(false);
+        $file = $this->params('file');
+        if ($file == 'sitemap.xml') {
+            $this->jump(array('action' => 'index'), __('You can not delete sitemap.xml build method')); 
+        } else {
+            $row = $this->getModel('generate')->find($file, 'file');
+            if ($row) {
+                $row->delete();
+                $this->jump(array('action' => 'index'), __('This sitemap method deleted'));
+            } else {
+                $this->jump(array('action' => 'index'), __('Please select sitemap method'));   
+            }
+        }
+    }
 
     public function deletefileAction()
     {
         $this->view()->setTemplate(false);
         $file = $this->params('file');
         if ($file) {
-            // Set file path
-            $path = trim($this->config('sitemap_location'), '/');
-            if (empty($path)) {
-                $file = Pi::path($file);
-                // remove file
-                if (Pi::service('file')->exists($file)) {
-                    Pi::service('file')->remove($file);
-                }
-            } else {
-                $file = Pi::path(sprintf('%s/%s', $path, $file));
-                // remove file
-                if (Pi::service('file')->exists($file)) {
-                    Pi::service('file')->remove($file);
-                }
-                // remove file
-                $file = Pi::path($file);
-                if (Pi::service('file')->exists($file)) {
-                    Pi::service('file')->remove($file);
-                }
-            }    
+            $fileRoot = Pi::path($file);
+            $fileMain = Pi::path(sprintf('upload/sitemap/%s', $file));
+            // remove fileRoot
+            if (Pi::service('file')->exists($fileRoot)) {
+                Pi::service('file')->remove($fileRoot);
+            }
+            // remove fileMain
+            if (Pi::service('file')->exists($fileMain)) {
+                Pi::service('file')->remove($fileMain);
+            }
             $this->jump(array('action' => 'index'), __('Selected file delete')); 
         } else {
             $this->jump(array('action' => 'index'), __('Please selete file')); 
@@ -157,12 +171,10 @@ class IndexController extends ActionController
         $this->view()->setTemplate(false);
         $file = $this->params('file');
         if ($file) {
-            // Set file path
-            $path = trim($this->config('sitemap_location'), '/');
-            if (!empty($path)) {
-                $originFile = Pi::path(sprintf('%s/%s', $path, $file));
-                $targetFile = Pi::path($file);
-                Pi::service('file')->copy($originFile, $targetFile, true);
+            $fileRoot = Pi::path($file);
+            $fileMain = Pi::path(sprintf('upload/sitemap/%s', $file));
+            if (!Pi::service('file')->exists($fileRoot)) {
+                Pi::service('file')->copy($fileMain, $fileRoot, true);
                 $this->jump(array('action' => 'index'), __('Selected file copy to root'));
             } else {
                 $this->jump(array('action' => 'index'), __('Your origin file path is website root')); 
@@ -173,15 +185,6 @@ class IndexController extends ActionController
     } 
 
     /**
-     * Tools action
-     */
-    public function toolsAction()
-    {
-        // Set view
-        $this->view()->setTemplate('index_tools');
-    }
-
-    /**
      * Top action
      */
     public function topAction()
@@ -190,12 +193,12 @@ class IndexController extends ActionController
         $module = $this->params('module');
         $page = $this->params('page', 1);
         // Get info
-        $select = $this->getModel('url_top')->select()->order(array('id DESC', 'create DESC'));
+        $select = $this->getModel('url_top')->select()->order(array('id DESC', 'time_create DESC'));
         $rowset = $this->getModel('url_top')->selectWith($select);
         // Make list
         foreach ($rowset as $row) {
             $link[$row->id] = $row->toArray();
-            $link[$row->id]['create'] = _date($link[$row->id]['create']);
+            $link[$row->id]['time_create'] = _date($link[$row->id]['time_create']);
         }
         // Go to update page if empty
         if (empty($link)) {
@@ -233,7 +236,6 @@ class IndexController extends ActionController
         $module = $this->params('module');
         // Set form
         $form = new TopForm();
-        $form->setAttribute('enctype', 'multipart/form-data');
         if ($this->request->isPost()) {
             $data = $this->request->getPost();
             $form->setInputFilter(new TopFilter());
@@ -247,7 +249,7 @@ class IndexController extends ActionController
                     }
                 }
                 // Add / update time 
-                $values['create'] = time();
+                $values['time_create'] = time();
                 // Save values
                 if (!empty($values['id'])) {
                     $row = $this->getModel('url_top')->find($values['id']);
@@ -260,23 +262,17 @@ class IndexController extends ActionController
                 $message = __('Link saved successfully.');
                 $url = array('action' => 'top');
                 $this->jump($url, $message);
-            } else {
-                $message = __('Invalid data, please check and re-submit.');
             }	
         } else {
             if ($id) {
                 $values = $this->getModel('url_top')->find($id)->toArray();
                 $form->setData($values);
-                $message = 'You can edit this link';
-            } else {
-                $message = 'You can add new link';
             }
         }
         // Set view
         $this->view()->setTemplate('index_topadd');
         $this->view()->assign('form', $form);
         $this->view()->assign('title', __('Add a link'));
-        $this->view()->assign('message', $message);	
     }
     
     /**
@@ -309,13 +305,11 @@ class IndexController extends ActionController
             $values['lastmod'] = $row_list->lastmod;
             $values['changefreq'] = $row_list->changefreq;
             $values['priority'] = $row_list->priority;
-            $values['create'] = time();
+            $values['time_create'] = time();
             // Save
             $row_top = $this->getModel('url_top')->createRow();
             $row_top->assign($values);
             $row_top->save();
-            // Delete
-            Pi::api('sitemap', 'sitemap')->item($row_list->module, $row_list->table, false);
             $row_list->delete();
             // jump
             $this->jump(array('action' => 'list'), __('This link add as top link'));
@@ -333,12 +327,12 @@ class IndexController extends ActionController
         $module = $this->params('module');
         $page = $this->params('page', 1);
         // Get info
-        $select = $this->getModel('url_list')->select()->order(array('id DESC', 'create DESC'));
+        $select = $this->getModel('url_list')->select()->order(array('id DESC', 'time_create DESC'));
         $rowset = $this->getModel('url_list')->selectWith($select);
         // Make list
         foreach ($rowset as $row) {
             $link[$row->id] = $row->toArray();
-            $link[$row->id]['create'] = _date($link[$row->id]['create']);
+            $link[$row->id]['time_create'] = _date($link[$row->id]['time_create']);
         }
         // Go to update page if empty
         if (empty($link)) {
@@ -375,7 +369,6 @@ class IndexController extends ActionController
         $id = $this->params('id');
         $row = $this->getModel('url_list')->find($id);
         if ($row) {
-            Pi::api('sitemap', 'sitemap')->item($row->module, $row->table, false);
         	$row->delete();
             $this->jump(array('action' => 'list'), __('This link deleted'));
         } else {

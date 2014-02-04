@@ -16,49 +16,37 @@ namespace Module\Sitemap\Form;
 use Pi;
 use Zend\InputFilter\InputFilter;
 
-class TopFilter extends InputFilter
+class GenerateFilter extends InputFilter
 {
     public function __construct()
     {
-        // id
+        // file
         $this->add(array(
-            'name' => 'id',
-            'required' => false,
+            'name' => 'file',
+            'required' => true,
+            'filters' => array(
+                array(
+                    'name' => 'StringTrim',
+                ),
+            ),
+            'validators'    => array(
+                new \Module\Sitemap\Validator\FileValidation,
+            ),
         ));
-        // loc
+        // start
         $this->add(array(
-            'name' => 'loc',
-            'required' => false,
+            'name' => 'start',
+            'required' => true,
             'filters' => array(
                 array(
                     'name' => 'StringTrim',
                 ),
             ),
         ));
-        // lastmod
+        // end
         $this->add(array(
-            'name' => 'lastmod',
-            'required' => false,
-            'filters' => array(
-                array(
-                    'name' => 'StringTrim',
-                ),
-            ),
-        ));
-        // changefreq
-        $this->add(array(
-            'name' => 'changefreq',
-            'required' => false,
-            'filters' => array(
-                array(
-                    'name' => 'StringTrim',
-                ),
-            ),
-        ));
-        // priority
-        $this->add(array(
-            'name' => 'priority',
-            'required' => false,
+            'name' => 'end',
+            'required' => true,
             'filters' => array(
                 array(
                     'name' => 'StringTrim',

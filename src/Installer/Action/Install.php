@@ -7,14 +7,14 @@
  * @license         http://pialog.org/license.txt New BSD License
  */
 
+/**
+ * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
+ */
+
 namespace Module\Sitemap\Installer\Action;
 use Pi;
 use Pi\Application\Installer\Action\Install as BasicInstall;
 use Zend\EventManager\Event;
-
-/**
- * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
- */ 
 
 class Install extends BasicInstall
 {
@@ -40,17 +40,13 @@ class Install extends BasicInstall
     {
     	// Set model
     	$module = $e->getParam('module');
-    	$historyModel =  Pi::model('history', $module);
-
+    	$generateModel =  Pi::model('generate', $module);
     	// Add link
-        $historyData = array(
+        $generateData = array(
             'file' => 'sitemap.xml',
-            'module' => '',
-            'table' => '',
-            'create' => time(),
+            'time_create' => time(),
         );
-        $historyModel->insert($historyData);
-
+        $generateModel->insert($generateData);
         // Result
         $result = array(
             'status' => true,

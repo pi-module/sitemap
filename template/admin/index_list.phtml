@@ -5,18 +5,20 @@
 		<tr>
 			<th><?php _e('ID'); ?></th>
 			<th><?php _e('URL'); ?></th>
-			<th><?php _e('Time'); ?></th>
-			<th><?php _e('Module'); ?></th>
-			<th><?php _e('Table'); ?></th>
 			<th><?php _e('Action'); ?></th>
 		</tr>
 		<?php foreach($links as $link) { ?>
         <tr>
 			<td><?php echo $this->escape($link['id']); ?></td>
-            <td><?php echo $this->escape($link['loc']); ?></td>
-            <td><?php echo $this->escape($link['module']); ?></td>
-            <td><?php echo $this->escape($link['table']); ?></td>
-            <td><?php echo $this->escape($link['create']); ?></td>
+            <td>
+            	<div class="text-left"><?php _e('Loc'); ?><?php echo $this->escape($link['loc']); ?></div>
+            	<div class="text-left">
+            		<span class="label label-primary"><?php _e('Time'); ?> : <?php echo $this->escape($link['time_create']); ?></span>
+            		<span class="label label-primary"><?php _e('Module'); ?> : <?php echo $this->escape($link['module']); ?></span>
+            		<span class="label label-primary"><?php _e('Table'); ?> : <?php echo $this->escape($link['table']); ?></span>
+            		<span class="label label-primary"><?php _e('Item'); ?> : <?php echo $this->escape($link['item']); ?></span>
+            	</div>
+            </td>
             <td>
 				<a class="btn btn-primary" title="<?php _e('Add as top'); ?>" href="<?php echo $this->url('', array('action' => 'topadd', 'id' => $link['id'])); ?>"><i class="fa fa-edit"></i> <?php _e('Add as top'); ?></a>
 				<a class="btn btn-danger" title="<?php _e('Delete'); ?>" href="<?php echo $this->url('', array('action' => 'listdelete', 'id' => $link['id'])); ?>"><i class="fa fa-trash-o"></i> <?php _e('Delete'); ?></a>

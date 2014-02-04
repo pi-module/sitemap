@@ -8,8 +8,6 @@
  */
 
 /**
- * Module meta
- *
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
 return array(
@@ -41,14 +39,6 @@ return array(
             'edit' => 'text',
             'filter' => 'number_int',
             'value' => 1000
-        ),
-        'sitemap_location' => array(
-            'category' => 'sitemap',
-            'title' => _t('Sitemap location'),
-            'description' => _t('Set empty for add sitemaps on website root, or add pach like : upload/sitemap'),
-            'edit' => 'text',
-            'filter' => 'string',
-            'value' => 'upload/sitemap'
         ),
     ),
 );

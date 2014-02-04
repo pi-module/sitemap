@@ -1,11 +1,15 @@
 <?php
 /**
-* Pi Engine (http://pialog.org)
-*
-* @link http://code.pialog.org for the Pi Engine source repository
-* @copyright Copyright (c) Pi Engine http://pialog.org
-* @license http://pialog.org/license.txt New BSD License
-*/
+ * Pi Engine (http://pialog.org)
+ *
+ * @link            http://code.pialog.org for the Pi Engine source repository
+ * @copyright       Copyright (c) Pi Engine http://pialog.org
+ * @license         http://pialog.org/license.txt New BSD License
+ */
+
+/**
+ * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
+ */
 
 namespace Module\Sitemap\Api;
 
@@ -14,34 +18,9 @@ use Pi\Application\AbstractApi;
 use Module\Sitemap\Lib\Generat;
 
 /**
-* Sitemap APIs
-*
-* @author Hossein Azizabadi <azizabadi@faragostaresh.com>
-*
-* Pi::service('api')->sitemap(array('Sitemap', 'add'), $module, $table, $link);
-* Pi::service('api')->sitemap(array('Sitemap', 'remove'), $link);
-* Pi::service('api')->sitemap(array('Sitemap', 'item'), $module, $table, $plus);
-*
-* Pi::api('sitemap', 'sitemap')->add($module, $table, $link);
-* Pi::api('sitemap', 'sitemap')->remove($link);
-* Pi::api('sitemap', 'sitemap')->item($module, $table, $plus);
-* 
-* // Use it for add new link on sitemap module when you submit new item / category / topic ...
-* if (Pi::service('module')->isActive('sitemap')) {
-*   $link = array();
-*   $link['loc'] = Pi::url('YOUR ROTE URL');
-*   $link['lastmod'] = date("Y-m-d H:i:s"); // Or set empty
-*   $link['changefreq'] = 'daily'; // Or set empty
-*   $link['priority'] = 1; // Or set empty
-*   Pi::api('sitemap', 'sitemap')->add($module, $table, $link);
-* } 
-*
-* // Use it for remove items
-* if (Pi::service('module')->isActive('sitemap')) {
-*   $loc = Pi::url('YOUR ROTE URL');
-*   Pi::api('sitemap', 'sitemap')->remove($module, $table, $loc);
-* } 
-* 
+* Pi::api('sitemap', 'sitemap')->add($module, $table, $item, $loc);
+* Pi::api('sitemap', 'sitemap')->update($module, $table, $item, $loc);
+* Pi::api('sitemap', 'sitemap')->remove($loc);
 */
 class Sitemap extends AbstractApi
 { 
@@ -50,76 +29,58 @@ class Sitemap extends AbstractApi
     * 
     * @param  string $module
     * @param  string $table
-    * @param  array  $link
-    * @return true / false
+    * @param  int    $item
+    * @param  string  $loc
     */
-    public function add($module, $table, $link)
+    public function add($module, $table, $item, $loc)
     {
-    	// Set
-    	$values = array();
-    	$values['loc'] = $link['loc'];
-    	$values['lastmod'] = (!empty($link['lastmod'])) ? $link['lastmod'] : date("Y-m-d H:i:s");
-    	$values['changefreq'] = (!empty($link['changefreq'])) ? $link['changefreq'] : 'daily';
-    	$values['priority'] = (!empty($link['priority'])) ? $link['priority'] : '';
-    	$values['create'] = time();
-    	$values['module'] = $module;
-    	$values['table'] = $table;
-    	$values['status'] = 1;
-    	// Save
-    	$row = Pi::model('url_list', $this->getModule())->createRow();
+        // Set
+        $values = array();
+        $values['loc'] = $loc;
+        $values['lastmod'] = date("Y-m-d H:i:s");
+        $values['changefreq'] = 'daily';
+        $values['priority'] = '';
+        $values['time_create'] = time();
+        $values['module'] = $module;
+        $values['table'] = $table;
+        $values['item'] = intval($item);
+        $values['status'] = 1;
+        // Save
+        $row = Pi::model('url_list', 'sitemap')->createRow();
         $row->assign($values);
-        if ($row->save()) {
-            // Update item table
-            $this->item($module, $table);
-            return true;
+        $row->save();
+    }
+
+    /**
+    * Update link to url_list table
+    * 
+    * @param  string $module
+    * @param  string $table
+    * @param  int    $item
+    * @param  string  $loc
+    */
+    public function update($module, $table, $item, $loc)
+    {
+        $where = array('module' => $module, 'table' => $table, 'item' => $item);
+        $select = Pi::model('url_list', 'sitemap')->select()->where($where)->limit(1);
+        $row = Pi::model('url_list', 'sitemap')->selectWith($select)->current();
+        if (!empty($row) && is_object($row)) {
+            $row->loc = $loc;
+            $row->lastmod = date("Y-m-d H:i:s");
+            $row->save();
+        } else {
+            $this->add($module, $table, $item, $loc);
         }
-        return false;
     }
 
     /**
     * Remove link from url_list table
     * 
-    * @param  string $module
-    * @param  string $table
     * @param  string $loc
-    * @return true / false
     */
-    public function remove($module, $table, $loc)
+    public function remove($loc)
     {
-        $row = Pi::model('url_list', $this->getModule())->find($loc, 'loc');
-        if ($row->delete()) {
-            // Update item table
-            $this->item($module, $table, false);
-            return true;
-        }  
-        return false;  
+        $row = Pi::model('url_list', 'sitemap')->find($loc, 'loc');
+        $row->delete();  
     }	
-
-    /**
-    * Update count of links of each module on item table
-    *
-    * @param  string $module
-    * @param  string $table
-    * @param  true / false
-    */
-    public function item($module, $table, $plus = true)
-    {
-        // Select row
-        $where = array('module' => $module, 'table' => $table);
-    	$select = Pi::model('item', $this->getModule())->select()->where($where)->limit(1);
-    	$rowset = Pi::model('item', $this->getModule())->selectWith($select);
-    	$row = $rowset->current();
-    	if ($row) {
-            $row->count = ($plus) ? $row->count + 1 : $row->count - 1;
-            $row->save();
-        } else {
-            $values = array();
-            $values['module'] = $module;
-    	    $values['table'] = $table;
-    	    $values['count'] = 1;
-            $row = Pi::model('item', $this->getModule())->createRow();
-            $row->assign($values);
-            $row->save();
-        }
-    }
 }

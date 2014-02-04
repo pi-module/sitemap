@@ -4,17 +4,20 @@ CREATE TABLE `{url_list}` (
   `lastmod` varchar(64) NOT NULL,
   `changefreq` varchar(64) NOT NULL,
   `priority` varchar(64) NOT NULL,
-  `create` int(10) unsigned NOT NULL,
+  `time_create` int(10) unsigned NOT NULL,
   `module` varchar(64) NOT NULL,
   `table` varchar(64) NOT NULL,
+  `item` int(10) unsigned NOT NULL,
   `status` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `loc` (`loc`),
+  UNIQUE KEY `loc_unique` (`module`, `table`, `item`),
   KEY `status` (`status`),
-  KEY `create` (`create`),
+  KEY `time_create` (`time_create`),
   KEY `module` (`module`),
   KEY `table` (`table`),
-  KEY `create_id` (`id`, `create`, `status`),
+  KEY `item` (`item`),
+  KEY `create_id` (`id`, `time_create`, `status`),
   KEY `module_table` (`module`, `table`)
 ); 
 
@@ -24,38 +27,23 @@ CREATE TABLE `{url_top}` (
   `lastmod` varchar(64) NOT NULL,
   `changefreq` varchar(64) NOT NULL,
   `priority` varchar(64) NOT NULL,
-  `create` int(10) unsigned NOT NULL,
+  `time_create` int(10) unsigned NOT NULL,
   `order` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `loc` (`loc`),
-  KEY `create` (`create`),
-  KEY `create_id` (`id`, `create`),
+  KEY `time_create` (`time_create`),
+  KEY `create_id` (`id`, `time_create`),
   KEY `order_id` (`id`, `order`)
 );
 
-CREATE TABLE `{item}` ( 
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `module` varchar(64) NOT NULL,
-  `table` varchar(64) NOT NULL,
-  `count` int(10) unsigned NOT NULL,
-  `start` int(10) unsigned NOT NULL,
-  `end` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `module` (`module`),
-  KEY `table` (`table`),
-  KEY `module_table` (`module`, `table`)
-);
-
-CREATE TABLE `{history}` ( 
+CREATE TABLE `{generate}` ( 
   `id` int(10) unsigned NOT NULL auto_increment,
   `file` varchar(64) NOT NULL,
-  `path` varchar(64) NOT NULL,
-  `module` varchar(64) NOT NULL,
-  `table` varchar(64) NOT NULL,
-  `create` int(10) unsigned NOT NULL,
+  `time_create` int(10) unsigned NOT NULL,
+  `time_update` int(10) unsigned NOT NULL,
   `start` int(10) unsigned NOT NULL,
   `end` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `file` (`file`),
-  KEY `create` (`create`)
+  KEY `time_create` (`time_create`)
 );
