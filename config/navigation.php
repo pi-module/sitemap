@@ -13,21 +13,21 @@
 return array(
     'admin' => array(
         'generat' => array(
-            'label'         => _t('Generate'),
+            'label'         => __('Generate'),
             'route'         => 'admin',
             'module'        => 'sitemap',
             'controller'    => 'index',
             'action'        => 'index',
         ),
         'top' => array(
-            'label'         => _t('Top links'),
+            'label'         => __('Top links'),
             'route'         => 'admin',
             'module'        => 'sitemap',
             'controller'    => 'index',
             'action'        => 'top',
         ),
         'list' => array(
-            'label'         => _t('List links'),
+            'label'         => __('List links'),
             'route'         => 'admin',
             'module'        => 'sitemap',
             'controller'    => 'index',

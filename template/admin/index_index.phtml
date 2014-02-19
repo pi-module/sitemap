@@ -30,6 +30,9 @@
                 <a class="btn btn-success" title="<?php _e('Generate'); ?>" href="<?php echo $this->escape($file['generate_link']); ?>"><i class="fa fa-plus"></i> <?php _e('Generate'); ?></a>
                 <?php } ?>
                 <a class="btn btn-danger" title="<?php _e('Delete method'); ?>" href="<?php echo $this->url('', array('action' => 'delete', 'file' => $this->escape($file['file']))); ?>"><i class="fa fa-trash-o"></i> <?php _e('Delete method'); ?></a>
+                <?php if ($file['file_exists']) { ?>
+                <a class="btn btn-primary" title="<?php _e('View'); ?>" href="<?php echo $this->escape($file['file_url']); ?>"><i class="fa fa-eye"></i> <?php _e('View'); ?></a>
+                <?php } ?>
             </td>
         </tr>   
         <?php } ?>

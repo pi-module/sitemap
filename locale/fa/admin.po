@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Pi Sitemap module\n"
-"POT-Creation-Date: 2014-02-19 11:16+0330\n"
+"POT-Creation-Date: 2014-02-19 11:15+0330\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Pi\n"
@@ -22,243 +22,243 @@ msgstr ""
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/config/navigation.php:16
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:30
 msgid "Generate"
-msgstr ""
+msgstr "تولید"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/config/navigation.php:23
 msgid "Top links"
-msgstr ""
+msgstr "پیوند های برتر"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/config/navigation.php:30
 msgid "List links"
-msgstr ""
+msgstr "فهرست پیوند ها"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/config/module.php:16
 msgid "Sitemap"
-msgstr ""
+msgstr "نقشه سایت"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/config/module.php:17
 msgid "For generate sitemap.xml."
-msgstr ""
+msgstr "برای ساخت sitemap.xml"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/TopForm.php:48
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:7
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:10
 msgid "URL"
-msgstr ""
+msgstr "پیوند"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/TopForm.php:58
 msgid "Last modification"
-msgstr ""
+msgstr "آخرین ویرایش"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/TopForm.php:70
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:11
 msgid "Change frequency"
-msgstr ""
+msgstr "تغییر فرکانس"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/TopForm.php:72
 msgid "Always"
-msgstr ""
+msgstr "همیشه"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/TopForm.php:73
 msgid "Hourly"
-msgstr ""
+msgstr "ساعتی"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/TopForm.php:74
 msgid "Daily"
-msgstr ""
+msgstr "روزانه"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/TopForm.php:75
 msgid "Weekly"
-msgstr ""
+msgstr "هفتگی"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/TopForm.php:76
 msgid "Monthly"
-msgstr ""
+msgstr "ماهیانه"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/TopForm.php:77
 msgid "Yearly"
-msgstr ""
+msgstr "سالیانه"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/TopForm.php:78
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:51
 msgid "Never"
-msgstr ""
+msgstr "هرگز"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/TopForm.php:89
 msgid "priority (optional)"
-msgstr ""
+msgstr "اولویت (انتخابی)"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/TopForm.php:100
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/GenerateForm.php:73
 msgid "Submit"
-msgstr ""
+msgstr "ارسال"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/GenerateForm.php:41
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:7
 msgid "File"
-msgstr ""
+msgstr "فایل"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/GenerateForm.php:45
 msgid "Set file name as filename.xml"
-msgstr ""
+msgstr "تنظیم نام فایل مطابق الگو filename.xml"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/GenerateForm.php:52
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:10
 msgid "Start"
-msgstr ""
+msgstr "شروع"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/GenerateForm.php:62
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:11
 msgid "End"
-msgstr ""
+msgstr "پایان"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Installer/Action/Install.php:53
 msgid "Default sitemap information added."
-msgstr ""
+msgstr "اطلاعات پیش فرض نقشه سایت اضافه شد"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:128
 msgid "New XML file generated"
-msgstr ""
+msgstr "فایل XML جدید ساخته شد"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:136
 msgid "You can not delete sitemap.xml build method"
-msgstr ""
+msgstr "شما نمی توانید الگوی ساخت sitemap.xml را حذف کنید"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:141
 msgid "This sitemap method deleted"
-msgstr ""
+msgstr "الگوی نقشه سایت حذف شد"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:143
 msgid "Please select sitemap method"
-msgstr ""
+msgstr "لطفا الگوی نقشه سایت را انتخاب کنید"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:163
 msgid "Selected file delete"
-msgstr ""
+msgstr "فایل انتخابی حذف شد"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:165
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:183
 msgid "Please selete file"
-msgstr ""
+msgstr "لطفا فایل را انتخاب کنید"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:178
 msgid "Selected file copy to root"
-msgstr ""
+msgstr "فایل انتخابی به ریشه وب سایت منتقل شد"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:180
 msgid "Your origin file path is website root"
-msgstr ""
+msgstr "مسیر اصلی فایل شما ریشه وب سایت است"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:262
 msgid "Link saved successfully."
-msgstr ""
+msgstr "پیوند با موفقیت ذخیره شد"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:275
 msgid "Add a link"
-msgstr ""
+msgstr "پیوند جدید"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:288
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:373
 msgid "This link deleted"
-msgstr ""
+msgstr "پیوند انتخابی حذف شد"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:290
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:317
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:375
 msgid "Please select link"
-msgstr ""
+msgstr "لطفا یک پیوند انتخاب کنید"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:315
 msgid "This link add as top link"
-msgstr ""
+msgstr "این پیوند به فهرست پیوند های برتر اضافه شد"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:3
 msgid "List of module links"
-msgstr ""
+msgstr "فهرست پیوند ماژول ها"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:6
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:6
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:9
 msgid "ID"
-msgstr ""
+msgstr "شناسه"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:8
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:12
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:13
 msgid "Action"
-msgstr ""
+msgstr "عملکرد"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:14
 msgid "Loc"
-msgstr ""
+msgstr "پیوند"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:16
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:12
 msgid "Time"
-msgstr ""
+msgstr "زمان"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:17
 msgid "Module"
-msgstr ""
+msgstr "ماژول"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:18
 msgid "Table"
-msgstr ""
+msgstr "جدول"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:19
 msgid "Item"
-msgstr ""
+msgstr "آیتم"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:23
 msgid "Add as top"
-msgstr ""
+msgstr "اضافه به برتر"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:24
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:23
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:3
 msgid "List of files"
-msgstr ""
+msgstr "فهرست فایل ها"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:8
 msgid "Create"
-msgstr ""
+msgstr "ایجاد"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:9
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:27
 msgid "Update"
-msgstr ""
+msgstr "به روز رسانی"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:25
 msgid "Copy to root"
-msgstr ""
+msgstr "کپی به ریشه"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:28
 msgid "Delete file"
-msgstr ""
+msgstr "حذف فایل"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:32
 msgid "Delete method"
-msgstr ""
+msgstr "حذف الگو"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:34
 msgid "View"
-msgstr ""
+msgstr "نمایش"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:41
 msgid "Generate new sitemap method"
-msgstr ""
+msgstr "ایجاد یک الگوی جدید نقشه سایت"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:4
 msgid "Add Link"
-msgstr ""
+msgstr "پیوند جدید"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:6
 msgid "List of top links"
-msgstr ""
+msgstr "فهرست پیوند های برتر"
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:22
 msgid "Edit"
-msgstr ""
+msgstr "ویرایش"
