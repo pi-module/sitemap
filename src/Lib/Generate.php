@@ -18,7 +18,7 @@ use Pi;
 class Generate
 {
     protected $name = 'sitemap.xml';
-    protected $limit = 1000;
+    protected $limit = 5000;
     protected $start = '';
     protected $end = '';
 
@@ -45,9 +45,7 @@ class Generate
     {
         $this->content = array();
         // Set index and top url
-        if ($this->name == 'sitemap.xml') {
-            echo $this->name;
-            
+        if ($this->name == 'sitemap.xml') {     
             $this->content = $this->indexUrl($this->content);
             $this->content = $this->topUrl($this->content);
         }

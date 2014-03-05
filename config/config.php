@@ -38,7 +38,7 @@ return array(
             'description' => _t('Limited link in each file'),
             'edit' => 'text',
             'filter' => 'number_int',
-            'value' => 1000
+            'value' => 5000
         ),
     ),
 );

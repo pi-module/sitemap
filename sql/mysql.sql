@@ -9,6 +9,7 @@ CREATE TABLE `{url_list}` (
   `table` varchar(64) NOT NULL,
   `item` int(10) unsigned NOT NULL,
   `status` tinyint(1) unsigned NOT NULL,
+  `type` varchar(64) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `loc` (`loc`),
   UNIQUE KEY `loc_unique` (`module`, `table`, `item`),

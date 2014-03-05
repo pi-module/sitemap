@@ -18,8 +18,8 @@ use Pi\Mvc\Controller\ActionController;
 use Pi\Paginator\Paginator;
 use Module\Sitemap\Form\TopForm;
 use Module\Sitemap\Form\TopFilter;
-use Module\Sitemap\Form\GenerateForm;
-use Module\Sitemap\Form\GenerateFilter;
+//use Module\Sitemap\Form\GenerateForm;
+//use Module\Sitemap\Form\GenerateFilter;
 use Module\Sitemap\Lib\Generate;
 
 class IndexController extends ActionController
@@ -80,7 +80,7 @@ class IndexController extends ActionController
             ));
         }
         // Set Generate Form
-        $form = new GenerateForm('generate');
+        /* $form = new GenerateForm('generate');
         if ($this->request->isPost()) {
             $data = $this->request->getPost();
             $form->setInputFilter(new GenerateFilter);
@@ -95,11 +95,11 @@ class IndexController extends ActionController
                 );
                 $this->jump($url, '');
             }
-        }
+        } */
         // Set view
         $this->view()->setTemplate('index_index');
         $this->view()->assign('generate', $generate);
-        $this->view()->assign('form', $form);
+        //$this->view()->assign('form', $form);
     }
 
     public function generateAction()
@@ -199,10 +199,6 @@ class IndexController extends ActionController
         foreach ($rowset as $row) {
             $link[$row->id] = $row->toArray();
             $link[$row->id]['time_create'] = _date($link[$row->id]['time_create']);
-        }
-        // Go to update page if empty
-        if (empty($link)) {
-            return $this->redirect()->toRoute('', array('action' => 'topupdate'));
         }
         // Set paginator
         $count = array('count' => new \Zend\Db\Sql\Predicate\Expression('count(*)'));
@@ -326,6 +322,7 @@ class IndexController extends ActionController
         // Get info
         $module = $this->params('module');
         $page = $this->params('page', 1);
+        $link = array();
         // Get info
         $select = $this->getModel('url_list')->select()->order(array('id DESC', 'time_create DESC'));
         $rowset = $this->getModel('url_list')->selectWith($select);
@@ -333,10 +330,6 @@ class IndexController extends ActionController
         foreach ($rowset as $row) {
             $link[$row->id] = $row->toArray();
             $link[$row->id]['time_create'] = _date($link[$row->id]['time_create']);
-        }
-        // Go to update page if empty
-        if (empty($link)) {
-            return $this->redirect()->toRoute('', array('action' => 'index'));
         }
         // Set paginator
         $count = array('count' => new \Zend\Db\Sql\Predicate\Expression('count(*)'));

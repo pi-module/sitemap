@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Pi Sitemap module\n"
-"POT-Creation-Date: 2014-02-19 11:16+0330\n"
+"POT-Creation-Date: 2014-03-05 12:38+0330\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Pi\n"
@@ -12,6 +12,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: _e;__\n"
 "X-Poedit-Basepath: /var/www/html/local/pi/pi-develop/usr/module/sitemap\n"
+"Language: en\n"
 "X-Poedit-SearchPath-0: /var/www/html/local/pi/pi-develop/usr/module/sitemap/"
 "config\n"
 "X-Poedit-SearchPath-1: /var/www/html/local/pi/pi-develop/usr/module/sitemap/"
@@ -41,8 +42,8 @@ msgid "For generate sitemap.xml."
 msgstr ""
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/TopForm.php:48
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:7
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:10
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:8
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:11
 msgid "URL"
 msgstr ""
 
@@ -51,7 +52,7 @@ msgid "Last modification"
 msgstr ""
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Form/TopForm.php:70
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:11
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:12
 msgid "Change frequency"
 msgstr ""
 
@@ -149,73 +150,84 @@ msgstr ""
 msgid "Your origin file path is website root"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:262
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:258
 msgid "Link saved successfully."
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:275
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:271
 msgid "Add a link"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:288
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:373
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:284
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:366
 msgid "This link deleted"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:290
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:317
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:375
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:286
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:313
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:368
 msgid "Please select link"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:315
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/src/Controller/Admin/IndexController.php:311
 msgid "This link add as top link"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:3
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:4
 msgid "List of module links"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:6
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:7
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:6
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:9
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:10
 msgid "ID"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:8
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:9
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:12
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:13
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:14
 msgid "Action"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:14
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:15
 msgid "Loc"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:16
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:12
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:17
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:13
 msgid "Time"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:17
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:18
 msgid "Module"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:18
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:19
 msgid "Table"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:19
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:20
 msgid "Item"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:23
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:24
 msgid "Add as top"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:24
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:23
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:25
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:24
 msgid "Delete"
+msgstr ""
+
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:33
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:32
+msgid "Empty list"
+msgstr ""
+
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_list.phtml:34
+msgid ""
+"Link list table is empty, when you submit new entry on modules that support "
+"sitemap, sitemap information add automatically on this part"
 msgstr ""
 
 #: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_index.phtml:3
@@ -255,10 +267,16 @@ msgstr ""
 msgid "Add Link"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:6
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:7
 msgid "List of top links"
 msgstr ""
 
-#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:22
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:23
 msgid "Edit"
+msgstr ""
+
+#: /var/www/html/local/pi/pi-develop/usr/module/sitemap/template/admin/index_top.phtml:33
+msgid ""
+"Link top table is empty, you can add your important website links on this "
+"table manually."
 msgstr ""
