@@ -13,9 +13,9 @@
 return array(
     // Module meta
     'meta'         => array(
-        'title'         => __('Sitemap'),
-        'description'   => __('For generate sitemap.xml.'),
-        'version'       => '1.1.0',
+        'title'         => _a('Sitemap'),
+        'description'   => _a('For generate sitemap.xml.'),
+        'version'       => '1.1.1',
         'license'       => 'New BSD',
         'logo'          => 'image/logo.png',
         'readme'        => 'docs/readme.txt',

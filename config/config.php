@@ -13,11 +13,11 @@
 return array(
     'category' => array(
         array(
-            'title' => _t('Admin'),
+            'title' => _a('Admin'),
             'name' => 'admin'
         ),
         array(
-            'title' => _t('Sitemap'),
+            'title' => _a('Sitemap'),
             'name' => 'sitemap'
         ),
     ),
@@ -25,7 +25,7 @@ return array(
         // Admin
         'admin_perpage' => array(
             'category' => 'admin',
-            'title' => _t('Perpage'),
+            'title' => _a('Perpage'),
             'description' => '',
             'edit' => 'text',
             'filter' => 'number_int',
@@ -34,8 +34,8 @@ return array(
         // Sitemap
         'sitemap_limit' => array(
             'category' => 'sitemap',
-            'title' => _t('Sitemap limit'),
-            'description' => _t('Limited link in each file'),
+            'title' => _a('Sitemap limit'),
+            'description' => _a('Limited link in each file'),
             'edit' => 'text',
             'filter' => 'number_int',
             'value' => 5000
