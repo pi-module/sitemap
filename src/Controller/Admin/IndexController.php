@@ -192,8 +192,12 @@ class IndexController extends ActionController
         // Get info
         $module = $this->params('module');
         $page = $this->params('page', 1);
+        // Set info
+        $order = array('id DESC', 'time_create DESC');
+        $limit = intval($this->config('admin_perpage'));
+        $offset = (int)($page - 1) * $this->config('admin_perpage');
         // Get info
-        $select = $this->getModel('url_top')->select()->order(array('id DESC', 'time_create DESC'));
+        $select = $this->getModel('url_top')->select()->order($order)->offset($offset)->limit($limit);
         $rowset = $this->getModel('url_top')->selectWith($select);
         // Make list
         foreach ($rowset as $row) {
@@ -323,8 +327,12 @@ class IndexController extends ActionController
         $module = $this->params('module');
         $page = $this->params('page', 1);
         $link = array();
+        // Set info
+        $order = array('id DESC', 'time_create DESC');
+        $limit = intval($this->config('admin_perpage'));
+        $offset = (int)($page - 1) * $this->config('admin_perpage');
         // Get info
-        $select = $this->getModel('url_list')->select()->order(array('id DESC', 'time_create DESC'));
+        $select = $this->getModel('url_list')->select()->order($order)->offset($offset)->limit($limit);
         $rowset = $this->getModel('url_list')->selectWith($select);
         // Make list
         foreach ($rowset as $row) {
@@ -333,8 +341,8 @@ class IndexController extends ActionController
         }
         // Set paginator
         $count = array('count' => new \Zend\Db\Sql\Predicate\Expression('count(*)'));
-        $select = $this->getModel('url_top')->select()->columns($count);
-        $count = $this->getModel('url_top')->selectWith($select)->current()->count;
+        $select = $this->getModel('url_list')->select()->columns($count);
+        $count = $this->getModel('url_list')->selectWith($select)->current()->count;
         $paginator = Paginator::factory(intval($count));
         $paginator->setItemCountPerPage($this->config('admin_perpage'));
         $paginator->setCurrentPageNumber($page);
