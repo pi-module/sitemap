@@ -4,13 +4,12 @@
  *
  * @link            http://code.pialog.org for the Pi Engine source repository
  * @copyright       Copyright (c) Pi Engine http://pialog.org
- * @license         http://pialog.org/license.txt New BSD License
+ * @license         http://pialog.org/license.txt BSD 3-Clause License
  */
 
 /**
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
-
 namespace Module\Sitemap\Form;
 
 use Pi;
@@ -49,6 +48,7 @@ class TopForm extends BaseForm
             ),
             'attributes' => array(
                 'type' => 'text',
+                'required'  => true,
             )
         ));
         // lastmod
@@ -60,6 +60,7 @@ class TopForm extends BaseForm
             'attributes' => array(
                 'type' => 'text',
                 'value' => date("Y-m-d H:i:s"),
+                'required'  => true,
             )
         ));
         // changefreq
@@ -80,6 +81,7 @@ class TopForm extends BaseForm
             ),
             'attributes' => array(
                 'value' => 'daily',
+                'required'  => true,
             ),
         ));
         // priority
@@ -90,6 +92,24 @@ class TopForm extends BaseForm
             ),
             'attributes' => array(
                 'type' => 'text',
+            )
+        ));
+        // status
+        $this->add(array(
+            'name' => 'status',
+            'type' => 'select',
+            'options' => array(
+                'label' => __('Status'),
+                'value_options' => array(
+                    1 => __('Published'),
+                    2 => __('Pending review'),
+                    3 => __('Edit by user'),
+                    4 => __('Draft'),
+                    5 => __('Delete'),
+                ),
+            ),
+            'attributes' => array(
+                'required'  => true,
             )
         ));
         // Save

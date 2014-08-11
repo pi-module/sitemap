@@ -4,13 +4,12 @@
  *
  * @link            http://code.pialog.org for the Pi Engine source repository
  * @copyright       Copyright (c) Pi Engine http://pialog.org
- * @license         http://pialog.org/license.txt New BSD License
+ * @license         http://pialog.org/license.txt BSD 3-Clause License
  */
 
 /**
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
-
 namespace Module\Sitemap\Controller\Admin;
 
 use Pi;
@@ -18,18 +17,12 @@ use Pi\Mvc\Controller\ActionController;
 use Pi\Paginator\Paginator;
 use Module\Sitemap\Form\TopForm;
 use Module\Sitemap\Form\TopFilter;
-//use Module\Sitemap\Form\GenerateForm;
-//use Module\Sitemap\Form\GenerateFilter;
 use Module\Sitemap\Lib\Generate;
 
 class IndexController extends ActionController
 {
     protected $listColumns = array(
-        'id', 'loc', 'lastmod', 'changefreq', 'priority', 'time_create', 'module', 'table', 'item', 'status'
-    );
-
-    protected $topColumns = array(
-        'id', 'loc', 'lastmod', 'changefreq', 'priority', 'time_create', 'order'
+        'id', 'loc', 'lastmod', 'changefreq', 'priority', 'time_create', 'module', 'table', 'item', 'status', 'top'
     );
 
     protected $generateColumns = array(
@@ -79,27 +72,9 @@ class IndexController extends ActionController
                 'file'   =>  'sitemap.xml'
             ));
         }
-        // Set Generate Form
-        /* $form = new GenerateForm('generate');
-        if ($this->request->isPost()) {
-            $data = $this->request->getPost();
-            $form->setInputFilter(new GenerateFilter);
-            $form->setData($data);
-            if ($form->isValid()) {
-                $values = $form->getData();
-                $url = array(
-                    'action' => 'generate',
-                    'file'   => $values['file'],
-                    'start'  => $values['start'],
-                    'end'    => $values['end'],
-                );
-                $this->jump($url, '');
-            }
-        } */
         // Set view
         $this->view()->setTemplate('index_index');
         $this->view()->assign('generate', $generate);
-        //$this->view()->assign('form', $form);
     }
 
     public function generateAction()
@@ -193,12 +168,13 @@ class IndexController extends ActionController
         $module = $this->params('module');
         $page = $this->params('page', 1);
         // Set info
+        $where = array('top' => 1);
         $order = array('id DESC', 'time_create DESC');
         $limit = intval($this->config('admin_perpage'));
         $offset = (int)($page - 1) * $this->config('admin_perpage');
         // Get info
-        $select = $this->getModel('url_top')->select()->order($order)->offset($offset)->limit($limit);
-        $rowset = $this->getModel('url_top')->selectWith($select);
+        $select = $this->getModel('url_list')->select()->where($where)->order($order)->offset($offset)->limit($limit);
+        $rowset = $this->getModel('url_list')->selectWith($select);
         // Make list
         foreach ($rowset as $row) {
             $link[$row->id] = $row->toArray();
@@ -206,8 +182,8 @@ class IndexController extends ActionController
         }
         // Set paginator
         $count = array('count' => new \Zend\Db\Sql\Predicate\Expression('count(*)'));
-        $select = $this->getModel('url_top')->select()->columns($count);
-        $count = $this->getModel('url_top')->selectWith($select)->current()->count;
+        $select = $this->getModel('url_list')->select()->columns($count);
+        $count = $this->getModel('url_list')->selectWith($select)->current()->count;
         $paginator = Paginator::factory(intval($count));
         $paginator->setItemCountPerPage($this->config('admin_perpage'));
         $paginator->setCurrentPageNumber($page);
@@ -229,7 +205,7 @@ class IndexController extends ActionController
     /**
      * Top update action
      */
-    public function topupdateAction()
+    public function updateAction()
     {
         // Get id
         $id = $this->params('id');
@@ -244,17 +220,18 @@ class IndexController extends ActionController
             	$values = $form->getData();
             	// Set just story fields
                 foreach (array_keys($values) as $key) {
-                    if (!in_array($key, $this->topColumns)) {
+                    if (!in_array($key, $this->listColumns)) {
                         unset($values[$key]);
                     }
                 }
                 // Add / update time 
                 $values['time_create'] = time();
+                $values['top'] = 1;
                 // Save values
                 if (!empty($values['id'])) {
-                    $row = $this->getModel('url_top')->find($values['id']);
+                    $row = $this->getModel('url_list')->find($values['id']);
                 } else {
-                    $row = $this->getModel('url_top')->createRow();
+                    $row = $this->getModel('url_list')->createRow();
                 }
                 $row->assign($values);
                 $row->save();
@@ -265,52 +242,28 @@ class IndexController extends ActionController
             }	
         } else {
             if ($id) {
-                $values = $this->getModel('url_top')->find($id)->toArray();
+                $values = $this->getModel('url_list')->find($id)->toArray();
                 $form->setData($values);
             }
         }
         // Set view
-        $this->view()->setTemplate('index_topadd');
+        $this->view()->setTemplate('index_update');
         $this->view()->assign('form', $form);
         $this->view()->assign('title', __('Add a link'));
     }
-    
-    /**
-     * Top update action
-     */
-    public function topdeleteAction()
-    {
-        $this->view()->setTemplate(false);
-        $id = $this->params('id');
-        $row = $this->getModel('url_top')->find($id);
-        if ($row) {
-        	$row->delete();
-            $this->jump(array('action' => 'top'), __('This link deleted'));
-        } else {
-        	$this->jump(array('action' => 'top'), __('Please select link'));	
-        }
-    }
 
     /**
-     * List update action
+     * Add to top action
      */
     public function topaddAction()
     {
         // Set view
         $this->view()->setTemplate(false);
         $id = $this->params('id');
-        $row_list = $this->getModel('url_list')->find($id);
-        if ($row_list) {
-            $values['loc'] = $row_list->loc;
-            $values['lastmod'] = $row_list->lastmod;
-            $values['changefreq'] = $row_list->changefreq;
-            $values['priority'] = $row_list->priority;
-            $values['time_create'] = time();
-            // Save
-            $row_top = $this->getModel('url_top')->createRow();
-            $row_top->assign($values);
-            $row_top->save();
-            $row_list->delete();
+        $row = $this->getModel('url_list')->find($id);
+        if ($row) {
+            $row->top = 1;
+            $row->save();
             // jump
             $this->jump(array('action' => 'list'), __('This link add as top link'));
         } else {
@@ -362,9 +315,9 @@ class IndexController extends ActionController
     }
 
     /**
-     * Top update action
+     * delete link action
      */
-    public function listdeleteAction()
+    public function deleteLinkAction()
     {
         $this->view()->setTemplate(false);
         $id = $this->params('id');

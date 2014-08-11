@@ -4,13 +4,12 @@
  *
  * @link            http://code.pialog.org for the Pi Engine source repository
  * @copyright       Copyright (c) Pi Engine http://pialog.org
- * @license         http://pialog.org/license.txt New BSD License
+ * @license         http://pialog.org/license.txt BSD 3-Clause License
  */
 
 /**
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
-
 namespace Module\Sitemap\Lib;
 
 use Pi;
@@ -83,7 +82,7 @@ class Generate
      */
     public function indexUrl($content)
     {
-        $content[] = array(
+        $content[0] = array(
             'uri' => Pi::url('www'),
             'lastmod' => date("Y-m-d H:i:s"),
             'changefreq' => 'daily',
@@ -93,22 +92,22 @@ class Generate
     }
 
     /**
-     * Add links from url_top table on content array
+     * Add top links from url_list table on content array
      * @param array
      * @return array
      */
     public function topUrl($content)
     {
+        $where = array('top' => 1);
         $order = array('id DESC', 'time_create DESC');
-        $select = Pi::model('url_top', 'sitemap')->select()->order($order);
-        $rowset = Pi::model('url_top', 'sitemap')->selectWith($select);
+        $select = Pi::model('url_list', 'sitemap')->select()->where($where)->order($order);
+        $rowset = Pi::model('url_list', 'sitemap')->selectWith($select);
         foreach ($rowset as $row) {
-            $url_top[$row->id] = $row->toArray();
-            $link['uri'] = $url_top[$row->id]['loc'];
-            $link['lastmod'] = $url_top[$row->id]['lastmod'];
-            $link['changefreq'] = $url_top[$row->id]['changefreq'];
-            $link['priority'] = $url_top[$row->id]['priority'];
-            $content[] = $link;
+            $link['uri']         = $row->loc;
+            $link['lastmod']     = $row->lastmod;
+            $link['changefreq']  = $row->changefreq;
+            $link['priority']    = $row->priority;
+            $content[$row->id]   = $link;
         }
         return $content;
     }
@@ -126,22 +125,22 @@ class Generate
         // Set start and end
         if (!empty($this->start) && !empty($this->end) && ($this->end > $this->start)) {
             $where = array(
-                'status' => 1,
-                'id < ?' => $this->end,
-                'id >= ?' => $this->start,
+                'status'   => 1,
+                'top'      => 0,
+                'id < ?'   => $this->end,
+                'id >= ?'  => $this->start,
             );
         } else {    
-            $where = array('status' => 1);
+            $where = array('status' => 1, 'top' => 0);
         }
         $select = Pi::model('url_list', 'sitemap')->select()->where($where)->order($order)->limit($limit);
         $rowset = Pi::model('url_list', 'sitemap')->selectWith($select);
         foreach ($rowset as $row) {
-            $url_top[$row->id] = $row->toArray();
-            $link['uri'] = $url_top[$row->id]['loc'];
-            $link['lastmod'] = $url_top[$row->id]['lastmod'];
-            $link['changefreq'] = $url_top[$row->id]['changefreq'];
-            $link['priority'] = $url_top[$row->id]['priority'];
-            $content[] = $link;
+            $link['uri']         = $row->loc;
+            $link['lastmod']     = $row->lastmod;
+            $link['changefreq']  = $row->changefreq;
+            $link['priority']    = $row->priority;
+            $content[$row->id]   = $link;
         }
         return $content;
     }
