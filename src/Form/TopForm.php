@@ -103,8 +103,8 @@ class TopForm extends BaseForm
                 'value_options' => array(
                     1 => __('Published'),
                     2 => __('Pending review'),
-                    3 => __('Edit by user'),
-                    4 => __('Draft'),
+                    3 => __('Draft'),
+                    4 => __('Private'),
                     5 => __('Delete'),
                 ),
             ),
