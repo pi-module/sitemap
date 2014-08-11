@@ -22,21 +22,27 @@ Use on other modules
 ----------------------
 This module have dedicated table for save website links and build sitemap just from links on this table, you should use this codes for Add / Remove your module links on sitemap table.
 
-Add this code after save new row for add or update new item link on sitemap module
+Add this code after save new row for add or update new item link on sitemap module, By check it exist on DB or not
 ```
-// Add / Edit sitemap
+// Add / Edit sitemap link
 if (Pi::service('module')->isActive('sitemap')) {
-    $loc = Pi::url();
-    if (empty($values['id'])) {
-        Pi::api('sitemap', 'sitemap')->add($module, $table, , $item, $loc);
-    } else {
-        Pi::api('sitemap', 'sitemap')->update($module, $table, , $item, $loc);
-    }              
+    $loc = Pi::url('YOUR ROTE URL');
+    Pi::api('sitemap', 'sitemap')->singleLink($loc, $status, $module, $table, $item);
 }
 
 ```
 
-And use this code for remove link from sitemap module after remove item on your module
+Add this code after save new row for add or update new item link on sitemap module, without check it exist on DB or not, good for use import multi links 
+```
+// Add / Edit sitemap link
+if (Pi::service('module')->isActive('sitemap')) {
+    $loc = Pi::url('YOUR ROTE URL');
+    Pi::api('sitemap', 'sitemap')->groupLink($loc, $status, $module, $table, $item);
+}
+
+```
+
+Remove link from sitemap module after remove item on your module
 ```
 // Remove sitemap
 if (Pi::service('module')->isActive('sitemap')) {
@@ -45,7 +51,16 @@ if (Pi::service('module')->isActive('sitemap')) {
 } 
 ```
 
+Remove all links of your module or your module table from sitemap module , for regenerate all of them
+```
+// Remove sitemap
+if (Pi::service('module')->isActive('sitemap')) {
+    Pi::api('sitemap', 'sitemap')->removeAll($module, $table);
+} 
+```
+
 * **$module** : your module
 * **$table** : your item table
-* **$item** : your item id
+* **$item** : your item id (int)
 * **$loc** : URL of the page. This URL must begin with the protocol (such as http) and end with a trailing slash, if your web server requires it. This value must be less than 2,048 characters.
+* **$status** : your item status (int) , just items by status `1` will add on sitemap.xml file
