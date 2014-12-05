@@ -77,88 +77,6 @@ class IndexController extends ActionController
         $this->view()->assign('generate', $generate);
     }
 
-    public function generateAction()
-    {
-        $file = $this->params('file', 'sitemap.xml');
-        $start = $this->params('start');
-        $end = $this->params('end');
-        // Remove old files if exists
-        $fileRoot = Pi::path($file);
-        $fileMain = Pi::path(sprintf('upload/sitemap/%s', $file));
-        // remove fileRoot
-        if (Pi::service('file')->exists($fileRoot)) {
-            Pi::service('file')->remove($fileRoot);
-        }
-        // remove fileMain
-        if (Pi::service('file')->exists($fileMain)) {
-            Pi::service('file')->remove($fileMain);
-        }
-        // Generat sitemap
-        $generate = new Generate($file, $start, $end);
-        $sitemap = $this->view()->navigation($generate->content())->sitemap();
-        $sitemap = $sitemap->setFormatOutput(true)->render();
-        $generate->write($sitemap);
-        // Set view
-        $this->view()->setTemplate(false);
-        $this->jump(array('action' => 'index'), __('New XML file generated'));
-    }  
-
-    public function deleteAction()
-    {
-        $this->view()->setTemplate(false);
-        $file = $this->params('file');
-        if ($file == 'sitemap.xml') {
-            $this->jump(array('action' => 'index'), __('You can not delete sitemap.xml build method')); 
-        } else {
-            $row = $this->getModel('generate')->find($file, 'file');
-            if ($row) {
-                $row->delete();
-                $this->jump(array('action' => 'index'), __('This sitemap method deleted'));
-            } else {
-                $this->jump(array('action' => 'index'), __('Please select sitemap method'));   
-            }
-        }
-    }
-
-    public function deletefileAction()
-    {
-        $this->view()->setTemplate(false);
-        $file = $this->params('file');
-        if ($file) {
-            $fileRoot = Pi::path($file);
-            $fileMain = Pi::path(sprintf('upload/sitemap/%s', $file));
-            // remove fileRoot
-            if (Pi::service('file')->exists($fileRoot)) {
-                Pi::service('file')->remove($fileRoot);
-            }
-            // remove fileMain
-            if (Pi::service('file')->exists($fileMain)) {
-                Pi::service('file')->remove($fileMain);
-            }
-            $this->jump(array('action' => 'index'), __('Selected file delete')); 
-        } else {
-            $this->jump(array('action' => 'index'), __('Please selete file')); 
-        }
-    } 
-
-    public function copyfileAction()
-    {
-        $this->view()->setTemplate(false);
-        $file = $this->params('file');
-        if ($file) {
-            $fileRoot = Pi::path($file);
-            $fileMain = Pi::path(sprintf('upload/sitemap/%s', $file));
-            if (!Pi::service('file')->exists($fileRoot)) {
-                Pi::service('file')->copy($fileMain, $fileRoot, true);
-                $this->jump(array('action' => 'index'), __('Selected file copy to root'));
-            } else {
-                $this->jump(array('action' => 'index'), __('Your origin file path is website root')); 
-            }
-        } else {
-            $this->jump(array('action' => 'index'), __('Please selete file')); 
-        }
-    } 
-
     /**
      * Top action
      */
@@ -182,7 +100,7 @@ class IndexController extends ActionController
         }
         // Set paginator
         $count = array('count' => new \Zend\Db\Sql\Predicate\Expression('count(*)'));
-        $select = $this->getModel('url_list')->select()->columns($count);
+        $select = $this->getModel('url_list')->select()->columns($count)->where($where);
         $count = $this->getModel('url_list')->selectWith($select)->current()->count;
         $paginator = Paginator::factory(intval($count));
         $paginator->setItemCountPerPage($this->config('admin_perpage'));
@@ -202,75 +120,6 @@ class IndexController extends ActionController
         $this->view()->assign('paginator', $paginator);
     }
 
-    /**
-     * Top update action
-     */
-    public function updateAction()
-    {
-        // Get id
-        $id = $this->params('id');
-        $module = $this->params('module');
-        // Set form
-        $form = new TopForm();
-        if ($this->request->isPost()) {
-            $data = $this->request->getPost();
-            $form->setInputFilter(new TopFilter());
-            $form->setData($data);
-            if ($form->isValid()) {
-            	$values = $form->getData();
-            	// Set just story fields
-                foreach (array_keys($values) as $key) {
-                    if (!in_array($key, $this->listColumns)) {
-                        unset($values[$key]);
-                    }
-                }
-                // Add / update time 
-                $values['time_create'] = time();
-                $values['top'] = 1;
-                // Save values
-                if (!empty($values['id'])) {
-                    $row = $this->getModel('url_list')->find($values['id']);
-                } else {
-                    $row = $this->getModel('url_list')->createRow();
-                }
-                $row->assign($values);
-                $row->save();
-                // jump
-                $message = __('Link saved successfully.');
-                $url = array('action' => 'top');
-                $this->jump($url, $message);
-            }	
-        } else {
-            if ($id) {
-                $values = $this->getModel('url_list')->find($id)->toArray();
-                $form->setData($values);
-            }
-        }
-        // Set view
-        $this->view()->setTemplate('index_update');
-        $this->view()->assign('form', $form);
-        $this->view()->assign('title', __('Add a link'));
-    }
-
-    /**
-     * Add to top action
-     */
-    public function topaddAction()
-    {
-        // Set view
-        $this->view()->setTemplate(false);
-        $id = $this->params('id');
-        $row = $this->getModel('url_list')->find($id);
-        if ($row) {
-            $row->top = 1;
-            $row->save();
-            // jump
-            $this->jump(array('action' => 'list'), __('This link add as top link'));
-        } else {
-            $this->jump(array('action' => 'list'), __('Please select link'));   
-        }
-    }
-    	
     /**
      * List action
      */
@@ -315,18 +164,194 @@ class IndexController extends ActionController
     }
 
     /**
+     * Top update action
+     */
+    public function updateAction()
+    {
+        // Get id
+        $id = $this->params('id');
+        $module = $this->params('module');
+        // Set form
+        $form = new TopForm();
+        if ($this->request->isPost()) {
+            $data = $this->request->getPost();
+            $form->setInputFilter(new TopFilter());
+            $form->setData($data);
+            if ($form->isValid()) {
+                $values = $form->getData();
+                // Set just story fields
+                foreach (array_keys($values) as $key) {
+                    if (!in_array($key, $this->listColumns)) {
+                        unset($values[$key]);
+                    }
+                }
+                // Add / update time 
+                $values['time_create'] = time();
+                $values['top'] = 1;
+                // Save values
+                if (!empty($values['id'])) {
+                    $row = $this->getModel('url_list')->find($values['id']);
+                } else {
+                    $row = $this->getModel('url_list')->createRow();
+                }
+                $row->assign($values);
+                $row->save();
+                // jump
+                $message = __('Link saved successfully.');
+                $url = array('action' => 'top');
+                $this->jump($url, $message);
+            }   
+        } else {
+            if ($id) {
+                $values = $this->getModel('url_list')->find($id)->toArray();
+                $form->setData($values);
+            }
+        }
+        // Set view
+        $this->view()->setTemplate('index_update');
+        $this->view()->assign('form', $form);
+        $this->view()->assign('title', __('Add a link'));
+    }
+
+    /**
+     * Generate sitemap.xml
+     */
+    public function generateAction()
+    {
+        $file = $this->params('file', 'sitemap.xml');
+        $start = $this->params('start');
+        $end = $this->params('end');
+        // Remove old files if exists
+        $fileRoot = Pi::path($file);
+        $fileMain = Pi::path(sprintf('upload/sitemap/%s', $file));
+        // remove fileRoot
+        if (Pi::service('file')->exists($fileRoot)) {
+            Pi::service('file')->remove($fileRoot);
+        }
+        // remove fileMain
+        if (Pi::service('file')->exists($fileMain)) {
+            Pi::service('file')->remove($fileMain);
+        }
+        // Generat sitemap
+        $generate = new Generate($file, $start, $end);
+        $sitemap = $this->view()->navigation($generate->content())->sitemap();
+        $sitemap = $sitemap->setFormatOutput(true)->render();
+        $generate->write($sitemap);
+        // Set copy URL
+        $url = $this->url('', array(
+            'action'  => 'copyfile', 
+            'file'    => $file,
+        ));
+        // Set view
+        $this->view()->setTemplate('file_generate');
+        $this->view()->assign('url', $url);
+    } 
+
+    /**
+     * Copy XML file to website root
+     */
+    public function copyfileAction()
+    {
+        $file = $this->params('file');
+        if (!$file) {
+            $this->jump(array('action' => 'index'), __('Please selete file'));
+        } else {
+            $fileRoot = Pi::path($file);
+            $fileMain = Pi::path(sprintf('upload/sitemap/%s', $file));
+            if (Pi::service('file')->exists($fileRoot)) {
+                $this->jump(array('action' => 'index'), __('Your origin file path is website root')); 
+            } else {
+                Pi::service('file')->copy($fileMain, $fileRoot, true);
+            }
+        }
+        // Set copy URL
+        $url = $this->url('', array(
+            'action'  => 'index', 
+        ));
+        // Set view
+        $this->view()->setTemplate('file_copy');
+        $this->view()->assign('url', $url);
+    } 
+
+    /**
+     * Delete XML file
+     */
+    public function deletefileAction()
+    {
+        $file = $this->params('file');
+        if ($file) {
+            $fileRoot = Pi::path($file);
+            $fileMain = Pi::path(sprintf('upload/sitemap/%s', $file));
+            // remove fileRoot
+            if (Pi::service('file')->exists($fileRoot)) {
+                Pi::service('file')->remove($fileRoot);
+            }
+            // remove fileMain
+            if (Pi::service('file')->exists($fileMain)) {
+                Pi::service('file')->remove($fileMain);
+            }
+            $this->jump(array('action' => 'index'), __('Selected file delete')); 
+        } else {
+            $this->jump(array('action' => 'index'), __('Please selete file')); 
+        }
+        // Set view
+        $this->view()->setTemplate(false);
+    } 
+
+    /**
+     * Delete XML build method
+     */
+    public function deleteAction()
+    {
+        $file = $this->params('file');
+        if ($file == 'sitemap.xml') {
+            $this->jump(array('action' => 'index'), __('You can not delete sitemap.xml build method')); 
+        } else {
+            $row = $this->getModel('generate')->find($file, 'file');
+            if ($row) {
+                $row->delete();
+                $this->jump(array('action' => 'index'), __('This sitemap method deleted'));
+            } else {
+                $this->jump(array('action' => 'index'), __('Please select sitemap method'));   
+            }
+        }
+        // Set view
+        $this->view()->setTemplate(false);
+    }
+
+    /**
+     * Add link as top
+     */
+    public function topaddAction()
+    {
+        $id = $this->params('id');
+        $row = $this->getModel('url_list')->find($id);
+        if ($row) {
+            $row->top = 1;
+            $row->save();
+            // jump
+            $this->jump(array('action' => 'list'), __('This link add as top link'));
+        } else {
+            $this->jump(array('action' => 'list'), __('Please select link'));   
+        }
+        // Set view
+        $this->view()->setTemplate(false);
+    }
+
+    /**
      * delete link action
      */
     public function deleteLinkAction()
     {
-        $this->view()->setTemplate(false);
         $id = $this->params('id');
         $row = $this->getModel('url_list')->find($id);
         if ($row) {
-        	$row->delete();
+            $row->delete();
             $this->jump(array('action' => 'list'), __('This link deleted'));
         } else {
-        	$this->jump(array('action' => 'list'), __('Please select link'));	
+            $this->jump(array('action' => 'list'), __('Please select link'));   
         }
+        // Set view
+        $this->view()->setTemplate(false);
     }
 }

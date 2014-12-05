@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Pi Sitemap module\n"
-"POT-Creation-Date: 2014-08-11 11:38+0330\n"
+"POT-Creation-Date: 2014-12-05 13:25+0330\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Pi\n"
@@ -13,225 +13,270 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: _e;__\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-SearchPath-0: /var/www/html/local/pi/pi-release-2.4.0/usr/module/"
+"X-Poedit-SearchPath-0: /var/www/html/local/pi/pi-release-2.5.0/usr/module/"
 "sitemap\n"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:47
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:8
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:11
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:47
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:8
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:11
 msgid "URL"
 msgstr "پیوند"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:58
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:58
 msgid "Last modification"
 msgstr "آخرین ویرایش"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:71
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:12
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:71
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:12
 msgid "Change frequency"
 msgstr "تغییر فرکانس"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:73
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:73
 msgid "Always"
 msgstr "همیشه"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:74
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:74
 msgid "Hourly"
 msgstr "ساعتی"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:75
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:75
 msgid "Daily"
 msgstr "روزانه"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:76
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:76
 msgid "Weekly"
 msgstr "هفتگی"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:77
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:77
 msgid "Monthly"
 msgstr "ماهیانه"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:78
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:78
 msgid "Yearly"
 msgstr "سالیانه"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:79
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:44
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:79
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:44
 msgid "Never"
 msgstr "هرگز"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:91
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:91
 msgid "priority (optional)"
 msgstr "اولویت (انتخابی)"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:102
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:102
 msgid "Status"
 msgstr "وضعیت"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:104
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:53
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:44
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:104
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:53
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:44
 msgid "Published"
 msgstr "منتشر شده"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:105
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:54
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:45
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:105
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:54
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:45
 msgid "Pending review"
 msgstr "در انتظار تایید"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:106
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:55
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:46
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:106
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:55
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:46
 msgid "Draft"
 msgstr "پیش نویس"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:107
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:56
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:47
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:107
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:56
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:47
 msgid "Private"
 msgstr " خصوصی"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:108
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:46
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:37
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:108
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:46
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:37
 msgid "Delete"
 msgstr "حذف"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/TopForm.php:120
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/GenerateForm.php:72
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/TopForm.php:120
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/GenerateForm.php:72
 msgid "Submit"
 msgstr "ارسال"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/GenerateForm.php:40
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_index.phtml:7
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/GenerateForm.php:40
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_index.phtml:6
 msgid "File"
 msgstr "فایل"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/GenerateForm.php:44
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/GenerateForm.php:44
 msgid "Set file name as filename.xml"
 msgstr "تنظیم نام فایل مطابق الگو filename.xml"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/GenerateForm.php:51
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_index.phtml:10
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/GenerateForm.php:51
 msgid "Start"
 msgstr "شروع"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Form/GenerateForm.php:61
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_index.phtml:11
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Form/GenerateForm.php:61
 msgid "End"
 msgstr "پایان"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Installer/Action/Install.php:53
-msgid "Default sitemap information added."
-msgstr "اطلاعات پیش فرض نقشه سایت اضافه شد"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:103
-msgid "New XML file generated"
-msgstr "فایل XML جدید ساخته شد"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:111
-msgid "You can not delete sitemap.xml build method"
-msgstr "شما نمی توانید الگوی ساخت sitemap.xml را حذف کنید"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:116
-msgid "This sitemap method deleted"
-msgstr "الگوی نقشه سایت حذف شد"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:118
-msgid "Please select sitemap method"
-msgstr "لطفا الگوی نقشه سایت را انتخاب کنید"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:138
-msgid "Selected file delete"
-msgstr "فایل انتخابی حذف شد"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:140
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:158
-msgid "Please selete file"
-msgstr "لطفا فایل را انتخاب کنید"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:153
-msgid "Selected file copy to root"
-msgstr "فایل انتخابی به ریشه وب سایت منتقل شد"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:155
-msgid "Your origin file path is website root"
-msgstr "مسیر اصلی فایل شما ریشه وب سایت است"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:239
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:200
 msgid "Link saved successfully."
 msgstr "پیوند با موفقیت ذخیره شد"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:252
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:213
 msgid "Add a link"
 msgstr "پیوند جدید"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:268
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:257
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:295
+msgid "Please selete file"
+msgstr "لطفا فایل را انتخاب کنید"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:262
+msgid "Your origin file path is website root"
+msgstr "مسیر اصلی فایل شما ریشه وب سایت است"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:293
+msgid "Selected file delete"
+msgstr "فایل انتخابی حذف شد"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:308
+msgid "You can not delete sitemap.xml build method"
+msgstr "شما نمی توانید الگوی ساخت sitemap.xml را حذف کنید"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:313
+msgid "This sitemap method deleted"
+msgstr "الگوی نقشه سایت حذف شد"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:315
+msgid "Please select sitemap method"
+msgstr "لطفا الگوی نقشه سایت را انتخاب کنید"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:333
 msgid "This link add as top link"
 msgstr "این پیوند به فهرست پیوند های برتر اضافه شد"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:270
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:329
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:335
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:352
 msgid "Please select link"
 msgstr "لطفا یک پیوند انتخاب کنید"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:327
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Controller/Admin/IndexController.php:350
 msgid "This link deleted"
 msgstr "پیوند انتخابی حذف شد"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:4
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/src/Installer/Action/Install.php:53
+msgid "Default sitemap information added."
+msgstr "اطلاعات پیش فرض نقشه سایت اضافه شد"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_copy.phtml:5
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_generate.phtml:5
+msgid "Generate XML file"
+msgstr "ایجاد فایل XML"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_copy.phtml:8
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_generate.phtml:8
+msgid ""
+"Sitemap XML file generated on two steps, first new file generated on upload/"
+"sitemap and after that you need cope this file to website root. you can copy "
+"XML file by (( Copy to root )) button on this page, But if your server "
+"setting does not support this action you need copy XML file to website root "
+"manually by FTP client"
+msgstr ""
+"روند ایجاد فایل Sitemap XML جدید در دو مرحله کامل می شود، ابتدا یک فایل جدی "
+"در مسیر upload/sitemap ایجاد می شود و پس از آن لازم است که این فایل رابه "
+"ریشه وب سایت منتقل نمایید. برای انتقال فایل Sitemap XML جدید به ریشه وب سایت "
+"از دکمه (( کپی به ریشه )) که در همین صفحه قرار دارد استفاده نمایید. اما اگر "
+"تنظیمات سرور شما این عمل را پشتیبانی نمی کند، لازم است که فایل XML را به "
+"صورت دستی و با استفاده از نرم افزار FTP یا کنترل پنل هاست به ریشه وب سایت "
+"منتقل نمایید."
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_copy.phtml:11
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_generate.phtml:11
+msgid "Step 1"
+msgstr "مرحله ۱"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_copy.phtml:11
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_generate.phtml:11
+msgid "New XML file generated"
+msgstr "فایل XML جدید ساخته شد"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_copy.phtml:11
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_copy.phtml:12
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_generate.phtml:11
+msgid "Completed"
+msgstr "تکمیل شده"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_copy.phtml:12
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_generate.phtml:12
+msgid "Step 2"
+msgstr "مرحله ۲"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_copy.phtml:12
+msgid "Copy XML file to website root"
+msgstr "فایل XML به ریشه وب سایت منتقل شد"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_copy.phtml:15
+msgid "‌Back to index"
+msgstr "برگشت به صفحه اصلی"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/file_generate.phtml:12
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_index.phtml:19
+msgid "Copy to root"
+msgstr "کپی به ریشه"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:4
 msgid "List of module links"
 msgstr "فهرست پیوند ماژول ها"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:7
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_index.phtml:6
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:10
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:7
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:10
 msgid "ID"
 msgstr "شناسه"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:9
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_index.phtml:12
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:14
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:9
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:14
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_index.phtml:9
 msgid "Action"
 msgstr "عملکرد"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:28
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:28
 msgid "Loc"
 msgstr "پیوند"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:30
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:13
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:30
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:13
 msgid "Time"
 msgstr "زمان"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:32
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:32
 msgid "Module"
 msgstr "ماژول"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:35
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:35
 msgid "Table"
 msgstr "جدول"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:38
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:38
 msgid "Item"
 msgstr "آیتم"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:44
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:44
 msgid "Add as top"
 msgstr "اضافه به برتر"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:57
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:48
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:57
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:48
 msgid "Trash"
 msgstr "سطل آشغال"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:61
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:52
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:61
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:52
 msgid "Empty list"
 msgstr "فهرست خالی است"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_list.phtml:62
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_list.phtml:62
 msgid ""
 "Link list table is empty, when you submit new entry on modules that support "
 "sitemap, sitemap information add automatically on this part"
@@ -240,62 +285,59 @@ msgstr ""
 "سایت مپ پشتیبانی میکنند ارسال کنید ، پیوند آن مطلب به صورت خودکار در این "
 "جدول درج میگردد."
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_index.phtml:3
-msgid "List of files"
-msgstr "فهرست فایل ها"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_index.phtml:8
-msgid "Create"
-msgstr "ایجاد"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_index.phtml:9
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_index.phtml:27
-msgid "Update"
-msgstr "به روز رسانی"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_index.phtml:25
-msgid "Copy to root"
-msgstr "کپی به ریشه"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_index.phtml:28
-msgid "Delete file"
-msgstr "حذف فایل"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_index.phtml:30
-msgid "Generate"
-msgstr "تولید"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_index.phtml:32
-msgid "Delete method"
-msgstr "حذف الگو"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_index.phtml:34
-msgid "View"
-msgstr "نمایش"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_index.phtml:41
-msgid "Generate new sitemap method"
-msgstr "ایجاد یک الگوی جدید نقشه سایت"
-
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:4
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:4
 msgid "Add Link"
 msgstr "پیوند جدید"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:7
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:7
 msgid "List of top links"
 msgstr "فهرست پیوند های برتر"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:36
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:36
 msgid "Edit"
 msgstr "ویرایش"
 
-#: /var/www/html/local/pi/pi-release-2.4.0/usr/module/sitemap/template/admin/index_top.phtml:53
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_top.phtml:53
 msgid ""
 "Link top table is empty, you can add your important website links on this "
 "table manually."
 msgstr ""
 "جدول پیوند های برتر خالی است، شما میتوانید پیوند های مهم سایت خود را به صورت "
 "دستی در این جدول درج کنید."
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_index.phtml:3
+msgid "List of files"
+msgstr "فهرست فایل ها"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_index.phtml:7
+msgid "Create"
+msgstr "ایجاد"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_index.phtml:8
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_index.phtml:21
+msgid "Update"
+msgstr "به روز رسانی"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_index.phtml:22
+msgid "Delete file"
+msgstr "حذف فایل"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_index.phtml:24
+msgid "Generate"
+msgstr "تولید"
+
+#: /var/www/html/local/pi/pi-release-2.5.0/usr/module/sitemap/template/admin/index_index.phtml:27
+msgid "View"
+msgstr "نمایش"
+
+#~ msgid "Selected file copy to root"
+#~ msgstr "فایل انتخابی به ریشه وب سایت منتقل شد"
+
+#~ msgid "Delete method"
+#~ msgstr "حذف الگو"
+
+#~ msgid "Generate new sitemap method"
+#~ msgstr "ایجاد یک الگوی جدید نقشه سایت"
 
 #~ msgid "Top links"
 #~ msgstr "پیوند های برتر"
