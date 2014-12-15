@@ -24,7 +24,7 @@
                 <a class="btn btn-success" title="<?php _e('Generate'); ?>" href="<?php echo $this->escape($file['generate_link']); ?>"><i class="fa fa-plus"></i> <?php _e('Generate'); ?></a>
                 <?php } ?>
                 <?php if ($file['file_exists']) { ?>
-                <a class="btn btn-info" title="<?php _e('View'); ?>" href="<?php echo $this->escape($file['file_url']); ?>"><i class="fa fa-eye"></i> <?php _e('View'); ?></a>
+                <a class="btn btn-info" title="<?php _e('View'); ?>" href="<?php echo $this->escape($file['file_url']); ?>" target="_blank"><i class="fa fa-eye"></i> <?php _e('View'); ?></a>
                 <?php } ?>
             </td>
         </tr>   
