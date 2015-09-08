@@ -1,15 +1,15 @@
-CREATE TABLE `{url_list}` ( 
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `loc` varchar(255) NOT NULL default '',
-  `lastmod` varchar(64) NOT NULL default '',
-  `changefreq` varchar(64) NOT NULL default '',
-  `priority` varchar(64) NOT NULL default '',
-  `time_create` int(10) unsigned NOT NULL default '0',
-  `module` varchar(64) NOT NULL default '',
-  `table` varchar(64) NOT NULL default '',
-  `item` int(10) unsigned NOT NULL default '0',
-  `status` tinyint(1) unsigned NOT NULL default '0',
-  `top` tinyint(1) unsigned NOT NULL default '0',
+CREATE TABLE `{url_list}` (
+  `id`          INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
+  `loc`         VARCHAR(255)        NOT NULL DEFAULT '',
+  `lastmod`     VARCHAR(64)         NOT NULL DEFAULT '',
+  `changefreq`  VARCHAR(64)         NOT NULL DEFAULT '',
+  `priority`    VARCHAR(64)         NOT NULL DEFAULT '',
+  `time_create` INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `module`      VARCHAR(64)         NOT NULL DEFAULT '',
+  `table`       VARCHAR(64)         NOT NULL DEFAULT '',
+  `item`        INT(10) UNSIGNED    NOT NULL DEFAULT '0',
+  `status`      TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+  `top`         TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `loc` (`loc`),
   KEY `status` (`status`),
@@ -22,13 +22,13 @@ CREATE TABLE `{url_list}` (
   KEY `module_table` (`module`, `table`)
 );
 
-CREATE TABLE `{generate}` ( 
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `file` varchar(64) NOT NULL default '',
-  `time_create` int(10) unsigned NOT NULL default '0',
-  `time_update` int(10) unsigned NOT NULL default '0',
-  `start` int(10) unsigned NOT NULL default '0',
-  `end` int(10) unsigned NOT NULL default '0',
+CREATE TABLE `{generate}` (
+  `id`          INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `file`        VARCHAR(64)      NOT NULL DEFAULT '',
+  `time_create` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `time_update` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `start`       INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  `end`         INT(10) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `file` (`file`),
   KEY `time_create` (`time_create`)
