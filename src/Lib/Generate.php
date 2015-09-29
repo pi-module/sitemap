@@ -44,7 +44,7 @@ class Generate
 
         $config = Pi::service('registry')->config->read('sitemap', 'sitemap');
         $where = array('status' => 1);
-        $order = array('top DESC', 'priority DESC', 'time_create DESC');
+        $order = array('priority DESC', 'top DESC', 'time_create DESC');
         $limit = intval($config['sitemap_limit']);
         $select = Pi::model('url', 'sitemap')->select()->where($where)->order($order)->limit($limit);
         $rowset = Pi::model('url', 'sitemap')->selectWith($select);

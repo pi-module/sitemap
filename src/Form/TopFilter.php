@@ -27,7 +27,7 @@ class TopFilter extends InputFilter
         // loc
         $this->add(array(
             'name' => 'loc',
-            'required' => false,
+            'required' => true,
             'filters' => array(
                 array(
                     'name' => 'StringTrim',
@@ -37,7 +37,7 @@ class TopFilter extends InputFilter
         // lastmod
         $this->add(array(
             'name' => 'lastmod',
-            'required' => false,
+            'required' => true,
             'filters' => array(
                 array(
                     'name' => 'StringTrim',
@@ -47,7 +47,7 @@ class TopFilter extends InputFilter
         // changefreq
         $this->add(array(
             'name' => 'changefreq',
-            'required' => false,
+            'required' => true,
             'filters' => array(
                 array(
                     'name' => 'StringTrim',
@@ -57,7 +57,7 @@ class TopFilter extends InputFilter
         // priority
         $this->add(array(
             'name' => 'priority',
-            'required' => false,
+            'required' => true,
             'filters' => array(
                 array(
                     'name' => 'StringTrim',

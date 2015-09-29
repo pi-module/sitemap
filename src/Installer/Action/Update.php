@@ -141,8 +141,8 @@ class Update extends BasicUpdate
             }
         }
 
-        // Update to version 1.2.2
-        if (version_compare($moduleVersion, '1.2.2', '<')) {
+        // Update to version 1.2.3
+        if (version_compare($moduleVersion, '1.2.3', '<')) {
 
             // Set changefreq and priority
             $changefreq = 'weekly';
@@ -203,7 +203,7 @@ class Update extends BasicUpdate
                                 switch ($row->table) {
                                     case 'product';
                                         $changefreq = 'weekly';
-                                        $priority = '0.8';
+                                        $priority = '0.6';
                                         break;
 
                                     case 'category';
@@ -238,7 +238,7 @@ class Update extends BasicUpdate
 
 
             // Alter table : ADD index
-            $sql = sprintf("ALTER TABLE %s ADD INDEX `list_order` (`top`, `priority`, `time_create`)", $urlTable);
+            $sql = sprintf("ALTER TABLE %s ADD INDEX `list_order` (`priority`, `top`, `time_create`)", $urlTable);
             try {
                 $urlAdapter->query($sql, 'execute');
             } catch (\Exception $exception) {

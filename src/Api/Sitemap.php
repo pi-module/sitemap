@@ -124,7 +124,7 @@ class Sitemap extends AbstractApi
                 switch ($table) {
                     case 'product';
                         $changefreq = 'weekly';
-                        $priority = '0.8';
+                        $priority = '0.6';
                         break;
 
                     case 'category';
@@ -245,7 +245,7 @@ class Sitemap extends AbstractApi
                 switch ($table) {
                     case 'product';
                         $changefreq = 'weekly';
-                        $priority = '0.8';
+                        $priority = '0.6';
                         break;
 
                     case 'category';
