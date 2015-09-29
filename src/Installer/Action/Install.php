@@ -21,19 +21,9 @@ class Install extends BasicInstall
     protected function attachDefaultListeners()
     {
         $events = $this->events;
-        $events->attach('install.pre', array($this, 'preInstall'), 1000);
         $events->attach('install.post', array($this, 'postInstall'), 1);
         parent::attachDefaultListeners();
         return $this;
-    }
-
-    public function preInstall(Event $e)
-    {
-        $result = array(
-            'status' => true,
-            'message' => sprintf('Called from %s', __METHOD__),
-        );
-        $e->setParam('result', $result);
     }
 
     public function postInstall(Event $e)

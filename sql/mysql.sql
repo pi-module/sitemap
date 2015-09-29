@@ -1,4 +1,4 @@
-CREATE TABLE `{url_list}` (
+CREATE TABLE `{url}` (
   `id`          INT(10) UNSIGNED    NOT NULL AUTO_INCREMENT,
   `loc`         VARCHAR(255)        NOT NULL DEFAULT '',
   `lastmod`     VARCHAR(64)         NOT NULL DEFAULT '',
@@ -19,7 +19,8 @@ CREATE TABLE `{url_list}` (
   KEY `item` (`item`),
   KEY `top` (`top`),
   KEY `create_id` (`id`, `time_create`, `status`),
-  KEY `module_table` (`module`, `table`)
+  KEY `module_table` (`module`, `table`),
+  KEY `list_order` (`top`, `priority`, `time_create`)
 );
 
 CREATE TABLE `{generate}` (

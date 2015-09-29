@@ -91,8 +91,8 @@ class IndexController extends ActionController
         $limit = intval($this->config('admin_perpage'));
         $offset = (int)($page - 1) * $this->config('admin_perpage');
         // Get info
-        $select = $this->getModel('url_list')->select()->where($where)->order($order)->offset($offset)->limit($limit);
-        $rowset = $this->getModel('url_list')->selectWith($select);
+        $select = $this->getModel('url')->select()->where($where)->order($order)->offset($offset)->limit($limit);
+        $rowset = $this->getModel('url')->selectWith($select);
         // Make list
         foreach ($rowset as $row) {
             $link[$row->id] = $row->toArray();
@@ -100,8 +100,8 @@ class IndexController extends ActionController
         }
         // Set paginator
         $count = array('count' => new \Zend\Db\Sql\Predicate\Expression('count(*)'));
-        $select = $this->getModel('url_list')->select()->columns($count)->where($where);
-        $count = $this->getModel('url_list')->selectWith($select)->current()->count;
+        $select = $this->getModel('url')->select()->columns($count)->where($where);
+        $count = $this->getModel('url')->selectWith($select)->current()->count;
         $paginator = Paginator::factory(intval($count));
         $paginator->setItemCountPerPage($this->config('admin_perpage'));
         $paginator->setCurrentPageNumber($page);
@@ -134,8 +134,8 @@ class IndexController extends ActionController
         $limit = intval($this->config('admin_perpage'));
         $offset = (int)($page - 1) * $this->config('admin_perpage');
         // Get info
-        $select = $this->getModel('url_list')->select()->order($order)->offset($offset)->limit($limit);
-        $rowset = $this->getModel('url_list')->selectWith($select);
+        $select = $this->getModel('url')->select()->order($order)->offset($offset)->limit($limit);
+        $rowset = $this->getModel('url')->selectWith($select);
         // Make list
         foreach ($rowset as $row) {
             $link[$row->id] = $row->toArray();
@@ -143,8 +143,8 @@ class IndexController extends ActionController
         }
         // Set paginator
         $count = array('count' => new \Zend\Db\Sql\Predicate\Expression('count(*)'));
-        $select = $this->getModel('url_list')->select()->columns($count);
-        $count = $this->getModel('url_list')->selectWith($select)->current()->count;
+        $select = $this->getModel('url')->select()->columns($count);
+        $count = $this->getModel('url')->selectWith($select)->current()->count;
         $paginator = Paginator::factory(intval($count));
         $paginator->setItemCountPerPage($this->config('admin_perpage'));
         $paginator->setCurrentPageNumber($page);
@@ -190,9 +190,9 @@ class IndexController extends ActionController
                 $values['top'] = 1;
                 // Save values
                 if (!empty($values['id'])) {
-                    $row = $this->getModel('url_list')->find($values['id']);
+                    $row = $this->getModel('url')->find($values['id']);
                 } else {
-                    $row = $this->getModel('url_list')->createRow();
+                    $row = $this->getModel('url')->createRow();
                 }
                 $row->assign($values);
                 $row->save();
@@ -203,7 +203,7 @@ class IndexController extends ActionController
             }   
         } else {
             if ($id) {
-                $values = $this->getModel('url_list')->find($id)->toArray();
+                $values = $this->getModel('url')->find($id)->toArray();
                 $form->setData($values);
             }
         }
@@ -325,7 +325,7 @@ class IndexController extends ActionController
     public function topaddAction()
     {
         $id = $this->params('id');
-        $row = $this->getModel('url_list')->find($id);
+        $row = $this->getModel('url')->find($id);
         if ($row) {
             $row->top = 1;
             $row->save();
@@ -344,7 +344,7 @@ class IndexController extends ActionController
     public function deleteLinkAction()
     {
         $id = $this->params('id');
-        $row = $this->getModel('url_list')->find($id);
+        $row = $this->getModel('url')->find($id);
         if ($row) {
             $row->delete();
             $this->jump(array('action' => 'list'), __('This link deleted'));
