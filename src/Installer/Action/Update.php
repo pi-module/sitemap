@@ -163,6 +163,11 @@ class Update extends BasicUpdate
                                         $priority = '0.7';
                                         break;
 
+                                    case 'microblog';
+                                        $changefreq = 'daily';
+                                        $priority = '0.4';
+                                        break;
+
                                     case 'topic';
                                         $changefreq = 'weekly';
                                         $priority = '0.3';

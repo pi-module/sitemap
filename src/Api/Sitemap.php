@@ -84,6 +84,11 @@ class Sitemap extends AbstractApi
                         $priority = '0.7';
                         break;
 
+                    case 'microblog';
+                        $changefreq = 'daily';
+                        $priority = '0.4';
+                        break;
+
                     case 'topic';
                         $changefreq = 'weekly';
                         $priority = '0.3';
@@ -203,6 +208,11 @@ class Sitemap extends AbstractApi
                     case 'story';
                         $changefreq = 'daily';
                         $priority = '0.7';
+                        break;
+
+                    case 'microblog';
+                        $changefreq = 'daily';
+                        $priority = '0.4';
                         break;
 
                     case 'topic';
