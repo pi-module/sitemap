@@ -15,7 +15,7 @@ return array(
     'meta'         => array(
         'title'         => _a('Sitemap'),
         'description'   => _a('For generate sitemap.xml.'),
-        'version'       => '1.2.3',
+        'version'       => '1.2.4',
         'license'       => 'New BSD',
         'logo'          => 'image/logo.png',
         'readme'        => 'docs/readme.txt',
