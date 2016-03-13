@@ -274,6 +274,21 @@ class Sitemap extends AbstractApi
                 $changefreq = 'weekly';
                 $priority = '0.3';
                 break;
+
+            case 'event' :
+                $changefreq = 'daily';
+                $priority = '0.6';
+                break;
+
+            case 'blog' :
+                $changefreq = 'daily';
+                $priority = '0.6';
+                break;
+
+            case 'gallery' :
+                $changefreq = 'daily';
+                $priority = '0.6';
+                break;
         }
 
         // Set
