@@ -24,9 +24,11 @@ class Generate
      * @param  int    $start
      * @param  int    $end
      */
-    public function __construct($name)
+    public function __construct($name, $start, $end)
     {
         $this->name = $name;
+        $this->start = $start;
+        $this->end = $end;
     }
 
     /**
