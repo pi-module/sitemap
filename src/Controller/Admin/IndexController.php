@@ -83,8 +83,8 @@ class IndexController extends ActionController
     public function topAction()
     {
         // Get info
-        $module = $this->params('module');
         $page = $this->params('page', 1);
+        $link = null;
         // Set info
         $where = array('top' => 1);
         $order = array('id DESC', 'time_create DESC');
