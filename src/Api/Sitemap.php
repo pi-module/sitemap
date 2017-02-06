@@ -46,6 +46,7 @@ class Sitemap extends AbstractApi
      * @param  string $table
      * @param  int $item
      * @param  string $loc
+     * @param  int $status
      */
     public function update($module, $table, $item, $loc, $status = 1)
     {
@@ -61,7 +62,7 @@ class Sitemap extends AbstractApi
      * @param  string $table
      * @param  int $item
      */
-    public function singleLink($loc, $status = 1, $module = '', $table = '', $item = '')
+    public function singleLink($loc, $status = 1, $module = '', $table = '', $item = 0)
     {
         // Check loc not empty
         if (empty($loc)) {
@@ -187,7 +188,7 @@ class Sitemap extends AbstractApi
      * @param  string $table
      * @param  int $item
      */
-    public function groupLink($loc, $status = 1, $module = '', $table = '', $item = '')
+    public function groupLink($loc, $status = 1, $module = '', $table = '', $item = 0)
     {
         // Check loc not empty
         if (empty($loc)) {
@@ -310,8 +311,6 @@ class Sitemap extends AbstractApi
 
     /**
      * Remove link from url table
-     *
-     * @param  string $loc
      */
     public function remove($loc)
     {
@@ -326,9 +325,6 @@ class Sitemap extends AbstractApi
 
     /**
      * Remove link from url table
-     *
-     * @param  string $module
-     * @param  string $table
      */
     public function removeAll($module, $table = '')
     {
