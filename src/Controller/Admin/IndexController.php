@@ -21,14 +21,6 @@ use Module\Sitemap\Lib\Generate;
 
 class IndexController extends ActionController
 {
-    protected $listColumns = array(
-        'id', 'loc', 'lastmod', 'changefreq', 'priority', 'time_create', 'module', 'table', 'item', 'status', 'top'
-    );
-
-    protected $generateColumns = array(
-        'id', 'file', 'time_create', 'time_update', 'start', 'end'
-    );
-
     /**
      * Default action
      */
@@ -73,7 +65,7 @@ class IndexController extends ActionController
             ));
         }
         // Set view
-        $this->view()->setTemplate('index_index');
+        $this->view()->setTemplate('index-index');
         $this->view()->assign('generate', $generate);
     }
 
@@ -115,7 +107,7 @@ class IndexController extends ActionController
             )),
         ));
         // Set view
-        $this->view()->setTemplate('index_top');
+        $this->view()->setTemplate('index-top');
         $this->view()->assign('links', $link);
         $this->view()->assign('paginator', $paginator);
     }
@@ -158,7 +150,7 @@ class IndexController extends ActionController
             )),
         ));
         // Set view
-        $this->view()->setTemplate('index_list');
+        $this->view()->setTemplate('index-list');
         $this->view()->assign('links', $link);
         $this->view()->assign('paginator', $paginator);
     }
@@ -179,13 +171,7 @@ class IndexController extends ActionController
             $form->setData($data);
             if ($form->isValid()) {
                 $values = $form->getData();
-                // Set just story fields
-                foreach (array_keys($values) as $key) {
-                    if (!in_array($key, $this->listColumns)) {
-                        unset($values[$key]);
-                    }
-                }
-                // Add / update time 
+                // Add / update time
                 $values['time_create'] = time();
                 $values['top'] = 1;
                 // Save values
@@ -200,7 +186,7 @@ class IndexController extends ActionController
                 $message = __('Link saved successfully.');
                 $url = array('action' => 'top');
                 $this->jump($url, $message);
-            }   
+            }
         } else {
             if ($id) {
                 $values = $this->getModel('url')->find($id)->toArray();
@@ -208,7 +194,7 @@ class IndexController extends ActionController
             }
         }
         // Set view
-        $this->view()->setTemplate('index_update');
+        $this->view()->setTemplate('index-update');
         $this->view()->assign('form', $form);
         $this->view()->assign('title', __('Add a link'));
     }
@@ -239,13 +225,13 @@ class IndexController extends ActionController
         $generate->write($sitemap);
         // Set copy URL
         $url = $this->url('', array(
-            'action'  => 'copyfile', 
+            'action'  => 'copyfile',
             'file'    => $file,
         ));
         // Set view
-        $this->view()->setTemplate('file_generate');
+        $this->view()->setTemplate('file-generate');
         $this->view()->assign('url', $url);
-    } 
+    }
 
     /**
      * Copy XML file to website root
@@ -259,19 +245,19 @@ class IndexController extends ActionController
             $fileRoot = Pi::path($file);
             $fileMain = Pi::path(sprintf('upload/sitemap/%s', $file));
             if (Pi::service('file')->exists($fileRoot)) {
-                $this->jump(array('action' => 'index'), __('Your origin file path is website root')); 
+                $this->jump(array('action' => 'index'), __('Your origin file path is website root'));
             } else {
                 Pi::service('file')->copy($fileMain, $fileRoot, true);
             }
         }
         // Set copy URL
         $url = $this->url('', array(
-            'action'  => 'index', 
+            'action'  => 'index',
         ));
         // Set view
-        $this->view()->setTemplate('file_copy');
+        $this->view()->setTemplate('file-copy');
         $this->view()->assign('url', $url);
-    } 
+    }
 
     /**
      * Delete XML file
@@ -290,13 +276,13 @@ class IndexController extends ActionController
             if (Pi::service('file')->exists($fileMain)) {
                 Pi::service('file')->remove($fileMain);
             }
-            $this->jump(array('action' => 'index'), __('Selected file delete')); 
+            $this->jump(array('action' => 'index'), __('Selected file delete'));
         } else {
-            $this->jump(array('action' => 'index'), __('Please selete file')); 
+            $this->jump(array('action' => 'index'), __('Please selete file'));
         }
         // Set view
         $this->view()->setTemplate(false);
-    } 
+    }
 
     /**
      * Delete XML build method
@@ -305,14 +291,14 @@ class IndexController extends ActionController
     {
         $file = $this->params('file');
         if ($file == 'sitemap.xml') {
-            $this->jump(array('action' => 'index'), __('You can not delete sitemap.xml build method')); 
+            $this->jump(array('action' => 'index'), __('You can not delete sitemap.xml build method'));
         } else {
             $row = $this->getModel('generate')->find($file, 'file');
             if ($row) {
                 $row->delete();
                 $this->jump(array('action' => 'index'), __('This sitemap method deleted'));
             } else {
-                $this->jump(array('action' => 'index'), __('Please select sitemap method'));   
+                $this->jump(array('action' => 'index'), __('Please select sitemap method'));
             }
         }
         // Set view
@@ -332,7 +318,7 @@ class IndexController extends ActionController
             // jump
             $this->jump(array('action' => 'list'), __('This link add as top link'));
         } else {
-            $this->jump(array('action' => 'list'), __('Please select link'));   
+            $this->jump(array('action' => 'list'), __('Please select link'));
         }
         // Set view
         $this->view()->setTemplate(false);
@@ -349,7 +335,7 @@ class IndexController extends ActionController
             $row->delete();
             $this->jump(array('action' => 'list'), __('This link deleted'));
         } else {
-            $this->jump(array('action' => 'list'), __('Please select link'));   
+            $this->jump(array('action' => 'list'), __('Please select link'));
         }
         // Set view
         $this->view()->setTemplate(false);

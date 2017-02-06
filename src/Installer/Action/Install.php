@@ -31,17 +31,19 @@ class Install extends BasicInstall
     	// Set model
     	$module = $e->getParam('module');
     	$generateModel =  Pi::model('generate', $module);
+
     	// Add link
         $generateData = array(
-            'file' => 'sitemap.xml',
-            'time_create' => time(),
+            'file'         => 'sitemap.xml',
+            'time_create'  => time(),
         );
         $generateModel->insert($generateData);
+
         // Result
         $result = array(
-            'status' => true,
-            'message' => __('Default sitemap information added.'),
+            'status'      => true,
+            'message'     => __('Default sitemap information added.'),
         );
         $this->setResult('post-install', $result);
     }
-}	
+}
