@@ -44,8 +44,6 @@ class IndexController extends ActionController
                 'module' =>  'sitemap',
                 'action' =>  'generate',
                 'file'   =>  $generate[$row->id]['file'],
-                'start'  =>  ($generate[$row->id]['start']) ? $generate[$row->id]['start'] : '',
-                'end'    =>  ($generate[$row->id]['end']) ? $generate[$row->id]['end'] : '',
             ));
         }
         // Set sitemap.xml if not exist
@@ -205,8 +203,6 @@ class IndexController extends ActionController
     public function generateAction()
     {
         $file = $this->params('file', 'sitemap.xml');
-        $start = $this->params('start');
-        $end = $this->params('end');
         // Remove old files if exists
         $fileRoot = Pi::path($file);
         $fileMain = Pi::path(sprintf('upload/sitemap/%s', $file));
@@ -218,8 +214,8 @@ class IndexController extends ActionController
         if (Pi::service('file')->exists($fileMain)) {
             Pi::service('file')->remove($fileMain);
         }
-        // Generat sitemap
-        $generate = new Generate($file, $start, $end);
+        // Generate sitemap
+        $generate = new Generate($file);
         $sitemap = $this->view()->navigation($generate->content())->sitemap();
         $sitemap = $sitemap->setFormatOutput(true)->render();
         $generate->write($sitemap);

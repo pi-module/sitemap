@@ -23,7 +23,7 @@ class FileValidation extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = array(
-        self::TAKEN     => 'XML file name is not valid, vlaid example is : sitemap1.xml, You shuold add .xml as file prefix and use a-z 1-9 on filename',
+        self::TAKEN     => 'XML file name is not valid, valid example is : sitemap1.xml, You should add .xml as file prefix and use a-z 1-9 on filename',
     );
 
     public function isValid($value)
