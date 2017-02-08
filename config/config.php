@@ -20,6 +20,10 @@ return array(
             'title' => _a('Sitemap'),
             'name' => 'sitemap'
         ),
+        array(
+            'title' => _a('Cron'),
+            'name' => 'cron'
+        ),
     ),
     'item' => array(
         // Admin
@@ -39,6 +43,15 @@ return array(
             'edit' => 'text',
             'filter' => 'number_int',
             'value' => 5000
+        ),
+        // Cron
+        'module_cron' => array(
+            'category' => 'cron',
+            'title' => _a('Active this module cron system'),
+            'description' => '',
+            'edit' => 'checkbox',
+            'filter' => 'number_int',
+            'value' => 1
         ),
     ),
 );

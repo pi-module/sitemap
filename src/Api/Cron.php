@@ -24,38 +24,49 @@ class Cron extends AbstractApi
 {
     public function start()
     {
-        // Set log
-        Pi::service('audit')->log('cron', 'sitemap - Start cron on server');
-        // Set info
-        $file = 'sitemap.xml';
-        // Remove old files if exists
-        $fileRoot = Pi::path($file);
-        $fileMain = Pi::path(sprintf('upload/sitemap/%s', $file));
-        // remove fileRoot
-        if (Pi::service('file')->exists($fileRoot)) {
-            Pi::service('file')->remove($fileRoot);
+        // Get config
+        $config = Pi::service('registry')->config->read($this->getModule());
+        
+        // Check cron active for this module
+        if ($config['module_cron']) {
+
+            // Set log
+            Pi::service('audit')->log('cron', 'sitemap - Start cron on server');
+            // Set info
+            $file = 'sitemap.xml';
+            // Remove old files if exists
+            $fileRoot = Pi::path($file);
+            $fileMain = Pi::path(sprintf('upload/sitemap/%s', $file));
+            // remove fileRoot
+            if (Pi::service('file')->exists($fileRoot)) {
+                Pi::service('file')->remove($fileRoot);
+            }
+            // Set log
+            Pi::service('audit')->log('cron', sprintf('sitemap - remove %s', $fileRoot));
+            // remove fileMain
+            if (Pi::service('file')->exists($fileMain)) {
+                Pi::service('file')->remove($fileMain);
+            }
+            // Set log
+            Pi::service('audit')->log('cron', sprintf('sitemap - remove %s', $fileMain));
+            // Generat sitemap
+            $generate = new Generate($file);
+            $navigation = Pi::service('view')->getHelper('navigation');
+            $sitemap = $navigation($generate->content())->sitemap();
+            $sitemap = $sitemap->setFormatOutput(true)->render();
+            $generate->write($sitemap);
+            // Set log
+            Pi::service('audit')->log('cron', 'sitemap - generate new sitemap');
+            // Copy
+            Pi::service('file')->copy($fileMain, $fileRoot, true);
+            // Set log
+            Pi::service('audit')->log('cron', sprintf('sitemap - copy %s to %s', $fileMain, $fileRoot));
+            // Set log
+            Pi::service('audit')->log('cron', 'sitemap - End cron on server');
+            
+        } else {
+            // Set log
+            Pi::service('audit')->log('cron', 'sitemap - cron system not active for this module');
         }
-        // Set log
-        Pi::service('audit')->log('cron', sprintf('sitemap - remove %s', $fileRoot));
-        // remove fileMain
-        if (Pi::service('file')->exists($fileMain)) {
-            Pi::service('file')->remove($fileMain);
-        }
-        // Set log
-        Pi::service('audit')->log('cron', sprintf('sitemap - remove %s', $fileMain));
-        // Generat sitemap
-        $generate = new Generate($file);
-        $navigation = Pi::service('view')->getHelper('navigation');
-        $sitemap = $navigation($generate->content())->sitemap();
-        $sitemap = $sitemap->setFormatOutput(true)->render();
-        $generate->write($sitemap);
-        // Set log
-        Pi::service('audit')->log('cron', 'sitemap - generate new sitemap');
-        // Copy
-        Pi::service('file')->copy($fileMain, $fileRoot, true);
-        // Set log
-        Pi::service('audit')->log('cron', sprintf('sitemap - copy %s to %s', $fileMain, $fileRoot));
-        // Set log
-        Pi::service('audit')->log('cron', 'sitemap - End cron on server');
     }
 }
