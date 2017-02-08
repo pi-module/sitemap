@@ -17,12 +17,12 @@ use Pi\Application\Api\AbstractApi;
 use Module\Sitemap\Lib\Generate;
 
 /*
- * Pi::api('notification', 'Sitemap')->doCron();
+ * Pi::api('cron', 'Sitemap')->start();
  */
 
-class Notification extends AbstractApi
+class Cron extends AbstractApi
 {
-    public function doCron()
+    public function start()
     {
         // Set log
         Pi::service('audit')->log('cron', 'sitemap - Start cron on server');
