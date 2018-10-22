@@ -41,9 +41,9 @@
             </td>
             <td>
 				<?php if ($link['top'] == 0) { ?>
-				<a class="btn btn-success" title="<?php _e('Add as top'); ?>" href="<?php echo $this->url('', array('action' => 'topadd', 'id' => $link['id'])); ?>"><i class="fa fa-edit"></i> <?php _e('Add as top'); ?></a>
+				<a class="btn btn-success" title="<?php _e('Add as top'); ?>" href="<?php echo $this->url('', array('action' => 'topadd', 'id' => $link['id'])); ?>"><i class="fas fa-edit"></i> <?php _e('Add as top'); ?></a>
 				<?php } ?>
-				<a class="btn btn-danger" title="<?php _e('Delete'); ?>" href="<?php echo $this->url('', array('action' => 'deleteLink', 'id' => $link['id'])); ?>"><i class="fa fa-trash-o"></i> <?php _e('Delete'); ?></a>
+				<a class="btn btn-danger" title="<?php _e('Delete'); ?>" href="<?php echo $this->url('', array('action' => 'deleteLink', 'id' => $link['id'])); ?>"><i class="far fa-trash-alt"></i> <?php _e('Delete'); ?></a>
             </td>
 		</tr>	
 		<?php } ?>

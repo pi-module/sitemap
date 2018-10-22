@@ -1,7 +1,7 @@
 <?php $this->css($this->assetModule('css/admin.css')); ?>
 <div class="clearfix">
     <p>
-        <a class="btn btn-primary" title="<?php _e('Add Link'); ?>" href="<?php echo $this->url('', array('action' => 'update')); ?>"><i class="fa fa-file"></i> <?php _e('Add Link'); ?></a>
+        <a class="btn btn-primary" title="<?php _e('Add Link'); ?>" href="<?php echo $this->url('', array('action' => 'update')); ?>"><i class="fas fa-file"></i> <?php _e('Add Link'); ?></a>
     </p>
     <?php if (!empty($links)) { ?>
         <h3><?php _e('List of top links'); ?></h3>
@@ -31,8 +31,8 @@
                     <td><?php echo $this->escape($link['changefreq']); ?></td>
                     <td><?php echo $this->escape($link['time_create']); ?></td>
                     <td>
-                        <a class="btn btn-primary btn-xs" title="<?php _e('Edit'); ?>" href="<?php echo $this->url('', array('action' => 'update', 'id' => $link['id'])); ?>"><i class="fa fa-edit"></i> <?php _e('Edit'); ?></a>
-                        <a class="btn btn-danger btn-xs" title="<?php _e('Delete'); ?>" href="<?php echo $this->url('', array('action' => 'deleteLink', 'id' => $link['id'])); ?>"><i class="fa fa-trash-o"></i> <?php _e('Delete'); ?></a>
+                        <a class="btn btn-primary btn-xs" title="<?php _e('Edit'); ?>" href="<?php echo $this->url('', array('action' => 'update', 'id' => $link['id'])); ?>"><i class="fas fa-edit"></i> <?php _e('Edit'); ?></a>
+                        <a class="btn btn-danger btn-xs" title="<?php _e('Delete'); ?>" href="<?php echo $this->url('', array('action' => 'deleteLink', 'id' => $link['id'])); ?>"><i class="far fa-trash-alt"></i> <?php _e('Delete'); ?></a>
                     </td>
                 </tr>
             <?php } ?>
