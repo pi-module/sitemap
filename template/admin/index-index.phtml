@@ -16,15 +16,15 @@
                 <td>
                     <?php if ($file['file_main_exists']) { ?>
                         <?php if (!$file['file_exists']) { ?>
-                            <a class="btn btn-primary btn-xs" title="<?php _e('Copy to root'); ?>" href="<?php echo $this->url('', array('action' => 'copyfile', 'file' => $this->escape($file['file']))); ?>"><i class="fas fa-copy"></i> <?php _e('Copy to root'); ?></a>
+                            <a class="btn btn-primary btn-sm" title="<?php _e('Copy to root'); ?>" href="<?php echo $this->url('', array('action' => 'copyfile', 'file' => $this->escape($file['file']))); ?>"><i class="fas fa-copy"></i> <?php _e('Copy to root'); ?></a>
                         <?php } ?>
-                        <a class="btn btn-success btn-xs" title="<?php _e('Update'); ?>" href="<?php echo $this->escape($file['generate_link']); ?>"><i class="fas fa-sync-alt"></i> <?php _e('Update'); ?></a>
-                        <a class="btn btn-warning btn-xs" title="<?php _e('Delete file'); ?>" href="<?php echo $this->url('', array('action' => 'deletefile', 'file' => $this->escape($file['file']))); ?>"><i class="fas fa-file"></i> <?php _e('Delete file'); ?></a>
+                        <a class="btn btn-success btn-sm" title="<?php _e('Update'); ?>" href="<?php echo $this->escape($file['generate_link']); ?>"><i class="fas fa-sync-alt"></i> <?php _e('Update'); ?></a>
+                        <a class="btn btn-warning btn-sm" title="<?php _e('Delete file'); ?>" href="<?php echo $this->url('', array('action' => 'deletefile', 'file' => $this->escape($file['file']))); ?>"><i class="fas fa-file"></i> <?php _e('Delete file'); ?></a>
                     <?php } else { ?>
-                        <a class="btn btn-success btn-xs" title="<?php _e('Generate'); ?>" href="<?php echo $this->escape($file['generate_link']); ?>"><i class="fas fa-plus"></i> <?php _e('Generate'); ?></a>
+                        <a class="btn btn-success btn-sm" title="<?php _e('Generate'); ?>" href="<?php echo $this->escape($file['generate_link']); ?>"><i class="fas fa-plus"></i> <?php _e('Generate'); ?></a>
                     <?php } ?>
                     <?php if ($file['file_exists']) { ?>
-                        <a class="btn btn-info btn-xs" title="<?php _e('View'); ?>" href="<?php echo $this->escape($file['file_url']); ?>" target="_blank"><i class="far fa-eye"></i> <?php _e('View'); ?></a>
+                        <a class="btn btn-info btn-sm" title="<?php _e('View'); ?>" href="<?php echo $this->escape($file['file_url']); ?>" target="_blank"><i class="far fa-eye"></i> <?php _e('View'); ?></a>
                     <?php } ?>
                 </td>
             </tr>
