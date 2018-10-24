@@ -27,15 +27,15 @@
             <td>
             	<div class="clearfix"><?php _e('Loc'); ?> : <?php echo $this->escape($link['loc']); ?></div>
             	<div class="clearfix">
-            		<span class="label label-primary"><?php _e('Time'); ?> : <?php echo $this->escape($link['time_create']); ?></span>
+            		<span class="badge badge-primary"><?php _e('Time'); ?> : <?php echo $this->escape($link['time_create']); ?></span>
             		<?php if (!empty($link['module'])) { ?>
-            		<span class="label label-primary"><?php _e('Module'); ?> : <?php echo $this->escape($link['module']); ?></span>
+            		<span class="badge badge-primary"><?php _e('Module'); ?> : <?php echo $this->escape($link['module']); ?></span>
             		<?php } ?>
             		<?php if (!empty($link['table'])) { ?>
-            		<span class="label label-primary"><?php _e('Table'); ?> : <?php echo $this->escape($link['table']); ?></span>
+            		<span class="badge badge-primary"><?php _e('Table'); ?> : <?php echo $this->escape($link['table']); ?></span>
             		<?php } ?>
             		<?php if (!empty($link['item'])) { ?>
-            		<span class="label label-primary"><?php _e('Item'); ?> : <?php echo $this->escape($link['item']); ?></span>
+            		<span class="badge badge-primary"><?php _e('Item'); ?> : <?php echo $this->escape($link['item']); ?></span>
             		<?php } ?>
             	</div>
             </td>
@@ -50,11 +50,11 @@
 	</table>
 	<div class="paginator"><?php echo $this->paginationControl($paginator, 'Sliding', 'paginator.phtml'); ?></div>
 	<p>
-		<span class="label label-success"><?php _e('Published'); ?></span>
-		<span class="label label-warning"><?php _e('Pending review'); ?></span>
-		<span class="label label-warning"><?php _e('Draft'); ?></span>
-		<span class="label label-warning"><?php _e('Private'); ?></span>
-		<span class="label label-danger"><?php _e('Trash'); ?></span>
+		<span class="badge badge-success"><?php _e('Published'); ?></span>
+		<span class="badge badge-warning"><?php _e('Pending review'); ?></span>
+		<span class="badge badge-warning"><?php _e('Draft'); ?></span>
+		<span class="badge badge-warning"><?php _e('Private'); ?></span>
+		<span class="badge badge-danger"><?php _e('Trash'); ?></span>
 	</p>
 	<?php } else { ?>
 	<div class="alert alert-danger">
