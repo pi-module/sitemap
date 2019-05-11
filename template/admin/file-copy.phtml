@@ -1,15 +1,15 @@
 <?php $this->css($this->assetModule('css/admin.css')); ?>
 <div class="clearfix">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title"><?php _e('Generate XML file'); ?></h3>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><?php _e('Generate XML file'); ?></h3>
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             <p><?php _e('Sitemap XML file generated on two steps, first new file generated on upload/sitemap and after that you need cope this file to website root. you can copy XML file by (( Copy to root )) button on this page, But if your server setting does not support this action you need copy XML file to website root manually by FTP client'); ?></p>
         </div>
         <ul class="list-group">
-            <li class="list-group-item list-group-item-success"><strong><i class="fa fa-check-square-o"></i> <?php _e('Step 1'); ?></strong> <?php _e('New XML file generated'); ?> <span class="badge badge-success"><?php _e('Completed'); ?></span></li>
-            <li class="list-group-item list-group-item-success"><strong><i class="fa fa-check-square-o"></i> <?php _e('Step 2'); ?></strong> <?php _e('Copy XML file to website root'); ?> <span class="badge badge-success"><?php _e('Completed'); ?></span></li>
+            <li class="list-group-item list-group-item-success"><strong><i class="fas fa-check-square-o"></i> <?php _e('Step 1'); ?></strong> <?php _e('New XML file generated'); ?> <span class="badge badge-success"><?php _e('Completed'); ?></span></li>
+            <li class="list-group-item list-group-item-success"><strong><i class="fas fa-check-square-o"></i> <?php _e('Step 2'); ?></strong> <?php _e('Copy XML file to website root'); ?> <span class="badge badge-success"><?php _e('Completed'); ?></span></li>
         </ul>
     </div>
     <p><a class="btn btn-primary" title="<?php _e('‌Back to index'); ?>" href="<?php echo $this->escape($url); ?>"><?php _e('‌Back to index'); ?></a></p>
