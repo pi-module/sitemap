@@ -336,4 +336,18 @@ class IndexController extends ActionController
         // Set view
         $this->view()->setTemplate(false);
     }
+
+    /**
+     * delete all link action
+     */
+    public function deleteAllLinkAction()
+    {
+        $id = $this->params('id');
+        $row = $this->getModel('url')->find($id);
+
+        $urlModel = $this->getModel('url');
+        $urlModel->getAdapter()->query('TRUNCATE TABLE `' . $urlModel->getTable() . '`')->execute();
+
+        $this->jump(array('action' => 'list'), __('All links deleted'));
+    }
 }
