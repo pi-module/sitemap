@@ -14,19 +14,19 @@
 		<?php foreach($links as $link) { ?>
 		<?php
 		if($link['status'] == 1) {
-			$labelIdClass = 'label-success';	
+			$badgeIdClass = 'badge-success';
 		} elseif($link['status'] == 2) {
-			$labelIdClass = 'label-warning';	
+			$badgeIdClass = 'badge-warning';
 		} elseif($link['status'] == 3) {
-			$labelIdClass = 'label-warning';	
+			$badgeIdClass = 'badge-warning';
 		} elseif($link['status'] == 4) {
-			$labelIdClass = 'label-warning';	
+			$badgeIdClass = 'badge-warning';
 		} elseif($link['status'] == 5) {
-			$labelIdClass = 'label-danger';	
+			$badgeIdClass = 'badge-danger';
 		}	
 		?>
         <tr>
-			<td><span class="label <?php echo $labelIdClass; ?>"><?php echo $this->escape($link['id']); ?></span></td>
+			<td><span class="badge <?php echo $badgeIdClass; ?>"><?php echo $this->escape($link['id']); ?></span></td>
             <td>
             	<div class="clearfix"><?php _e('Loc'); ?> : <?php echo $this->escape($link['loc']); ?></div>
             	<div class="clearfix">
