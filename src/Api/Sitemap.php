@@ -173,6 +173,7 @@ class Sitemap extends AbstractApi
             $values['table']       = $table;
             $values['item']        = intval($item);
             $values['status']      = intval($status);
+
             // Save
             $row = Pi::model('url', 'sitemap')->createRow();
             $row->assign($values);
@@ -195,6 +196,7 @@ class Sitemap extends AbstractApi
         if (empty($loc)) {
             return '';
         }
+
         // Check loc is valid
         $validator = new UriValidator;
         if (!$validator->isValid($loc)) {
@@ -304,6 +306,7 @@ class Sitemap extends AbstractApi
         $values['table']       = $table;
         $values['item']        = intval($item);
         $values['status']      = intval($status);
+
         // Save
         $row = Pi::model('url', 'sitemap')->createRow();
         $row->assign($values);
@@ -319,6 +322,7 @@ class Sitemap extends AbstractApi
         if (empty($loc)) {
             return '';
         }
+
         // Remove
         $where = ['loc' => $loc];
         Pi::model('url', 'sitemap')->delete($where);
@@ -333,12 +337,14 @@ class Sitemap extends AbstractApi
         if (empty($module)) {
             return '';
         }
+
         // Check table
         if (empty($table)) {
             $where = ['module' => $module];
         } else {
             $where = ['module' => $module, 'table' => $table];
         }
+
         // Remove
         Pi::model('url', 'sitemap')->delete($where);
     }
