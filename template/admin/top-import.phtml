@@ -1,0 +1,12 @@
+<?php $this->css($this->assetModule('css/admin.css')); ?>
+<div class="clearfix">
+    <div class="alert alert-success">
+        <?php _e('All main links imported and synced !'); ?>
+    </div>
+    <div class="card bg-light mb-3">
+        <div class="card-header"><?php _e('List of links'); ?></div>
+        <div class="card-body">
+            <pre class="card-text"><?php print_r($linkList); ?></pre>
+        </div>
+    </div>
+</div>

@@ -125,6 +125,8 @@ class TopController extends ActionController
             Pi::api('sitemap', 'sitemap')->singleLink($linkSingle['loc'], $linkSingle['status'], $linkSingle['module']);
         }
 
-        $this->jump(['action' => 'index'], __('All links deleted'));
+        // Set view
+        $this->view()->setTemplate('top-import');
+        $this->view()->assign('linkList', $linkList);
     }
 }
