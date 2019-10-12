@@ -72,8 +72,8 @@ return [
             'label'      => _a('List links'),
             'route'      => 'admin',
             'module'     => 'sitemap',
-            'controller' => 'index',
-            'action'     => 'list',
+            'controller' => 'list',
+            'action'     => 'index',
         ],
     ],
 ];
