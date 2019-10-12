@@ -16,15 +16,11 @@ namespace Module\Sitemap\Controller\Admin;
 use Pi;
 use Pi\Mvc\Controller\ActionController;
 use Pi\Paginator\Paginator;
-use Module\Sitemap\Form\TopForm;
-use Module\Sitemap\Form\TopFilter;
 use Module\Sitemap\Lib\Generate;
+use Zend\Db\Sql\Predicate\Expression;
 
 class IndexController extends ActionController
 {
-    /**
-     * Default action
-     */
     public function indexAction()
     {
         // Get info
@@ -75,160 +71,6 @@ class IndexController extends ActionController
         $this->view()->assign('generate', $generate);
     }
 
-    /**
-     * Top action
-     */
-    public function topAction()
-    {
-        // Get info
-        $page = $this->params('page', 1);
-        $link = null;
-
-        // Set info
-        $where  = ['top' => 1];
-        $order  = ['id DESC', 'time_create DESC'];
-        $limit  = intval($this->config('admin_perpage'));
-        $offset = (int)($page - 1) * $this->config('admin_perpage');
-
-        // Get info
-        $select = $this->getModel('url')->select()->where($where)->order($order)->offset($offset)->limit($limit);
-        $rowset = $this->getModel('url')->selectWith($select);
-
-        // Make list
-        foreach ($rowset as $row) {
-            $link[$row->id]                = $row->toArray();
-            $link[$row->id]['time_create'] = _date($link[$row->id]['time_create']);
-        }
-
-        // Set paginator
-        $count     = ['count' => new \Zend\Db\Sql\Predicate\Expression('count(*)')];
-        $select    = $this->getModel('url')->select()->columns($count)->where($where);
-        $count     = $this->getModel('url')->selectWith($select)->current()->count;
-        $paginator = Paginator::factory(intval($count));
-        $paginator->setItemCountPerPage($this->config('admin_perpage'));
-        $paginator->setCurrentPageNumber($page);
-        $paginator->setUrlOptions(
-            [
-                'router' => $this->getEvent()->getRouter(),
-                'route'  => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
-                'params' => array_filter(
-                    [
-                        'module'     => $this->getModule(),
-                        'controller' => 'index',
-                        'action'     => 'top',
-                    ]
-                ),
-            ]
-        );
-
-        // Set view
-        $this->view()->setTemplate('index-top');
-        $this->view()->assign('links', $link);
-        $this->view()->assign('paginator', $paginator);
-    }
-
-    /**
-     * List action
-     */
-    public function listAction()
-    {
-        // Get info
-        $page   = $this->params('page', 1);
-        $link   = [];
-
-        // Set info
-        $order  = ['id DESC', 'time_create DESC'];
-        $limit  = intval($this->config('admin_perpage'));
-        $offset = (int)($page - 1) * $this->config('admin_perpage');
-
-        // Get info
-        $select = $this->getModel('url')->select()->order($order)->offset($offset)->limit($limit);
-        $rowset = $this->getModel('url')->selectWith($select);
-
-        // Make list
-        foreach ($rowset as $row) {
-            $link[$row->id]                = $row->toArray();
-            $link[$row->id]['time_create'] = _date($link[$row->id]['time_create']);
-        }
-
-        // Set paginator
-        $count     = ['count' => new \Zend\Db\Sql\Predicate\Expression('count(*)')];
-        $select    = $this->getModel('url')->select()->columns($count);
-        $count     = $this->getModel('url')->selectWith($select)->current()->count;
-        $paginator = Paginator::factory(intval($count));
-        $paginator->setItemCountPerPage($this->config('admin_perpage'));
-        $paginator->setCurrentPageNumber($page);
-        $paginator->setUrlOptions(
-            [
-                'router' => $this->getEvent()->getRouter(),
-                'route'  => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
-                'params' => array_filter(
-                    [
-                        'module'     => $this->getModule(),
-                        'controller' => 'index',
-                        'action'     => 'list',
-                    ]
-                ),
-            ]
-        );
-
-        // Set view
-        $this->view()->setTemplate('index-list');
-        $this->view()->assign('links', $link);
-        $this->view()->assign('paginator', $paginator);
-    }
-
-    /**
-     * Top update action
-     */
-    public function updateAction()
-    {
-        // Get id
-        $id     = $this->params('id');
-
-        // Set form
-        $form = new TopForm();
-        if ($this->request->isPost()) {
-            $data = $this->request->getPost();
-            $form->setInputFilter(new TopFilter());
-            $form->setData($data);
-            if ($form->isValid()) {
-                $values = $form->getData();
-
-                // Add / update time
-                $values['time_create'] = time();
-                $values['top']         = 1;
-
-                // Save values
-                if (!empty($values['id'])) {
-                    $row = $this->getModel('url')->find($values['id']);
-                } else {
-                    $row = $this->getModel('url')->createRow();
-                }
-                $row->assign($values);
-                $row->save();
-
-                // jump
-                $message = __('Link saved successfully.');
-                $url     = ['action' => 'top'];
-                $this->jump($url, $message);
-            }
-        } else {
-            if ($id) {
-                $values = $this->getModel('url')->find($id)->toArray();
-                $form->setData($values);
-            }
-        }
-
-        // Set view
-        $this->view()->setTemplate('index-update');
-        $this->view()->assign('form', $form);
-        $this->view()->assign('title', __('Add a link'));
-    }
-
-    /**
-     * Generate sitemap.xml
-     */
     public function generateAction()
     {
         $file = $this->params('file', 'sitemap.xml');
@@ -266,10 +108,7 @@ class IndexController extends ActionController
         $this->view()->assign('url', $url);
     }
 
-    /**
-     * Copy XML file to website root
-     */
-    public function copyfileAction()
+    public function copyFileAction()
     {
         $file = $this->params('file');
         if (!$file) {
@@ -296,10 +135,7 @@ class IndexController extends ActionController
         $this->view()->assign('url', $url);
     }
 
-    /**
-     * Delete XML file
-     */
-    public function deletefileAction()
+    public function deleteFileAction()
     {
         $file = $this->params('file');
         if ($file) {
@@ -325,9 +161,6 @@ class IndexController extends ActionController
         $this->view()->setTemplate(false);
     }
 
-    /**
-     * Delete XML build method
-     */
     public function deleteAction()
     {
         $file = $this->params('file');
@@ -347,53 +180,81 @@ class IndexController extends ActionController
         $this->view()->setTemplate(false);
     }
 
-    /**
-     * Add link as top
-     */
-    public function topaddAction()
+    public function checkHealthAction()
     {
-        $id  = $this->params('id');
-        $row = $this->getModel('url')->find($id);
-        if ($row) {
-            $row->top = 1;
-            $row->save();
+        // Clean params
+        $params = [];
+        foreach ($_GET as $key => $value) {
+            $params[$key] = $value;
+        }
 
-            // jump
-            $this->jump(['action' => 'list'], __('This link add as top link'));
+        // Get info from url
+        $params['module']  = $this->params('module');
+        $params['page']    = $this->params('page', 1);
+        $params['limit']   = $this->params('page', 50);
+        $params['count']   = $this->params('count', 0);
+        $params['percent'] = 0;
+
+        // Set info
+        $order  = ['id ASC'];
+        $offset = (int)($params['page'] - 1) * $params['limit'];
+        $where = ['item > ?' => 0];
+
+        // Get info
+        $select = $this->getModel('url')->select()->where($where)->order($order)->offset($offset)->limit($params['limit']);
+        $rowset = $this->getModel('url')->selectWith($select);
+
+        // Get count
+        if ($params['count'] == 0) {
+            $count           = ['count' => new Expression('count(*)')];
+            $select          = $this->getModel('url')->select()->columns($count)->where($where);
+            $params['count'] = $this->getModel('url')->selectWith($select)->current()->count;
+        }
+
+        // Check and update health
+        foreach ($rowset as $row) {
+            if (Pi::service('module')->isActive($row->module)) {
+                $urlRow = Pi::model($row->module, $row->table)->find($row->item);
+                if ($urlRow) {
+                    if ($urlRow->status != $row->status) {
+                        $row->status = $urlRow->status;
+                        $row->save();
+                    }
+                } else {
+                    if ($row->status != 0) {
+                        $row->status = 0;
+                        $row->save();
+                    }
+                }
+            } else {
+                if ($row->status != 0) {
+                    $row->status = 0;
+                    $row->save();
+                }
+            }
+        }
+
+        // Set page
+        $params['lastPage'] = intval($params['count'] / $params['limit']) + 1;
+        if ($params['lastPage'] == $params['page']) {
+            $nextUrl           = '';
+            $params['percent'] = 100;
         } else {
-            $this->jump(['action' => 'list'], __('Please select link'));
+            $params['percent'] = (100 * $params['page']) / $params['lastPage'];
+            $params['page']    = $params['page'] + 1;
+            $nextUrl           = Pi::url(
+                    $this->url(
+                        '', [
+                            'controller' => 'export',
+                            'action'     => 'generate',
+                        ]
+                    )
+                ) . '?' . http_build_query($params);
         }
 
         // Set view
-        $this->view()->setTemplate(false);
-    }
-
-    /**
-     * delete link action
-     */
-    public function deleteLinkAction()
-    {
-        $id  = $this->params('id');
-        $row = $this->getModel('url')->find($id);
-        if ($row) {
-            $row->delete();
-            $this->jump(['action' => 'list'], __('This link deleted'));
-        } else {
-            $this->jump(['action' => 'list'], __('Please select link'));
-        }
-
-        // Set view
-        $this->view()->setTemplate(false);
-    }
-
-    /**
-     * delete all link action
-     */
-    public function deleteAllLinkAction()
-    {
-        $urlModel = $this->getModel('url');
-        $urlModel->getAdapter()->query('TRUNCATE TABLE `' . $urlModel->getTable() . '`')->execute();
-
-        $this->jump(['action' => 'list'], __('All links deleted'));
+        $this->view()->setTemplate('check-health');
+        $this->view()->assign('nextUrl', $nextUrl);
+        $this->view()->assign('params', $params);
     }
 }

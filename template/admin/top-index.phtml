@@ -1,9 +1,5 @@
 <?php $this->css($this->assetModule('css/admin.css')); ?>
 <div class="clearfix">
-    <p>
-        <a class="btn btn-primary" title="<?php _e('Add Link'); ?>" href="<?php echo $this->url('', ['action' => 'update']); ?>"><i
-                    class="fas fa-file"></i> <?php _e('Add Link'); ?></a>
-    </p>
     <?php if (!empty($links)) { ?>
         <h3><?php _e('List of top links'); ?></h3>
         <table class="table table-striped table-bordered table-sm">
