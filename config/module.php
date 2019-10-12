@@ -10,29 +10,29 @@
 /**
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
-return array(
+return [
     // Module meta
-    'meta'         => array(
-        'title'         => _a('Sitemap'),
-        'description'   => _a('For generate sitemap.xml.'),
-        'version'       => '1.3.1',
-        'license'       => 'New BSD',
-        'logo'          => 'image/logo.png',
-        'readme'        => 'docs/readme.txt',
-        'demo'          => 'http://pialog',
-        'icon'          => 'fa-sitemap',
-    ),
+    'meta'     => [
+        'title'       => _a('Sitemap'),
+        'description' => _a('For generate sitemap.xml.'),
+        'version'     => '1.3.1',
+        'license'     => 'New BSD',
+        'logo'        => 'image/logo.png',
+        'readme'      => 'docs/readme.txt',
+        'demo'        => 'http://pialog',
+        'icon'        => 'fa-sitemap',
+    ],
     // Author information
-    'author'        => array(
-        'Name'          => 'Hossein Azizabadi',
-        'email'         => 'azizabadi@faragostaresh.com',
-        'website'       => 'http://www.xoopsengine.org',
-        'credits'       => 'Pi Engine Team'
-    ),
+    'author'   => [
+        'Name'    => 'Hossein Azizabadi',
+        'email'   => 'azizabadi@faragostaresh.com',
+        'website' => 'http://www.xoopsengine.org',
+        'credits' => 'Pi Engine Team',
+    ],
     // Resource
-    'resource' => array(
-        'database'      => 'database.php',
-        'config'        => 'config.php',
-        'navigation'    => 'navigation.php',
-    ),
-);
+    'resource' => [
+        'database'   => 'database.php',
+        'config'     => 'config.php',
+        'navigation' => 'navigation.php',
+    ],
+];

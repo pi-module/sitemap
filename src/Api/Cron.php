@@ -10,6 +10,7 @@
 /**
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
+
 namespace Module\Sitemap\Api;
 
 use Pi;
@@ -26,7 +27,7 @@ class Cron extends AbstractApi
     {
         // Get config
         $config = Pi::service('registry')->config->read($this->getModule());
-        
+
         // Check cron active for this module
         if ($config['module_cron']) {
 
@@ -50,10 +51,10 @@ class Cron extends AbstractApi
             // Set log
             Pi::service('audit')->log('cron', sprintf('sitemap - remove %s', $fileMain));
             // Generat sitemap
-            $generate = new Generate($file);
+            $generate   = new Generate($file);
             $navigation = Pi::service('view')->getHelper('navigation');
-            $sitemap = $navigation($generate->content())->sitemap();
-            $sitemap = $sitemap->setFormatOutput(true)->render();
+            $sitemap    = $navigation($generate->content())->sitemap();
+            $sitemap    = $sitemap->setFormatOutput(true)->render();
             $generate->write($sitemap);
             // Set log
             Pi::service('audit')->log('cron', 'sitemap - generate new sitemap');
@@ -63,7 +64,7 @@ class Cron extends AbstractApi
             Pi::service('audit')->log('cron', sprintf('sitemap - copy %s to %s', $fileMain, $fileRoot));
             // Set log
             Pi::service('audit')->log('cron', 'sitemap - End cron on server');
-            
+
         } else {
             // Set log
             Pi::service('audit')->log('cron', 'sitemap - cron system not active for this module');

@@ -20,17 +20,18 @@ class Url extends Model
     /**
      * {@inheritDoc}
      */
-    protected $columns = array(
-        'id',
-        'loc',
-        'lastmod',
-        'changefreq',
-        'priority',
-        'time_create',
-        'module',
-        'table',
-        'item',
-        'status',
-        'top',
-    );
+    protected $columns
+        = [
+            'id',
+            'loc',
+            'lastmod',
+            'changefreq',
+            'priority',
+            'time_create',
+            'module',
+            'table',
+            'item',
+            'status',
+            'top',
+        ];
 }

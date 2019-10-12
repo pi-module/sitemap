@@ -10,6 +10,7 @@
 /**
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
+
 namespace Module\Sitemap\Form;
 
 use Pi;
@@ -20,54 +21,66 @@ class TopFilter extends InputFilter
     public function __construct()
     {
         // id
-        $this->add(array(
-            'name' => 'id',
-            'required' => false,
-        ));
+        $this->add(
+            [
+                'name'     => 'id',
+                'required' => false,
+            ]
+        );
         // loc
-        $this->add(array(
-            'name' => 'loc',
-            'required' => true,
-            'filters' => array(
-                array(
-                    'name' => 'StringTrim',
-                ),
-            ),
-        ));
+        $this->add(
+            [
+                'name'     => 'loc',
+                'required' => true,
+                'filters'  => [
+                    [
+                        'name' => 'StringTrim',
+                    ],
+                ],
+            ]
+        );
         // lastmod
-        $this->add(array(
-            'name' => 'lastmod',
-            'required' => true,
-            'filters' => array(
-                array(
-                    'name' => 'StringTrim',
-                ),
-            ),
-        ));
+        $this->add(
+            [
+                'name'     => 'lastmod',
+                'required' => true,
+                'filters'  => [
+                    [
+                        'name' => 'StringTrim',
+                    ],
+                ],
+            ]
+        );
         // changefreq
-        $this->add(array(
-            'name' => 'changefreq',
-            'required' => true,
-            'filters' => array(
-                array(
-                    'name' => 'StringTrim',
-                ),
-            ),
-        ));
+        $this->add(
+            [
+                'name'     => 'changefreq',
+                'required' => true,
+                'filters'  => [
+                    [
+                        'name' => 'StringTrim',
+                    ],
+                ],
+            ]
+        );
         // priority
-        $this->add(array(
-            'name' => 'priority',
-            'required' => true,
-            'filters' => array(
-                array(
-                    'name' => 'StringTrim',
-                ),
-            ),
-        ));
+        $this->add(
+            [
+                'name'     => 'priority',
+                'required' => true,
+                'filters'  => [
+                    [
+                        'name' => 'StringTrim',
+                    ],
+                ],
+            ]
+        );
         // status
-        $this->add(array(
-            'name' => 'status',
-            'required' => true,
-        ));
-    }	
+        $this->add(
+            [
+                'name'     => 'status',
+                'required' => true,
+            ]
+        );
+    }
 }	

@@ -20,12 +20,13 @@ class Generate extends Model
     /**
      * {@inheritDoc}
      */
-    protected $columns = array(
-        'id',
-        'file',
-        'time_create',
-        'time_update',
-        'start',
-        'end',
-    );
+    protected $columns
+        = [
+            'id',
+            'file',
+            'time_create',
+            'time_update',
+            'start',
+            'end',
+        ];
 }

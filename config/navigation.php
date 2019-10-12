@@ -10,31 +10,31 @@
 /**
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
-return array(
+return [
     // Hide from front menu
     'front' => false,
     // Admin side
-    'admin' => array(
-        'generat' => array(
-            'label'         => _a('Generate'),
-            'route'         => 'admin',
-            'module'        => 'sitemap',
-            'controller'    => 'index',
-            'action'        => 'index',
-        ),
-        'top' => array(
-            'label'         => _a('Top links'),
-            'route'         => 'admin',
-            'module'        => 'sitemap',
-            'controller'    => 'index',
-            'action'        => 'top',
-        ),
-        'list' => array(
-            'label'         => _a('List links'),
-            'route'         => 'admin',
-            'module'        => 'sitemap',
-            'controller'    => 'index',
-            'action'        => 'list',
-        ),
-    ),
-);
+    'admin' => [
+        'generat' => [
+            'label'      => _a('Generate'),
+            'route'      => 'admin',
+            'module'     => 'sitemap',
+            'controller' => 'index',
+            'action'     => 'index',
+        ],
+        'top'     => [
+            'label'      => _a('Top links'),
+            'route'      => 'admin',
+            'module'     => 'sitemap',
+            'controller' => 'index',
+            'action'     => 'top',
+        ],
+        'list'    => [
+            'label'      => _a('List links'),
+            'route'      => 'admin',
+            'module'     => 'sitemap',
+            'controller' => 'index',
+            'action'     => 'list',
+        ],
+    ],
+];

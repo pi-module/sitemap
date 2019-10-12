@@ -10,6 +10,7 @@
 /**
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
+
 namespace Module\Sitemap\Lib;
 
 use Pi;
@@ -20,7 +21,8 @@ class Generate
 
     /**
      * Constructor
-     * @param  string $name
+     *
+     * @param string $name
      */
     public function __construct($name)
     {
@@ -29,41 +31,43 @@ class Generate
 
     /**
      * Get sitemap content
+     *
      * @return array
      */
     public function content()
     {
-        $content[0] = array(
-            'uri'         => Pi::url('www'),
-            'lastmod'     => date("Y-m-d H:i:s"),
-            'changefreq'  => 'daily',
-            'priority'    => '1.0',
-        );
+        $content[0] = [
+            'uri'        => Pi::url('www'),
+            'lastmod'    => date("Y-m-d H:i:s"),
+            'changefreq' => 'daily',
+            'priority'   => '1.0',
+        ];
 
         $config = Pi::service('registry')->config->read('sitemap', 'sitemap');
-        $where = array('status' => 1);
-        $order = array('priority DESC', 'top DESC', 'time_create DESC');
-        $limit = intval($config['sitemap_limit']);
+        $where  = ['status' => 1];
+        $order  = ['priority DESC', 'top DESC', 'time_create DESC'];
+        $limit  = intval($config['sitemap_limit']);
         $select = Pi::model('url', 'sitemap')->select()->where($where)->order($order)->limit($limit);
         $rowset = Pi::model('url', 'sitemap')->selectWith($select);
         foreach ($rowset as $row) {
             $changefreq = (!empty($row->changefreq)) ? $row->changefreq : 'weekly';
-            $priority = (!empty($row->priority)) ? $row->priority : '0.5';
+            $priority   = (!empty($row->priority)) ? $row->priority : '0.5';
 
-            $link = array();
-            $link['uri']         = $row->loc;
-            $link['lastmod']     = $row->lastmod;
-            $link['changefreq']  = $changefreq;
-            $link['priority']    = $priority;
+            $link               = [];
+            $link['uri']        = $row->loc;
+            $link['lastmod']    = $row->lastmod;
+            $link['changefreq'] = $changefreq;
+            $link['priority']   = $priority;
 
-            $content[$row->id]   = $link;
+            $content[$row->id] = $link;
         }
 
         return $content;
-    }	
+    }
 
     /**
      * write on XML file
+     *
      * @param array
      */
     public function write($xml)
@@ -90,12 +94,12 @@ class Generate
     {
         $row = Pi::model('generate', 'sitemap')->find($this->name, 'file');
         if ($row) {
-            $row->file = $this->name;
+            $row->file        = $this->name;
             $row->time_update = time();
             $row->save();
         } else {
-            $row = Pi::model('generate', 'sitemap')->createRow();
-            $row->file = $this->name;
+            $row              = Pi::model('generate', 'sitemap')->createRow();
+            $row->file        = $this->name;
             $row->time_create = time();
             $row->time_update = time();
             $row->save();

@@ -10,6 +10,7 @@
 /**
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
+
 namespace Module\Sitemap\Api;
 
 use Pi;
@@ -28,10 +29,10 @@ class Sitemap extends AbstractApi
      * Old method , will remove
      * Add new link to url table
      *
-     * @param  string $module
-     * @param  string $table
-     * @param  int $item
-     * @param  string $loc
+     * @param string $module
+     * @param string $table
+     * @param int    $item
+     * @param string $loc
      */
     public function add($module, $table, $item, $loc, $status = 1)
     {
@@ -42,11 +43,11 @@ class Sitemap extends AbstractApi
      * Old method , will remove
      * Update link to url table
      *
-     * @param  string $module
-     * @param  string $table
-     * @param  int $item
-     * @param  string $loc
-     * @param  int $status
+     * @param string $module
+     * @param string $table
+     * @param int    $item
+     * @param string $loc
+     * @param int    $status
      */
     public function update($module, $table, $item, $loc, $status = 1)
     {
@@ -56,11 +57,11 @@ class Sitemap extends AbstractApi
     /**
      * Add or Update link to url table
      *
-     * @param  string $loc
-     * @param  int $status
-     * @param  string $module
-     * @param  string $table
-     * @param  int $item
+     * @param string $loc
+     * @param int    $status
+     * @param string $module
+     * @param string $table
+     * @param int    $item
      */
     public function singleLink($loc, $status = 1, $module = '', $table = '', $item = 0)
     {
@@ -76,28 +77,28 @@ class Sitemap extends AbstractApi
 
         // Set changefreq and priority
         $changefreq = 'weekly';
-        $priority = '0.5';
+        $priority   = '0.5';
         switch ($module) {
             case 'news' :
                 switch ($table) {
                     case 'story';
                         $changefreq = 'daily';
-                        $priority = '0.7';
+                        $priority   = '0.7';
                         break;
 
                     case 'microblog';
                         $changefreq = 'daily';
-                        $priority = '0.4';
+                        $priority   = '0.4';
                         break;
 
                     case 'topic';
                         $changefreq = 'weekly';
-                        $priority = '0.3';
+                        $priority   = '0.3';
                         break;
 
                     case 'author';
                         $changefreq = 'weekly';
-                        $priority = '0.3';
+                        $priority   = '0.3';
                         break;
                 }
                 break;
@@ -106,22 +107,22 @@ class Sitemap extends AbstractApi
                 switch ($table) {
                     case 'item';
                         $changefreq = 'daily';
-                        $priority = '0.8';
+                        $priority   = '0.8';
                         break;
 
                     case 'event';
                         $changefreq = 'daily';
-                        $priority = '0.6';
+                        $priority   = '0.6';
                         break;
 
                     case 'category';
                         $changefreq = 'weekly';
-                        $priority = '0.3';
+                        $priority   = '0.3';
                         break;
 
                     case 'location';
                         $changefreq = 'weekly';
-                        $priority = '0.3';
+                        $priority   = '0.3';
                         break;
                 }
                 break;
@@ -130,48 +131,48 @@ class Sitemap extends AbstractApi
                 switch ($table) {
                     case 'product';
                         $changefreq = 'weekly';
-                        $priority = '0.6';
+                        $priority   = '0.6';
                         break;
 
                     case 'category';
                         $changefreq = 'weekly';
-                        $priority = '0.3';
+                        $priority   = '0.3';
                         break;
                 }
                 break;
 
             case 'page' :
                 $changefreq = 'weekly';
-                $priority = '0.3';
+                $priority   = '0.3';
                 break;
 
             case 'portfolio' :
                 $changefreq = 'weekly';
-                $priority = '0.3';
+                $priority   = '0.3';
                 break;
         }
 
         // Check loc exist or not
         $row = Pi::model('url', 'sitemap')->find($loc, 'loc');
         if (!empty($row) && is_object($row)) {
-            $row->loc = $loc;
-            $row->lastmod = date("Y-m-d H:i:s");
-            $row->status = intval($status);
+            $row->loc        = $loc;
+            $row->lastmod    = date("Y-m-d H:i:s");
+            $row->status     = intval($status);
             $row->changefreq = $changefreq;
-            $row->priority = $priority;
+            $row->priority   = $priority;
             $row->save();
         } else {
             // Set
-            $values = array();
-            $values['loc'] = $loc;
-            $values['lastmod'] = date("Y-m-d H:i:s");
-            $values['changefreq'] = $changefreq;
-            $values['priority'] = $priority;
+            $values                = [];
+            $values['loc']         = $loc;
+            $values['lastmod']     = date("Y-m-d H:i:s");
+            $values['changefreq']  = $changefreq;
+            $values['priority']    = $priority;
             $values['time_create'] = time();
-            $values['module'] = $module;
-            $values['table'] = $table;
-            $values['item'] = intval($item);
-            $values['status'] = intval($status);
+            $values['module']      = $module;
+            $values['table']       = $table;
+            $values['item']        = intval($item);
+            $values['status']      = intval($status);
             // Save
             $row = Pi::model('url', 'sitemap')->createRow();
             $row->assign($values);
@@ -182,11 +183,11 @@ class Sitemap extends AbstractApi
     /**
      * Add group of links to url table whitout check is exist or not
      *
-     * @param  string $loc
-     * @param  int $status
-     * @param  string $module
-     * @param  string $table
-     * @param  int $item
+     * @param string $loc
+     * @param int    $status
+     * @param string $module
+     * @param string $table
+     * @param int    $item
      */
     public function groupLink($loc, $status = 1, $module = '', $table = '', $item = 0)
     {
@@ -202,28 +203,28 @@ class Sitemap extends AbstractApi
 
         // Set changefreq and priority
         $changefreq = 'weekly';
-        $priority = '0.5';
+        $priority   = '0.5';
         switch ($module) {
             case 'news' :
                 switch ($table) {
                     case 'story';
                         $changefreq = 'daily';
-                        $priority = '0.7';
+                        $priority   = '0.7';
                         break;
 
                     case 'microblog';
                         $changefreq = 'daily';
-                        $priority = '0.4';
+                        $priority   = '0.4';
                         break;
 
                     case 'topic';
                         $changefreq = 'weekly';
-                        $priority = '0.3';
+                        $priority   = '0.3';
                         break;
 
                     case 'author';
                         $changefreq = 'weekly';
-                        $priority = '0.3';
+                        $priority   = '0.3';
                         break;
                 }
                 break;
@@ -232,22 +233,22 @@ class Sitemap extends AbstractApi
                 switch ($table) {
                     case 'item';
                         $changefreq = 'daily';
-                        $priority = '0.8';
+                        $priority   = '0.8';
                         break;
 
                     case 'event';
                         $changefreq = 'daily';
-                        $priority = '0.6';
+                        $priority   = '0.6';
                         break;
 
                     case 'category';
                         $changefreq = 'weekly';
-                        $priority = '0.3';
+                        $priority   = '0.3';
                         break;
 
                     case 'location';
                         $changefreq = 'weekly';
-                        $priority = '0.3';
+                        $priority   = '0.3';
                         break;
                 }
                 break;
@@ -256,53 +257,53 @@ class Sitemap extends AbstractApi
                 switch ($table) {
                     case 'product';
                         $changefreq = 'weekly';
-                        $priority = '0.6';
+                        $priority   = '0.6';
                         break;
 
                     case 'category';
                         $changefreq = 'weekly';
-                        $priority = '0.3';
+                        $priority   = '0.3';
                         break;
                 }
                 break;
 
             case 'page' :
                 $changefreq = 'weekly';
-                $priority = '0.3';
+                $priority   = '0.3';
                 break;
 
             case 'portfolio' :
                 $changefreq = 'weekly';
-                $priority = '0.3';
+                $priority   = '0.3';
                 break;
 
             case 'event' :
                 $changefreq = 'daily';
-                $priority = '0.6';
+                $priority   = '0.6';
                 break;
 
             case 'blog' :
                 $changefreq = 'daily';
-                $priority = '0.6';
+                $priority   = '0.6';
                 break;
 
             case 'gallery' :
                 $changefreq = 'daily';
-                $priority = '0.6';
+                $priority   = '0.6';
                 break;
         }
 
         // Set
-        $values = array();
-        $values['loc'] = $loc;
-        $values['lastmod'] = date("Y-m-d H:i:s");
-        $values['changefreq'] = $changefreq;
-        $values['priority'] = $priority;
+        $values                = [];
+        $values['loc']         = $loc;
+        $values['lastmod']     = date("Y-m-d H:i:s");
+        $values['changefreq']  = $changefreq;
+        $values['priority']    = $priority;
         $values['time_create'] = time();
-        $values['module'] = $module;
-        $values['table'] = $table;
-        $values['item'] = intval($item);
-        $values['status'] = intval($status);
+        $values['module']      = $module;
+        $values['table']       = $table;
+        $values['item']        = intval($item);
+        $values['status']      = intval($status);
         // Save
         $row = Pi::model('url', 'sitemap')->createRow();
         $row->assign($values);
@@ -319,7 +320,7 @@ class Sitemap extends AbstractApi
             return '';
         }
         // Remove
-        $where = array('loc' => $loc);
+        $where = ['loc' => $loc];
         Pi::model('url', 'sitemap')->delete($where);
     }
 
@@ -334,9 +335,9 @@ class Sitemap extends AbstractApi
         }
         // Check table
         if (empty($table)) {
-            $where = array('module' => $module);
+            $where = ['module' => $module];
         } else {
-            $where = array('module' => $module, 'table' => $table);
+            $where = ['module' => $module, 'table' => $table];
         }
         // Remove
         Pi::model('url', 'sitemap')->delete($where);

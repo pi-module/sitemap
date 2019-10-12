@@ -10,6 +10,7 @@
 /**
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
+
 namespace Module\Sitemap\Controller\Admin;
 
 use Pi;
@@ -27,40 +28,44 @@ class IndexController extends ActionController
     public function indexAction()
     {
         // Get info
-        $select = $this->getModel('generate')->select()->order(array('time_update DESC'));
+        $select = $this->getModel('generate')->select()->order(['time_update DESC']);
         $rowset = $this->getModel('generate')->selectWith($select);
         // Make list
         foreach ($rowset as $row) {
-            $generate[$row->id] = $row->toArray();
-            $generate[$row->id]['time_create'] = _date($generate[$row->id]['time_create']);
-            $generate[$row->id]['time_update'] = ($generate[$row->id]['time_update']) ? _date($generate[$row->id]['time_update']) : __('Never');
-            $generate[$row->id]['file_url'] = Pi::url($generate[$row->id]['file']);
-            $generate[$row->id]['file_path'] = Pi::path($generate[$row->id]['file']);
-            $generate[$row->id]['file_exists'] = (Pi::service('file')->exists($generate[$row->id]['file'])) ? 1 : 0;
-            $generate[$row->id]['file_main_url'] = Pi::url(sprintf('upload/sitemap/%s', $generate[$row->id]['file']));
-            $generate[$row->id]['file_main_path'] = Pi::path(sprintf('upload/sitemap/%s', $generate[$row->id]['file']));
+            $generate[$row->id]                     = $row->toArray();
+            $generate[$row->id]['time_create']      = _date($generate[$row->id]['time_create']);
+            $generate[$row->id]['time_update']      = ($generate[$row->id]['time_update']) ? _date($generate[$row->id]['time_update']) : __('Never');
+            $generate[$row->id]['file_url']         = Pi::url($generate[$row->id]['file']);
+            $generate[$row->id]['file_path']        = Pi::path($generate[$row->id]['file']);
+            $generate[$row->id]['file_exists']      = (Pi::service('file')->exists($generate[$row->id]['file'])) ? 1 : 0;
+            $generate[$row->id]['file_main_url']    = Pi::url(sprintf('upload/sitemap/%s', $generate[$row->id]['file']));
+            $generate[$row->id]['file_main_path']   = Pi::path(sprintf('upload/sitemap/%s', $generate[$row->id]['file']));
             $generate[$row->id]['file_main_exists'] = (Pi::service('file')->exists(sprintf('upload/sitemap/%s', $generate[$row->id]['file']))) ? 1 : 0;
-            $generate[$row->id]['generate_link'] = $this->url('', array(
-                'module' =>  'sitemap',
-                'action' =>  'generate',
-                'file'   =>  $generate[$row->id]['file'],
-            ));
+            $generate[$row->id]['generate_link']    = $this->url(
+                '', [
+                    'module' => 'sitemap',
+                    'action' => 'generate',
+                    'file'   => $generate[$row->id]['file'],
+                ]
+            );
         }
         // Set sitemap.xml if not exist
         if (empty($generate)) {
-            $generate[0]['file'] = 'sitemap.xml';
-            $generate[0]['time_create'] = _date(time());
-            $generate[0]['file_url'] = Pi::url('sitemap.xml');
-            $generate[0]['file_path'] = Pi::path('sitemap.xml');
-            $generate[0]['file_exists'] = (Pi::service('file')->exists('sitemap.xml')) ? 1 : 0;
-            $generate[0]['file_main_url'] = Pi::url('upload/sitemap/sitemap.xml');
-            $generate[0]['file_main_path'] = Pi::path('upload/sitemap/sitemap.xml');
+            $generate[0]['file']             = 'sitemap.xml';
+            $generate[0]['time_create']      = _date(time());
+            $generate[0]['file_url']         = Pi::url('sitemap.xml');
+            $generate[0]['file_path']        = Pi::path('sitemap.xml');
+            $generate[0]['file_exists']      = (Pi::service('file')->exists('sitemap.xml')) ? 1 : 0;
+            $generate[0]['file_main_url']    = Pi::url('upload/sitemap/sitemap.xml');
+            $generate[0]['file_main_path']   = Pi::path('upload/sitemap/sitemap.xml');
             $generate[0]['file_main_exists'] = (Pi::service('file')->exists('upload/sitemap/sitemap.xml')) ? 1 : 0;
-            $generate[0]['generate_link'] = $this->url('', array(
-                'module' =>  'sitemap',
-                'action' =>  'generate',
-                'file'   =>  'sitemap.xml'
-            ));
+            $generate[0]['generate_link']    = $this->url(
+                '', [
+                    'module' => 'sitemap',
+                    'action' => 'generate',
+                    'file'   => 'sitemap.xml',
+                ]
+            );
         }
         // Set view
         $this->view()->setTemplate('index-index');
@@ -76,34 +81,38 @@ class IndexController extends ActionController
         $page = $this->params('page', 1);
         $link = null;
         // Set info
-        $where = array('top' => 1);
-        $order = array('id DESC', 'time_create DESC');
-        $limit = intval($this->config('admin_perpage'));
+        $where  = ['top' => 1];
+        $order  = ['id DESC', 'time_create DESC'];
+        $limit  = intval($this->config('admin_perpage'));
         $offset = (int)($page - 1) * $this->config('admin_perpage');
         // Get info
         $select = $this->getModel('url')->select()->where($where)->order($order)->offset($offset)->limit($limit);
         $rowset = $this->getModel('url')->selectWith($select);
         // Make list
         foreach ($rowset as $row) {
-            $link[$row->id] = $row->toArray();
+            $link[$row->id]                = $row->toArray();
             $link[$row->id]['time_create'] = _date($link[$row->id]['time_create']);
         }
         // Set paginator
-        $count = array('count' => new \Zend\Db\Sql\Predicate\Expression('count(*)'));
-        $select = $this->getModel('url')->select()->columns($count)->where($where);
-        $count = $this->getModel('url')->selectWith($select)->current()->count;
+        $count     = ['count' => new \Zend\Db\Sql\Predicate\Expression('count(*)')];
+        $select    = $this->getModel('url')->select()->columns($count)->where($where);
+        $count     = $this->getModel('url')->selectWith($select)->current()->count;
         $paginator = Paginator::factory(intval($count));
         $paginator->setItemCountPerPage($this->config('admin_perpage'));
         $paginator->setCurrentPageNumber($page);
-        $paginator->setUrlOptions(array(
-            'router'    => $this->getEvent()->getRouter(),
-            'route'     => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
-            'params'    => array_filter(array(
-                'module'        => $this->getModule(),
-                'controller'    => 'index',
-                'action'        => 'top',
-            )),
-        ));
+        $paginator->setUrlOptions(
+            [
+                'router' => $this->getEvent()->getRouter(),
+                'route'  => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
+                'params' => array_filter(
+                    [
+                        'module'     => $this->getModule(),
+                        'controller' => 'index',
+                        'action'     => 'top',
+                    ]
+                ),
+            ]
+        );
         // Set view
         $this->view()->setTemplate('index-top');
         $this->view()->assign('links', $link);
@@ -117,36 +126,40 @@ class IndexController extends ActionController
     {
         // Get info
         $module = $this->params('module');
-        $page = $this->params('page', 1);
-        $link = array();
+        $page   = $this->params('page', 1);
+        $link   = [];
         // Set info
-        $order = array('id DESC', 'time_create DESC');
-        $limit = intval($this->config('admin_perpage'));
+        $order  = ['id DESC', 'time_create DESC'];
+        $limit  = intval($this->config('admin_perpage'));
         $offset = (int)($page - 1) * $this->config('admin_perpage');
         // Get info
         $select = $this->getModel('url')->select()->order($order)->offset($offset)->limit($limit);
         $rowset = $this->getModel('url')->selectWith($select);
         // Make list
         foreach ($rowset as $row) {
-            $link[$row->id] = $row->toArray();
+            $link[$row->id]                = $row->toArray();
             $link[$row->id]['time_create'] = _date($link[$row->id]['time_create']);
         }
         // Set paginator
-        $count = array('count' => new \Zend\Db\Sql\Predicate\Expression('count(*)'));
-        $select = $this->getModel('url')->select()->columns($count);
-        $count = $this->getModel('url')->selectWith($select)->current()->count;
+        $count     = ['count' => new \Zend\Db\Sql\Predicate\Expression('count(*)')];
+        $select    = $this->getModel('url')->select()->columns($count);
+        $count     = $this->getModel('url')->selectWith($select)->current()->count;
         $paginator = Paginator::factory(intval($count));
         $paginator->setItemCountPerPage($this->config('admin_perpage'));
         $paginator->setCurrentPageNumber($page);
-        $paginator->setUrlOptions(array(
-            'router'    => $this->getEvent()->getRouter(),
-            'route'     => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
-            'params'    => array_filter(array(
-                'module'        => $this->getModule(),
-                'controller'    => 'index',
-                'action'        => 'list',
-            )),
-        ));
+        $paginator->setUrlOptions(
+            [
+                'router' => $this->getEvent()->getRouter(),
+                'route'  => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
+                'params' => array_filter(
+                    [
+                        'module'     => $this->getModule(),
+                        'controller' => 'index',
+                        'action'     => 'list',
+                    ]
+                ),
+            ]
+        );
         // Set view
         $this->view()->setTemplate('index-list');
         $this->view()->assign('links', $link);
@@ -159,7 +172,7 @@ class IndexController extends ActionController
     public function updateAction()
     {
         // Get id
-        $id = $this->params('id');
+        $id     = $this->params('id');
         $module = $this->params('module');
         // Set form
         $form = new TopForm();
@@ -171,7 +184,7 @@ class IndexController extends ActionController
                 $values = $form->getData();
                 // Add / update time
                 $values['time_create'] = time();
-                $values['top'] = 1;
+                $values['top']         = 1;
                 // Save values
                 if (!empty($values['id'])) {
                     $row = $this->getModel('url')->find($values['id']);
@@ -182,7 +195,7 @@ class IndexController extends ActionController
                 $row->save();
                 // jump
                 $message = __('Link saved successfully.');
-                $url = array('action' => 'top');
+                $url     = ['action' => 'top'];
                 $this->jump($url, $message);
             }
         } else {
@@ -216,14 +229,16 @@ class IndexController extends ActionController
         }
         // Generate sitemap
         $generate = new Generate($file);
-        $sitemap = $this->view()->navigation($generate->content())->sitemap();
-        $sitemap = $sitemap->setFormatOutput(true)->render();
+        $sitemap  = $this->view()->navigation($generate->content())->sitemap();
+        $sitemap  = $sitemap->setFormatOutput(true)->render();
         $generate->write($sitemap);
         // Set copy URL
-        $url = $this->url('', array(
-            'action'  => 'copyfile',
-            'file'    => $file,
-        ));
+        $url = $this->url(
+            '', [
+                'action' => 'copyfile',
+                'file'   => $file,
+            ]
+        );
         // Set view
         $this->view()->setTemplate('file-generate');
         $this->view()->assign('url', $url);
@@ -236,20 +251,22 @@ class IndexController extends ActionController
     {
         $file = $this->params('file');
         if (!$file) {
-            $this->jump(array('action' => 'index'), __('Please selete file'));
+            $this->jump(['action' => 'index'], __('Please selete file'));
         } else {
             $fileRoot = Pi::path($file);
             $fileMain = Pi::path(sprintf('upload/sitemap/%s', $file));
             if (Pi::service('file')->exists($fileRoot)) {
-                $this->jump(array('action' => 'index'), __('Your origin file path is website root'));
+                $this->jump(['action' => 'index'], __('Your origin file path is website root'));
             } else {
                 Pi::service('file')->copy($fileMain, $fileRoot, true);
             }
         }
         // Set copy URL
-        $url = $this->url('', array(
-            'action'  => 'index',
-        ));
+        $url = $this->url(
+            '', [
+                'action' => 'index',
+            ]
+        );
         // Set view
         $this->view()->setTemplate('file-copy');
         $this->view()->assign('url', $url);
@@ -272,9 +289,9 @@ class IndexController extends ActionController
             if (Pi::service('file')->exists($fileMain)) {
                 Pi::service('file')->remove($fileMain);
             }
-            $this->jump(array('action' => 'index'), __('Selected file delete'));
+            $this->jump(['action' => 'index'], __('Selected file delete'));
         } else {
-            $this->jump(array('action' => 'index'), __('Please selete file'));
+            $this->jump(['action' => 'index'], __('Please selete file'));
         }
         // Set view
         $this->view()->setTemplate(false);
@@ -287,14 +304,14 @@ class IndexController extends ActionController
     {
         $file = $this->params('file');
         if ($file == 'sitemap.xml') {
-            $this->jump(array('action' => 'index'), __('You can not delete sitemap.xml build method'));
+            $this->jump(['action' => 'index'], __('You can not delete sitemap.xml build method'));
         } else {
             $row = $this->getModel('generate')->find($file, 'file');
             if ($row) {
                 $row->delete();
-                $this->jump(array('action' => 'index'), __('This sitemap method deleted'));
+                $this->jump(['action' => 'index'], __('This sitemap method deleted'));
             } else {
-                $this->jump(array('action' => 'index'), __('Please select sitemap method'));
+                $this->jump(['action' => 'index'], __('Please select sitemap method'));
             }
         }
         // Set view
@@ -306,15 +323,15 @@ class IndexController extends ActionController
      */
     public function topaddAction()
     {
-        $id = $this->params('id');
+        $id  = $this->params('id');
         $row = $this->getModel('url')->find($id);
         if ($row) {
             $row->top = 1;
             $row->save();
             // jump
-            $this->jump(array('action' => 'list'), __('This link add as top link'));
+            $this->jump(['action' => 'list'], __('This link add as top link'));
         } else {
-            $this->jump(array('action' => 'list'), __('Please select link'));
+            $this->jump(['action' => 'list'], __('Please select link'));
         }
         // Set view
         $this->view()->setTemplate(false);
@@ -325,13 +342,13 @@ class IndexController extends ActionController
      */
     public function deleteLinkAction()
     {
-        $id = $this->params('id');
+        $id  = $this->params('id');
         $row = $this->getModel('url')->find($id);
         if ($row) {
             $row->delete();
-            $this->jump(array('action' => 'list'), __('This link deleted'));
+            $this->jump(['action' => 'list'], __('This link deleted'));
         } else {
-            $this->jump(array('action' => 'list'), __('Please select link'));
+            $this->jump(['action' => 'list'], __('Please select link'));
         }
         // Set view
         $this->view()->setTemplate(false);
@@ -342,12 +359,12 @@ class IndexController extends ActionController
      */
     public function deleteAllLinkAction()
     {
-        $id = $this->params('id');
+        $id  = $this->params('id');
         $row = $this->getModel('url')->find($id);
 
         $urlModel = $this->getModel('url');
         $urlModel->getAdapter()->query('TRUNCATE TABLE `' . $urlModel->getTable() . '`')->execute();
 
-        $this->jump(array('action' => 'list'), __('All links deleted'));
+        $this->jump(['action' => 'list'], __('All links deleted'));
     }
 }

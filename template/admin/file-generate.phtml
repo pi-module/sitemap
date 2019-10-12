@@ -5,11 +5,19 @@
             <h3 class="card-title"><?php _e('Generate XML file'); ?></h3>
         </div>
         <div class="card-body">
-            <p><?php _e('Sitemap XML file generated on two steps, first new file generated on upload/sitemap and after that you need cope this file to website root. you can copy XML file by (( Copy to root )) button on this page, But if your server setting does not support this action you need copy XML file to website root manually by FTP client'); ?></p>
+            <p><?php _e(
+                    'Sitemap XML file generated on two steps, first new file generated on upload/sitemap and after that you need cope this file to website root. you can copy XML file by (( Copy to root )) button on this page, But if your server setting does not support this action you need copy XML file to website root manually by FTP client'
+                ); ?></p>
         </div>
         <ul class="list-group">
-            <li class="list-group-item list-group-item-success"><strong><i class="fas fa-check-square-o"></i> <?php _e('Step 1'); ?></strong> <?php _e('New XML file generated'); ?> <span class="badge badge-success"><?php _e('Completed'); ?></span></li>
-            <li class="list-group-item"><strong><i class="far fa-square"></i> <?php _e('Step 2'); ?></strong> <a class="btn btn-success" title="<?php _e('Copy to root'); ?>" href="<?php echo $this->escape($url); ?>"><?php _e('Copy to root'); ?></a></li>
+            <li class="list-group-item list-group-item-success"><strong><i class="fas fa-check-square-o"></i> <?php _e('Step 1'); ?></strong> <?php _e(
+                    'New XML file generated'
+                ); ?> <span class="badge badge-success"><?php _e('Completed'); ?></span></li>
+            <li class="list-group-item"><strong><i class="far fa-square"></i> <?php _e('Step 2'); ?></strong> <a class="btn btn-success"
+                                                                                                                 title="<?php _e('Copy to root'); ?>"
+                                                                                                                 href="<?php echo $this->escape(
+                                                                                                                     $url
+                                                                                                                 ); ?>"><?php _e('Copy to root'); ?></a></li>
         </ul>
     </div>
 </div>

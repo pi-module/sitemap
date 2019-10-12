@@ -10,6 +10,7 @@
 /**
  * @author Hossein Azizabadi <azizabadi@faragostaresh.com>
  */
+
 namespace Module\Sitemap\Form;
 
 use Pi;
@@ -34,105 +35,119 @@ class TopForm extends BaseForm
     public function init()
     {
         // id
-        $this->add(array(
-            'name' => 'id',
-            'attributes' => array(
-                'type' => 'hidden',
-            ),
-        ));
+        $this->add(
+            [
+                'name'       => 'id',
+                'attributes' => [
+                    'type' => 'hidden',
+                ],
+            ]
+        );
         // loc
-        $this->add(array(
-            'name' => 'loc',
-            'options' => array(
-                'label' => __('URL'),
-            ),
-            'attributes' => array(
-                'type' => 'text',
-                'required'  => true,
-            )
-        ));
+        $this->add(
+            [
+                'name'       => 'loc',
+                'options'    => [
+                    'label' => __('URL'),
+                ],
+                'attributes' => [
+                    'type'     => 'text',
+                    'required' => true,
+                ],
+            ]
+        );
         // lastmod
-        $this->add(array(
-            'name' => 'lastmod',
-            'options' => array(
-                'label' => __('Last modification'),
-            ),
-            'attributes' => array(
-                'type' => 'text',
-                'value' => date("Y-m-d H:i:s"),
-                'required'  => true,
-            )
-        ));
+        $this->add(
+            [
+                'name'       => 'lastmod',
+                'options'    => [
+                    'label' => __('Last modification'),
+                ],
+                'attributes' => [
+                    'type'     => 'text',
+                    'value'    => date("Y-m-d H:i:s"),
+                    'required' => true,
+                ],
+            ]
+        );
         // changefreq
-        $this->add(array(
-            'name' => 'changefreq',
-            'type' => 'select',
-            'options' => array(
-                'label' => __('Change frequency'),
-                'value_options' => array(
-                    'always'  => __('Always'),
-                    'hourly'  => __('Hourly'),
-                    'daily'   => __('Daily'),
-                    'weekly'  => __('Weekly'),
-                    'monthly' => __('Monthly'),
-                    'yearly'  => __('Yearly'),
-                    'never'   => __('Never'),
-                ),
-            ),
-            'attributes' => array(
-                'value' => 'daily',
-                'required'  => true,
-            ),
-        ));
+        $this->add(
+            [
+                'name'       => 'changefreq',
+                'type'       => 'select',
+                'options'    => [
+                    'label'         => __('Change frequency'),
+                    'value_options' => [
+                        'always'  => __('Always'),
+                        'hourly'  => __('Hourly'),
+                        'daily'   => __('Daily'),
+                        'weekly'  => __('Weekly'),
+                        'monthly' => __('Monthly'),
+                        'yearly'  => __('Yearly'),
+                        'never'   => __('Never'),
+                    ],
+                ],
+                'attributes' => [
+                    'value'    => 'daily',
+                    'required' => true,
+                ],
+            ]
+        );
         // priority
-        $this->add(array(
-            'name' => 'priority',
-            'type' => 'select',
-            'options' => array(
-                'label' => __('Change frequency'),
-                'value_options' => array(
-                    '1.0'  => '1.0',
-                    '0.9'  => '0.9',
-                    '0.8'  => '0.8',
-                    '0.7'  => '0.7',
-                    '0.6'  => '0.6',
-                    '0.5'  => '0.5',
-                    '0.4'  => '0.4',
-                    '0.3'  => '0.3',
-                    '0.2'  => '0.2',
-                    '0.1'  => '0.1',
-                ),
-            ),
-            'attributes' => array(
-                'value' => '0.5',
-                'required'  => true,
-            ),
-        ));
+        $this->add(
+            [
+                'name'       => 'priority',
+                'type'       => 'select',
+                'options'    => [
+                    'label'         => __('Change frequency'),
+                    'value_options' => [
+                        '1.0' => '1.0',
+                        '0.9' => '0.9',
+                        '0.8' => '0.8',
+                        '0.7' => '0.7',
+                        '0.6' => '0.6',
+                        '0.5' => '0.5',
+                        '0.4' => '0.4',
+                        '0.3' => '0.3',
+                        '0.2' => '0.2',
+                        '0.1' => '0.1',
+                    ],
+                ],
+                'attributes' => [
+                    'value'    => '0.5',
+                    'required' => true,
+                ],
+            ]
+        );
         // status
-        $this->add(array(
-            'name' => 'status',
-            'type' => 'select',
-            'options' => array(
-                'label' => __('Status'),
-                'value_options' => array(
-                    1 => __('Published'),
-                    2 => __('Pending review'),
-                    3 => __('Draft'),
-                    4 => __('Private'),
-                    5 => __('Delete'),
-                ),
-            ),
-            'attributes' => array(
-                'required'  => true,
-            )
-        ));
+        $this->add(
+            [
+                'name'       => 'status',
+                'type'       => 'select',
+                'options'    => [
+                    'label'         => __('Status'),
+                    'value_options' => [
+                        1 => __('Published'),
+                        2 => __('Pending review'),
+                        3 => __('Draft'),
+                        4 => __('Private'),
+                        5 => __('Delete'),
+                    ],
+                ],
+                'attributes' => [
+                    'required' => true,
+                ],
+            ]
+        );
         // Save
-        $this->add(array(
-            'name' => 'submit',
-            'type' => 'submit',
-            'attributes' => array(
-                'value' => __('Submit'),
-            )
-        ));
-    }	
+        $this->add(
+            [
+                'name'       => 'submit',
+                'type'       => 'submit',
+                'attributes' => [
+                    'value' => __('Submit'),
+                ],
+            ]
+        );
+    }
 }	
