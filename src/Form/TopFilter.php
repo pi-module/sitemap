@@ -20,13 +20,6 @@ class TopFilter extends InputFilter
 {
     public function __construct()
     {
-        // id
-        $this->add(
-            [
-                'name'     => 'id',
-                'required' => false,
-            ]
-        );
         // loc
         $this->add(
             [
@@ -39,6 +32,7 @@ class TopFilter extends InputFilter
                 ],
             ]
         );
+
         // lastmod
         $this->add(
             [
@@ -51,6 +45,7 @@ class TopFilter extends InputFilter
                 ],
             ]
         );
+
         // changefreq
         $this->add(
             [
@@ -63,6 +58,7 @@ class TopFilter extends InputFilter
                 ],
             ]
         );
+
         // priority
         $this->add(
             [
@@ -75,6 +71,7 @@ class TopFilter extends InputFilter
                 ],
             ]
         );
+
         // status
         $this->add(
             [

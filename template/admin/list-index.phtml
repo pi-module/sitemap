@@ -2,11 +2,6 @@
 <div class="clearfix">
     <?php if (!empty($links)) { ?>
         <h3><?php _e('List of module links'); ?></h3>
-        <p>
-            <a class="btn btn-danger" href="<?php echo $this->url('', ['action' => 'deleteAllLink']); ?>"><i class="far fa-trash-alt"></i> <?php _e(
-                    'Delete ALL'
-                ); ?></a>
-        </p>
         <table class="table table-striped table-bordered table-sm">
             <tr>
                 <th><?php _e('ID'); ?></th>
@@ -46,12 +41,12 @@
                     </td>
                     <td>
                         <?php if ($link['top'] == 0) { ?>
-                            <a class="btn btn-success" title="<?php _e('Add as top'); ?>"
+                            <a class="btn btn-success btn-sm" title="<?php _e('Add as top'); ?>"
                                href="<?php echo $this->url('', ['action' => 'topAdd', 'id' => $link['id']]); ?>"><i class="fas fa-edit"></i> <?php _e(
                                     'Add as top'
                                 ); ?></a>
                         <?php } ?>
-                        <a class="btn btn-danger" title="<?php _e('Delete'); ?>"
+                        <a class="btn btn-danger btn-sm" title="<?php _e('Delete'); ?>"
                            href="<?php echo $this->url('', ['action' => 'deleteLink', 'id' => $link['id']]); ?>"><i class="far fa-trash-alt"></i> <?php _e(
                                 'Delete'
                             ); ?></a>
@@ -59,14 +54,21 @@
                 </tr>
             <?php } ?>
         </table>
-        <div class="paginator"><?php echo $this->paginationControl($paginator, 'Sliding', 'paginator.phtml'); ?></div>
-        <p>
+        <div class="mb-3 p-3 bg-light">
             <span class="badge badge-success"><?php _e('Published'); ?></span>
             <span class="badge badge-warning"><?php _e('Pending review'); ?></span>
             <span class="badge badge-warning"><?php _e('Draft'); ?></span>
             <span class="badge badge-warning"><?php _e('Private'); ?></span>
             <span class="badge badge-danger"><?php _e('Trash'); ?></span>
-        </p>
+        </div>
+        <div class="paginator">
+            <?php echo $this->paginationControl($paginator, 'Sliding', 'paginator.phtml'); ?>
+        </div>
+        <div class="mb-3">
+            <a class="btn btn-danger" href="<?php echo $this->url('', ['action' => 'deleteAllLink']); ?>" onclick="confirm('<?php _e('Are you sure you want delete all links?'); ?>')">
+                <i class="far fa-trash-alt"></i> <?php _e('Delete ALL'); ?>
+            </a>
+        </div>
     <?php } else { ?>
         <div class="alert alert-danger">
             <h4><?php _e('Empty list'); ?></h4>

@@ -39,14 +39,16 @@
                 </tr>
             <?php } ?>
         </table>
-        <div class="paginator"><?php echo $this->paginationControl($paginator, 'Sliding', 'paginator.phtml'); ?></div>
-        <p>
+        <div class="mb-3 p-3 bg-light">
             <span class="badge badge-success"><?php _e('Published'); ?></span>
             <span class="badge badge-warning"><?php _e('Pending review'); ?></span>
             <span class="badge badge-warning"><?php _e('Draft'); ?></span>
             <span class="badge badge-warning"><?php _e('Private'); ?></span>
             <span class="badge badge-danger"><?php _e('Trash'); ?></span>
-        </p>
+        </div>
+        <div class="paginator">
+            <?php echo $this->paginationControl($paginator, 'Sliding', 'paginator.phtml'); ?>
+        </div>
     <?php } else { ?>
         <div class="alert alert-danger">
             <h4><?php _e('Empty list'); ?></h4>

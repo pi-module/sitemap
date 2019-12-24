@@ -60,8 +60,8 @@ class TopController extends ActionController
                 'params' => array_filter(
                     [
                         'module'     => $this->getModule(),
-                        'controller' => 'index',
-                        'action'     => 'top',
+                        'controller' => 'top',
+                        'action'     => 'index',
                     ]
                 ),
             ]
@@ -92,8 +92,8 @@ class TopController extends ActionController
                 $values['top']         = 1;
 
                 // Save values
-                if (!empty($values['id'])) {
-                    $row = $this->getModel('url')->find($values['id']);
+                if (!empty($id)) {
+                    $row = $this->getModel('url')->find($id);
                 } else {
                     $row = $this->getModel('url')->createRow();
                 }
@@ -102,7 +102,7 @@ class TopController extends ActionController
 
                 // jump
                 $message = __('Link saved successfully.');
-                $url     = ['action' => 'top'];
+                $url     = ['action' => 'index'];
                 $this->jump($url, $message);
             }
         } else {

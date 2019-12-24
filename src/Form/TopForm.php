@@ -34,15 +34,6 @@ class TopForm extends BaseForm
 
     public function init()
     {
-        // id
-        $this->add(
-            [
-                'name'       => 'id',
-                'attributes' => [
-                    'type' => 'hidden',
-                ],
-            ]
-        );
         // loc
         $this->add(
             [
@@ -56,6 +47,7 @@ class TopForm extends BaseForm
                 ],
             ]
         );
+
         // lastmod
         $this->add(
             [
@@ -70,6 +62,7 @@ class TopForm extends BaseForm
                 ],
             ]
         );
+
         // changefreq
         $this->add(
             [
@@ -93,6 +86,7 @@ class TopForm extends BaseForm
                 ],
             ]
         );
+
         // priority
         $this->add(
             [
@@ -119,6 +113,7 @@ class TopForm extends BaseForm
                 ],
             ]
         );
+
         // status
         $this->add(
             [
@@ -139,6 +134,7 @@ class TopForm extends BaseForm
                 ],
             ]
         );
+
         // Save
         $this->add(
             [
