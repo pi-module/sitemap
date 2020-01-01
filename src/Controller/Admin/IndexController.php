@@ -198,7 +198,7 @@ class IndexController extends ActionController
         // Set info
         $order  = ['id ASC'];
         $offset = (int)($params['page'] - 1) * $params['limit'];
-        $where = ['item > ?' => 0];
+        $where  = ['item > ?' => 0];
 
         // Get info
         $select = $this->getModel('url')->select()->where($where)->order($order)->offset($offset)->limit($params['limit']);
@@ -214,7 +214,7 @@ class IndexController extends ActionController
         // Check and update health
         foreach ($rowset as $row) {
             if (Pi::service('module')->isActive($row->module)) {
-                $urlRow = Pi::model($row->module, $row->table)->find($row->item);
+                $urlRow = Pi::model($row->table, $row->module)->find($row->item);
                 if ($urlRow) {
                     if ($urlRow->status != $row->status) {
                         $row->status = $urlRow->status;
@@ -245,8 +245,8 @@ class IndexController extends ActionController
             $nextUrl           = Pi::url(
                     $this->url(
                         '', [
-                            'controller' => 'export',
-                            'action'     => 'generate',
+                            'controller' => 'index',
+                            'action'     => 'checkHealth',
                         ]
                     )
                 ) . '?' . http_build_query($params);

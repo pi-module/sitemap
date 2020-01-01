@@ -6,6 +6,8 @@
             <tr>
                 <th><?php _e('ID'); ?></th>
                 <th><?php _e('URL'); ?></th>
+                <th><?php _e('Change frequency'); ?></th>
+                <th><?php _e('Priority'); ?></th>
                 <th><?php _e('Action'); ?></th>
             </tr>
             <?php foreach ($links as $link) { ?>
@@ -39,6 +41,8 @@
                             <?php } ?>
                         </div>
                     </td>
+                    <td><?php echo $this->escape($link['changefreq']); ?></td>
+                    <td><?php echo $this->escape($link['priority']); ?></td>
                     <td>
                         <?php if ($link['top'] == 0) { ?>
                             <a class="btn btn-success btn-sm" title="<?php _e('Add as top'); ?>"
