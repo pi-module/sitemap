@@ -191,17 +191,17 @@ class IndexController extends ActionController
         // Get info from url
         $params['module']  = $this->params('module');
         $params['page']    = $this->params('page', 1);
-        $params['limit']   = $this->params('page', 50);
         $params['count']   = $this->params('count', 0);
         $params['percent'] = 0;
 
         // Set info
         $order  = ['id ASC'];
-        $offset = (int)($params['page'] - 1) * $params['limit'];
+        $limit  = 100;
+        $offset = (int)($params['page'] - 1) * $limit;
         $where  = ['item > ?' => 0];
 
         // Get info
-        $select = $this->getModel('url')->select()->where($where)->order($order)->offset($offset)->limit($params['limit']);
+        $select = $this->getModel('url')->select()->where($where)->order($order)->offset($offset)->limit($limit);
         $rowset = $this->getModel('url')->selectWith($select);
 
         // Get count
@@ -213,21 +213,33 @@ class IndexController extends ActionController
 
         // Check and update health
         foreach ($rowset as $row) {
-            if (Pi::service('module')->isActive($row->module)) {
-                $urlRow = Pi::model($row->table, $row->module)->find($row->item);
-                if ($urlRow) {
-                    if ($urlRow->status != $row->status) {
-                        $row->status = $urlRow->status;
-                        $row->save();
-                    }
-                } else {
-                    if ($row->status != 0) {
+            // Check row
+            if (isset($row->module) && !empty($row->module) && isset($row->table) && !empty($row->table) && $row->status == 1) {
+
+                // Check module is active
+                if (Pi::service('module')->isActive($row->module)) {
+
+                    // Find item on module
+                    $urlRow = Pi::model($row->table, $row->module)->find($row->item);
+
+                    // Check item
+                    if (is_object($urlRow) && !empty($urlRow)) {
+                        if (isset($urlRow->status)) {
+                            if ($urlRow->status != $row->status) {
+                                $row->status = $urlRow->status;
+                                $row->save();
+                            }
+                        } elseif ($urlRow->active) {
+                            if ($urlRow->active != $row->status) {
+                                $row->status = $urlRow->active;
+                                $row->save();
+                            }
+                        }
+                    } else {
                         $row->status = 0;
                         $row->save();
                     }
-                }
-            } else {
-                if ($row->status != 0) {
+                } else {
                     $row->status = 0;
                     $row->save();
                 }
@@ -235,7 +247,7 @@ class IndexController extends ActionController
         }
 
         // Set page
-        $params['lastPage'] = intval($params['count'] / $params['limit']) + 1;
+        $params['lastPage'] = intval($params['count'] / $limit) + 1;
         if ($params['lastPage'] == $params['page']) {
             $nextUrl           = '';
             $params['percent'] = 100;
