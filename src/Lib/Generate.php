@@ -36,29 +36,43 @@ class Generate
      */
     public function content()
     {
-        $content[0] = [
-            'uri'        => Pi::url('www'),
-            'lastmod'    => date("Y-m-d H:i:s"),
-            'changefreq' => 'daily',
-            'priority'   => '1.0',
+        // Get config
+        $config = Pi::service('registry')->config->read('sitemap', 'sitemap');
+
+        // Set default content
+        $content = [
+            0 => [
+                'uri'        => Pi::url('www'),
+                'lastmod'    => date("Y-m-d H:i:s"),
+                'changefreq' => 'daily',
+                'priority'   => '1.0',
+            ],
         ];
 
-        $config = Pi::service('registry')->config->read('sitemap', 'sitemap');
-        $where  = ['status' => 1];
-        $order  = ['priority DESC', 'top DESC', 'time_create DESC'];
-        $limit  = intval($config['sitemap_limit']);
+        // Set info
+        $where = ['status' => 1];
+        $order = ['priority DESC', 'top DESC', 'time_create DESC'];
+        $limit = intval($config['sitemap_limit']);
+
+        // Select list
         $select = Pi::model('url', 'sitemap')->select()->where($where)->order($order)->limit($limit);
         $rowset = Pi::model('url', 'sitemap')->selectWith($select);
+
+        // Make content list
         foreach ($rowset as $row) {
+            // Check elements
             $changefreq = (!empty($row->changefreq)) ? $row->changefreq : 'weekly';
             $priority   = (!empty($row->priority)) ? $row->priority : '0.5';
 
-            $link               = [];
-            $link['uri']        = $row->loc;
-            $link['lastmod']    = $row->lastmod;
-            $link['changefreq'] = $changefreq;
-            $link['priority']   = $priority;
+            // Set link information
+            $link = [
+                'uri'        => $row->loc,
+                'lastmod'    => $row->lastmod,
+                'changefreq' => $changefreq,
+                'priority'   => $priority,
+            ];
 
+            // Set to content array
             $content[$row->id] = $link;
         }
 
@@ -72,17 +86,22 @@ class Generate
      */
     public function write($xml)
     {
+        // Make tmp path
         Pi::service('file')->mkdir(Pi::path('upload/sitemap'));
+        
         // Set file path
         $sitemap = Pi::path(sprintf('upload/sitemap/%s', $this->name));
+        
         // Remove old file
         if (Pi::service('file')->exists($sitemap)) {
             Pi::service('file')->remove($sitemap);
         }
+        
         // write to file
         $file = fopen($sitemap, "x+");
         fwrite($file, $xml);
         fclose($file);
+        
         // Save generate
         $this->canonizeGenerate();
     }

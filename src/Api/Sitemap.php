@@ -33,6 +33,7 @@ class Sitemap extends AbstractApi
      * @param string $table
      * @param int    $item
      * @param string $loc
+     * @param int    $status
      */
     public function add($module, $table, $item, $loc, $status = 1)
     {
@@ -62,17 +63,19 @@ class Sitemap extends AbstractApi
      * @param string $module
      * @param string $table
      * @param int    $item
+     *                    
+     * @return boolean
      */
     public function singleLink($loc, $status = 1, $module = '', $table = '', $item = 0)
     {
         // Check loc not empty
         if (empty($loc)) {
-            return '';
+            return false;
         }
         // Check loc is valid
         $validator = new UriValidator;
         if (!$validator->isValid($loc)) {
-            return '';
+            return false;
         }
 
         // Set changefreq and priority
@@ -141,14 +144,43 @@ class Sitemap extends AbstractApi
                 }
                 break;
 
+            case 'video' :
+                switch ($table) {
+                    case 'video';
+                        $changefreq = 'weekly';
+                        $priority   = '0.6';
+                        break;
+
+                    case 'category';
+                        $changefreq = 'weekly';
+                        $priority   = '0.3';
+                        break;
+                }
+                break;
+
             case 'page' :
                 $changefreq = 'weekly';
-                $priority   = '0.3';
+                $priority   = '0.7';
                 break;
 
             case 'portfolio' :
                 $changefreq = 'weekly';
                 $priority   = '0.3';
+                break;
+
+            case 'event' :
+                $changefreq = 'daily';
+                $priority   = '0.6';
+                break;
+
+            case 'blog' :
+                $changefreq = 'daily';
+                $priority   = '0.6';
+                break;
+
+            case 'gallery' :
+                $changefreq = 'daily';
+                $priority   = '0.6';
                 break;
         }
 
@@ -179,6 +211,8 @@ class Sitemap extends AbstractApi
             $row->assign($values);
             $row->save();
         }
+
+        return true;
     }
 
     /**
@@ -189,18 +223,20 @@ class Sitemap extends AbstractApi
      * @param string $module
      * @param string $table
      * @param int    $item
+     *                    
+     * @return boolean
      */
     public function groupLink($loc, $status = 1, $module = '', $table = '', $item = 0)
     {
         // Check loc not empty
         if (empty($loc)) {
-            return '';
+            return false;
         }
 
         // Check loc is valid
         $validator = new UriValidator;
         if (!$validator->isValid($loc)) {
-            return '';
+            return false;
         }
 
         // Set changefreq and priority
@@ -269,9 +305,23 @@ class Sitemap extends AbstractApi
                 }
                 break;
 
+            case 'video' :
+                switch ($table) {
+                    case 'video';
+                        $changefreq = 'weekly';
+                        $priority   = '0.6';
+                        break;
+
+                    case 'category';
+                        $changefreq = 'weekly';
+                        $priority   = '0.3';
+                        break;
+                }
+                break;
+
             case 'page' :
                 $changefreq = 'weekly';
-                $priority   = '0.3';
+                $priority   = '0.7';
                 break;
 
             case 'portfolio' :
@@ -311,16 +361,21 @@ class Sitemap extends AbstractApi
         $row = Pi::model('url', 'sitemap')->createRow();
         $row->assign($values);
         $row->save();
+
+        return true;
     }
 
     /**
      * Remove link from url table
+     *
+     * @param string $loc
+     * @return boolean            
      */
     public function remove($loc)
     {
         // Check module
         if (empty($loc)) {
-            return '';
+            return false;
         }
 
         // Remove
@@ -330,12 +385,16 @@ class Sitemap extends AbstractApi
 
     /**
      * Remove link from url table
+     *
+     * @param string $module
+     * @param string $table
+     * @return boolean
      */
     public function removeAll($module, $table = '')
     {
         // Check module
         if (empty($module)) {
-            return '';
+            return false;
         }
 
         // Check table
