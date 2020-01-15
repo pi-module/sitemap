@@ -118,6 +118,21 @@ class TopController extends ActionController
         $this->view()->assign('title', __('Add a link'));
     }
 
+    public function deleteLinkAction()
+    {
+        $id  = $this->params('id');
+        $row = $this->getModel('url')->find($id);
+        if ($row) {
+            $row->delete();
+            $this->jump(['action' => 'index'], __('This link deleted'));
+        } else {
+            $this->jump(['action' => 'index'], __('Please select link'));
+        }
+
+        // Set view
+        $this->view()->setTemplate(false);
+    }
+
     public function importAction()
     {
         $linkList = Pi::api('import', 'sitemap')->generateLinks();

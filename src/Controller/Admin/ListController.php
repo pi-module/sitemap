@@ -94,9 +94,9 @@ class ListController extends ActionController
         $row = $this->getModel('url')->find($id);
         if ($row) {
             $row->delete();
-            $this->jump(['action' => 'list'], __('This link deleted'));
+            $this->jump(['action' => 'index'], __('This link deleted'));
         } else {
-            $this->jump(['action' => 'list'], __('Please select link'));
+            $this->jump(['action' => 'index'], __('Please select link'));
         }
 
         // Set view
