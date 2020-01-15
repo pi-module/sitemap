@@ -69,7 +69,8 @@
             <?php echo $this->paginationControl($paginator, 'Sliding', 'paginator.phtml'); ?>
         </div>
         <div class="mb-3">
-            <a class="btn btn-danger" href="<?php echo $this->url('', ['action' => 'deleteAllLink']); ?>" onclick="confirm('<?php _e('Are you sure you want delete all links?'); ?>')">
+            <a class="btn btn-danger" href="<?php echo $this->url('', ['action' => 'deleteAllLink']); ?>"
+               onclick="confirm('<?php _e('Are you sure you want delete all links?'); ?>')">
                 <i class="far fa-trash-alt"></i> <?php _e('Delete ALL'); ?>
             </a>
         </div>

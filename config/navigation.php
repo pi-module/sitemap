@@ -45,21 +45,21 @@ return [
             'controller' => 'top',
             'action'     => 'index',
             'pages'      => [
-                'list' => [
+                'list'   => [
                     'label'      => _a('List'),
                     'route'      => 'admin',
                     'module'     => 'sitemap',
                     'controller' => 'top',
                     'action'     => 'index',
                 ],
-                'add'  => [
+                'add'    => [
                     'label'      => _a('Add'),
                     'route'      => 'admin',
                     'module'     => 'sitemap',
                     'controller' => 'top',
                     'action'     => 'update',
                 ],
-                'import'  => [
+                'import' => [
                     'label'      => _a('Import'),
                     'route'      => 'admin',
                     'module'     => 'sitemap',
