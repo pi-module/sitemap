@@ -185,18 +185,20 @@ class Sitemap extends AbstractApi
         }
 
         // Check item exist
-        if (!empty($module) && !empty($table) && $item > 0) {
-            $limit  = 1;
-            $where  = ['module' => $module, 'table' => $table, 'item' => $item];
-            $select = $this->getModel('url')->select()->where($where)->limit($limit);
+        $row = Pi::model('url', 'sitemap')->find($loc, 'loc');
 
-            $row = $this->getModel('url')->selectWith($select)->current();
-        } else {
-            $row = Pi::model('url', 'sitemap')->find($loc, 'loc');
+        // Check
+        if (empty($row) || !is_object($row)) {
+            if (!empty($module) && !empty($table) && $item > 0) {
+                $limit  = 1;
+                $where  = ['module' => $module, 'table' => $table, 'item' => $item];
+                $select = Pi::model('url', 'sitemap')->select()->where($where)->limit($limit);
+                $row    = Pi::model('url', 'sitemap')->selectWith($select)->current();
+            }
         }
 
         // Check row exist or not
-        if (isset($row) && !empty($row) && is_object($row)) {
+        if (!empty($row) && is_object($row)) {
             $row->loc        = $loc;
             $row->lastmod    = date("Y-m-d H:i:s");
             $row->status     = intval($status);
