@@ -63,7 +63,7 @@ class Sitemap extends AbstractApi
      * @param string $module
      * @param string $table
      * @param int    $item
-     *                    
+     *
      * @return boolean
      */
     public function singleLink($loc, $status = 1, $module = '', $table = '', $item = 0)
@@ -184,9 +184,19 @@ class Sitemap extends AbstractApi
                 break;
         }
 
-        // Check loc exist or not
-        $row = Pi::model('url', 'sitemap')->find($loc, 'loc');
-        if (!empty($row) && is_object($row)) {
+        // Check item exist
+        if (!empty($module) && !empty($table) && $item > 0) {
+            $limit  = 1;
+            $where  = ['module' => $module, 'table' => $table, 'item' => $item];
+            $select = $this->getModel('url')->select()->where($where)->limit($limit);
+
+            $row = $this->getModel('url')->selectWith($select)->current();
+        } else {
+            $row = Pi::model('url', 'sitemap')->find($loc, 'loc');
+        }
+
+        // Check row exist or not
+        if (isset($row) && !empty($row) && is_object($row)) {
             $row->loc        = $loc;
             $row->lastmod    = date("Y-m-d H:i:s");
             $row->status     = intval($status);
@@ -194,17 +204,18 @@ class Sitemap extends AbstractApi
             $row->priority   = $priority;
             $row->save();
         } else {
-            // Set
-            $values                = [];
-            $values['loc']         = $loc;
-            $values['lastmod']     = date("Y-m-d H:i:s");
-            $values['changefreq']  = $changefreq;
-            $values['priority']    = $priority;
-            $values['time_create'] = time();
-            $values['module']      = $module;
-            $values['table']       = $table;
-            $values['item']        = intval($item);
-            $values['status']      = intval($status);
+            // Set values
+            $values = [
+                'loc'         => $loc,
+                'lastmod'     => date("Y-m-d H:i:s"),
+                'changefreq'  => $changefreq,
+                'priority'    => $priority,
+                'time_create' => time(),
+                'module'      => $module,
+                'table'       => $table,
+                'item'        => intval($item),
+                'status'      => intval($status),
+            ];
 
             // Save
             $row = Pi::model('url', 'sitemap')->createRow();
@@ -223,7 +234,7 @@ class Sitemap extends AbstractApi
      * @param string $module
      * @param string $table
      * @param int    $item
-     *                    
+     *
      * @return boolean
      */
     public function groupLink($loc, $status = 1, $module = '', $table = '', $item = 0)
@@ -369,7 +380,8 @@ class Sitemap extends AbstractApi
      * Remove link from url table
      *
      * @param string $loc
-     * @return boolean            
+     *
+     * @return boolean
      */
     public function remove($loc)
     {
@@ -388,6 +400,7 @@ class Sitemap extends AbstractApi
      *
      * @param string $module
      * @param string $table
+     *
      * @return boolean
      */
     public function removeAll($module, $table = '')
