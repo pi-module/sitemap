@@ -15,7 +15,7 @@ namespace Module\Sitemap\Api;
 
 use Pi;
 use Pi\Application\Api\AbstractApi;
-use Zend\Validator\Uri as UriValidator;
+use Laminas\Validator\Uri as UriValidator;
 
 /**
  * Pi::api('import', 'sitemap')->generateLinks();

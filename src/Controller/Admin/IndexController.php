@@ -17,7 +17,7 @@ use Pi;
 use Pi\Mvc\Controller\ActionController;
 use Pi\Paginator\Paginator;
 use Module\Sitemap\Lib\Generate;
-use Zend\Db\Sql\Predicate\Expression;
+use Laminas\Db\Sql\Predicate\Expression;
 
 class IndexController extends ActionController
 {

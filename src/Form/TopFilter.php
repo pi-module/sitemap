@@ -14,7 +14,7 @@
 namespace Module\Sitemap\Form;
 
 use Pi;
-use Zend\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilter;
 
 class TopFilter extends InputFilter
 {
