@@ -18,7 +18,7 @@ use Pi\Mvc\Controller\ActionController;
 use Pi\Paginator\Paginator;
 use Module\Sitemap\Form\TopForm;
 use Module\Sitemap\Form\TopFilter;
-use Zend\Db\Sql\Predicate\Expression;
+use Laminas\Db\Sql\Predicate\Expression;
 
 class TopController extends ActionController
 {
