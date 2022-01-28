@@ -223,13 +223,13 @@ class IndexController extends ActionController
                     $urlRow = Pi::model($row->table, $row->module)->find($row->item);
 
                     // Check item
-                    if (is_object($urlRow) && !empty($urlRow)) {
+                    if (isset($urlRow) && is_object($urlRow) && !empty($urlRow)) {
                         if (isset($urlRow->status)) {
                             if ($urlRow->status != $row->status) {
                                 $row->status = $urlRow->status;
                                 $row->save();
                             }
-                        } elseif ($urlRow->active) {
+                        } elseif (isset($urlRow->active)) {
                             if ($urlRow->active != $row->status) {
                                 $row->status = $urlRow->active;
                                 $row->save();
@@ -243,6 +243,9 @@ class IndexController extends ActionController
                     $row->status = 0;
                     $row->save();
                 }
+            } else {
+                $row->status = 0;
+                $row->save();
             }
         }
 
